@@ -22,7 +22,7 @@ load_dotenv()
 data_path = getenv("DATA_PATH")
 
 # Change download directory
-new_path = path.join(path.expanduser(data_path), "datasets")
+new_path = path.join(path.expanduser(data_path), "raw")
 set_download_dir(new_path)
 
 # Download a MOABB dataset
