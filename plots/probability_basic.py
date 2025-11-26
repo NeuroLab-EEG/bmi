@@ -6,7 +6,7 @@ References:
 
 from graphviz import Digraph
 
-d = Digraph(filename="e2e_basic", format="png")
+d = Digraph(filename="probability_basic", format="png")
 d.attr("node", shape="rect", style="filled", fillcolor="lightblue", fontname="Helvetica")
 
 d.node("datasets")
