@@ -21,3 +21,11 @@ pip freeze > requirements.txt
 # Recreate an environment elsewhere
 pip install -r requirements.txt
 ```
+
+## Environment variables
+
+Create `.env` file in root of git repository.
+
+```bash
+DATA_PATH=/path/to/data
+```
