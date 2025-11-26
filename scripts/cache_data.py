@@ -1,11 +1,12 @@
 """
-Description: Cache a MOABB dataset as BIDS
+Description: Cache MOABB datasets
 References:
     - https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/plot_changing_download_directory.html
     - https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/plot_bids_conversion.html
 """
 
-import os.path as osp
+from os import path, getenv
+from dotenv import load_dotenv
 from moabb.utils import set_download_dir
 from moabb.datasets import (
     AlexMI,
@@ -16,12 +17,13 @@ from moabb.datasets import (
     Zhou2016
 )
 
-# Change download directory
-new_path = osp.join(osp.expanduser("/data/davise5"), "data")
-set_download_dir(new_path)
+# Load environment variables
+load_dotenv()
+data_path = getenv("DATA_PATH")
 
-# Define BIDS directory
-path = osp.join(osp.expanduser("/data/davise5"), "data/bids")
+# Change download directory
+new_path = path.join(path.expanduser(data_path), "datasets")
+set_download_dir(new_path)
 
 # Download a MOABB dataset
 datasets = [AlexMI, BNCI2014_001, PhysionetMI, Schirrmeister2017, Weibo2014, Zhou2016]
