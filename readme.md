@@ -29,3 +29,9 @@ Create `.env` file in root of git repository.
 ```bash
 DATA_PATH=/path/to/data
 ```
+
+## Background commands
+
+```bash
+nohup my_command > output.log 2>&1 &
+```
