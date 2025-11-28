@@ -5,12 +5,17 @@ References:
     - https://mne.tools/stable/auto_tutorials/intro/40_sensor_locations.html
 """
 
+from os import path, getenv
 from pathlib import Path
 from mne_bids import find_matching_paths, read_raw_bids
+from dotenv import load_dotenv
 import matplotlib.pyplot as plt
 
-# EEG datasets
-PATHNAME = "data"
+# Load environment variables
+load_dotenv()
+data_path = getenv("DATA_PATH")
+
+# Define EEG datasets
 datasets = [
     ("AlexMI", "MNE-BIDS-alexandre-motor-imagery"),
     ("BNCI2014_001", "MNE-BIDS-bnci2014-001"),
@@ -23,7 +28,7 @@ datasets = [
 # Plot channel montages
 for dataset in datasets:
     name, subdir = dataset
-    root = Path(PATHNAME, subdir)
+    root = path.join(path.expanduser(data_path), "bids", subdir)
     subject, datatype, extension = "1", "eeg", ".edf"
     montage = "standard_1005"
     bids_paths = find_matching_paths(

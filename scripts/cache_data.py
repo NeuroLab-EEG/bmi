@@ -25,8 +25,11 @@ data_path = getenv("DATA_PATH")
 new_path = path.join(path.expanduser(data_path), "raw")
 set_download_dir(new_path)
 
+# Create BIDS path
+bids_path = path.join(path.expanduser(data_path), "bids")
+
 # Download a MOABB dataset
 datasets = [AlexMI, BNCI2014_001, PhysionetMI, Schirrmeister2017, Weibo2014, Zhou2016]
 for dataset in datasets:
     d = dataset()
-    d.get_data()
+    d.get_data(cache_config=dict(path=bids_path, save_raw=True))
