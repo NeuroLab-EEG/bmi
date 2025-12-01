@@ -24,11 +24,10 @@ load_dotenv()
 data_path = getenv("DATA_PATH")
 
 # Change download directory
-download_path = path.join(path.expanduser(data_path))
-set_download_dir(download_path)
+set_download_dir(data_path)
 
 # Download a MOABB dataset
 datasets = [PhysionetMI, Lee2019_MI, Cho2017, Schirrmeister2017, Shin2017A, BNCI2014_001]
 for dataset in datasets:
     d = dataset(accept=True) if dataset is Shin2017A else dataset()
-    d.get_data(cache_config=dict(path=download_path, save_raw=True))
+    d.get_data(cache_config=dict(path=data_path, save_raw=True))
