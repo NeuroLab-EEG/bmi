@@ -1,5 +1,5 @@
 """
-Description: Plot probability from experiment design
+Plot probability from experiment design
 References:
     - https://graphviz.readthedocs.io/en/stable/examples.html
 """

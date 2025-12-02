@@ -1,5 +1,5 @@
 """
-Description: Subplots of images generated from other scripts
+Subplots of images generated from other scripts
 References:
     - https://matplotlib.org/stable/gallery/subplots_axes_and_figures/align_labels_demo.html
 """

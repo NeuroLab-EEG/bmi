@@ -1,5 +1,5 @@
 """
-Description: Plot experiment design
+Plot experiment design
 References:
     - https://graphviz.readthedocs.io/en/stable/examples.html
 """

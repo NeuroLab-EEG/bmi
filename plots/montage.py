@@ -1,5 +1,5 @@
 """
-Description: Plot an EEG dataset channel montage
+Plot an EEG dataset channel montage
 References:
     - https://mne.tools/mne-bids/stable/auto_examples/read_bids_datasets.html
     - https://mne.tools/stable/auto_tutorials/intro/40_sensor_locations.html

@@ -1,5 +1,5 @@
 """
-Description: Visualize MOABB bubble plots
+Visualize MOABB bubble plots
 Reference:
     - https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_dataset_bubbles.html
 """
