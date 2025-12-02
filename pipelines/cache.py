@@ -7,7 +7,7 @@ References:
     - https://moabb.neurotechx.com/docs/dataset_summary.html#motor-imagery
 """
 
-from os import path, getenv
+from os import getenv
 from dotenv import load_dotenv
 from moabb.utils import set_download_dir
 from moabb.datasets import (
