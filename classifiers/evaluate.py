@@ -6,17 +6,24 @@ References:
 from os import getenv
 from dotenv import load_dotenv
 from moabb.utils import set_download_dir
-from moabb.datasets import BNCI2014_001
+from moabb.datasets import (
+    PhysionetMI,
+    Lee2019_MI,
+    Cho2017,
+    Schirrmeister2017,
+    Shin2017A,
+    BNCI2014_001
+)
 from moabb.evaluations import CrossSubjectEvaluation
 from classifiers.paradigms import LogLossLeftRightImagery
-from classifiers.pipelines import csp_lda
+from classifiers.pipelines import pipelines, grids
 
 
 # Load environment variables
 load_dotenv()
 data_path = getenv("DATA_PATH")
 
-# Change data directory
+# Change download directory
 set_download_dir(data_path)
 
 # Initialize evaluation
@@ -26,13 +33,10 @@ evaluation = CrossSubjectEvaluation(
         BNCI2014_001()
     ],
     hdf5_path=data_path,
-    overwrite=True,
     n_jobs=-1,
     save_model=True,
     n_splits=5
 )
 
 # Execute evaluation
-evaluation.process({
-    "csp_lda": csp_lda()
-})
+evaluation.process(pipelines(), grids())
