@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 from moabb.utils import set_download_dir
 from moabb.datasets import BNCI2014_001
 from moabb.evaluations import CrossSubjectEvaluation
-from bmi.classifiers.paradigms import LogLossLeftRightImagery
-from bmi.classifiers.pipelines import csp_lda
+from classifiers.paradigms import LogLossLeftRightImagery
+from classifiers.pipelines import csp_lda
 
 
 # Load environment variables
