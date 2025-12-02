@@ -53,14 +53,14 @@ def plot_detail():
     d.node("datasets", """<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR>
-            <TD>AlexMI</TD>
-            <TD>BNCI2014_001</TD>
             <TD>PhysionetMI</TD>
+            <TD>Lee2019_MI</TD>
+            <TD>Cho2017</TD>
         </TR>
         <TR>
             <TD>Schirrmeister2017</TD>
-            <TD>Weibo2014</TD>
-            <TD>Zhou2016</TD>
+            <TD>Shin2017A</TD>
+            <TD>BNCI2014_001</TD>
         </TR>
     </TABLE>>""")
 
@@ -104,7 +104,7 @@ def plot_detail():
     d.node("inferences", """<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR>
-            <TD>Laplace</TD>
+            <TD>LA</TD>
             <TD>VI</TD>
             <TD>HMC</TD>
         </TR>
