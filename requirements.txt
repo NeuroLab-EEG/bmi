@@ -10,6 +10,7 @@ attrs==25.4.0
 babel==2.17.0
 beautifulsoup4==4.14.2
 bleach==6.3.0
+blosc2==3.12.0
 certifi==2025.11.12
 cffi==2.0.0
 charset-normalizer==3.4.4
@@ -74,12 +75,15 @@ mistune==3.1.4
 mne==1.11.0
 mne-bids==0.17.0
 moabb==1.4.2
+msgpack==1.1.2
 nbclient==0.10.2
 nbconvert==7.16.6
 nbformat==5.10.4
+ndindex==1.10.1
 nest-asyncio==1.6.0
 notebook==7.5.0
 notebook_shim==0.2.4
+numexpr==2.14.1
 numpy==2.2.6
 nvidia-ml-py==13.580.82
 overrides==7.7.0
