@@ -16,7 +16,9 @@ from moabb.datasets import (
 )
 from moabb.evaluations import CrossSubjectEvaluation
 from classifiers.paradigms import LogLossLeftRightImagery
-from classifiers.pipelines import pipelines, grids
+from pipelines.euclidean import csp_lda, csp_svm, csp_svm_params
+from pipelines.riemannian import ts_lr, ts_svm, ts_svm_params
+from pipelines.deep_learning import scnn
 
 
 # Load environment variables
@@ -32,11 +34,22 @@ evaluation = CrossSubjectEvaluation(
     datasets=[
         BNCI2014_001()
     ],
+    return_epochs=True,
     hdf5_path=data_path,
+    overwrite=True,
     n_jobs=-1,
     save_model=True,
     n_splits=5
 )
 
 # Execute evaluation
-evaluation.process(pipelines(), grids())
+evaluation.process(dict(
+    csp_lda=csp_lda,
+    csp_svm=csp_svm,
+    ts_lr=ts_lr,
+    ts_svm=ts_svm,
+    scnn=scnn
+), dict(
+    csp_svm=csp_svm_params,
+    ts_svm=ts_svm_params
+))
