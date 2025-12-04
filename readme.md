@@ -37,14 +37,8 @@ Create `.env` file in root of git repository.
 DATA_PATH=/path/to/data
 ```
 
-## Cache database in background
+## Background commands
 
 ```bash
-nohup python -m classifiers.cache > output.log 2>&1 &
-```
-
-## Train classifiers
-
-```bash
-python -m classifiers.evaluate
+nohup python -m path.to.command > output.log 2>&1 &
 ```
