@@ -2,7 +2,7 @@
 References:
     - https://scikit-learn.org/stable/modules/model_evaluation.html
     - https://scikit-learn.org/stable/modules/model_evaluation.html#log-loss
-    - https://scikit-learn.org/stable/modules/generated/sklearn.metrics.log_loss.html#sklearn.metrics.log_loss
+    - https://scikit-learn.org/stable/modules/generated/sklearn.metrics.log_loss.html#sklearn.metrics.log_loss  # noqa: E501
     - https://moabb.neurotechx.com/docs/generated/moabb.paradigms.LeftRightImagery.html
 """
 

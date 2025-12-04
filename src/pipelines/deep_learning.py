@@ -1,10 +1,10 @@
 """
 References:
     - https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
-    - https://github.com/NeuroTechX/moabb/blob/v1.1.2/pipelines/Keras_ShallowConvNet.yml
+    - https://github.com/NeuroTechX/moabb/blob/v1.1.2/pipelines/Keras_ShallowConvNet.yml  # noqa: E501
     - https://github.com/NeuroTechX/moabb/blob/v1.1.2/pipelines/Keras_DeepConvNet.yml
     - https://github.com/NeuroTechX/moabb/blob/v1.1.2/moabb/pipelines/deep_learning.py
-    - https://adriangb.com/scikeras/stable/generated/scikeras.wrappers.KerasClassifier.html
+    - https://adriangb.com/scikeras/stable/generated/scikeras.wrappers.KerasClassifier.html  # noqa: E501
 """
 
 from moabb.pipelines.features import (

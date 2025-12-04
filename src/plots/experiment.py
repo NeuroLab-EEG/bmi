@@ -51,16 +51,16 @@ def plot_detail():
 
     d.node(
         "data preprocessing",
-        "8-32 Hz bandpass,\n4th-order Butterworth IIR filter,\nforward-backward pass,\nMNE parameterization",
+        "8-32 Hz bandpass,\n4th-order Butterworth IIR filter,\nforward-backward pass,\nMNE parameterization",  # noqa: E501
     )
     d.node(
         "model training",
-        "within-session,\nshuffled,\nstratified 5-fold splits,\naveraged cross-validation",
+        "within-session,\nshuffled,\nstratified 5-fold splits,\naveraged cross-validation",  # noqa: E501
     )
     d.node("hyperparameter search", "nested 3-fold cross-validation")
     d.node(
         "statistical analysis",
-        "within-dataset pairwise comparisons,\neffect sizes and p-values,\none-tailed permutation t-tests, or\nWilcoxon signed-rank test,\n\nmeta-analysis pairwise comparisons,\ncombined effect sizes and p-values,\nStouffer's Z-score method",
+        "within-dataset pairwise comparisons,\neffect sizes and p-values,\none-tailed permutation t-tests, or\nWilcoxon signed-rank test,\n\nmeta-analysis pairwise comparisons,\ncombined effect sizes and p-values,\nStouffer's Z-score method",  # noqa: E501
     )
 
     d.edges(

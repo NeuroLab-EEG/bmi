@@ -1,9 +1,9 @@
 """
 References:
-    - https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/noplot_load_model.html
-    - https://moabb.neurotechx.com/docs/auto_examples/how_to_benchmark/plot_within_session_splitter.html
-    - https://moabb.neurotechx.com/docs/generated/moabb.evaluations.CrossSubjectSplitter.html#moabb.evaluations.CrossSubjectSplitter
-    - https://github.com/NeuroTechX/moabb/blob/develop/moabb/evaluations/evaluations.py#L581-L772
+    - https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/noplot_load_model.html  # noqa: E501
+    - https://moabb.neurotechx.com/docs/auto_examples/how_to_benchmark/plot_within_session_splitter.html  # noqa: E501
+    - https://moabb.neurotechx.com/docs/generated/moabb.evaluations.CrossSubjectSplitter.html#moabb.evaluations.CrossSubjectSplitter  # noqa: E501
+    - https://github.com/NeuroTechX/moabb/blob/develop/moabb/evaluations/evaluations.py#L581-L772  # noqa: E501
 """
 
 import numpy as np
