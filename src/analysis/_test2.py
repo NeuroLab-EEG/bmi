@@ -1,9 +1,9 @@
 """
 References:
-    - https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/noplot_load_model.html
-    - https://moabb.neurotechx.com/docs/auto_examples/how_to_benchmark/plot_within_session_splitter.html
-    - https://moabb.neurotechx.com/docs/generated/moabb.evaluations.CrossSubjectSplitter.html#moabb.evaluations.CrossSubjectSplitter
-    - https://github.com/NeuroTechX/moabb/blob/develop/moabb/evaluations/evaluations.py#L581-L772
+    - https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/noplot_load_model.html  # noqa: E501
+    - https://moabb.neurotechx.com/docs/auto_examples/how_to_benchmark/plot_within_session_splitter.html  # noqa: E501
+    - https://moabb.neurotechx.com/docs/generated/moabb.evaluations.CrossSubjectSplitter.html#moabb.evaluations.CrossSubjectSplitter  # noqa: E501
+    - https://github.com/NeuroTechX/moabb/blob/develop/moabb/evaluations/evaluations.py#L581-L772  # noqa: E501
 """
 
 import numpy as np
@@ -16,7 +16,7 @@ from moabb.evaluations import CrossSubjectSplitter
 from sklearn.model_selection import GroupKFold
 from sklearn.metrics import get_scorer
 from sklearn.preprocessing import LabelEncoder
-from classifiers.paradigms import LogLossLeftRightImagery
+from src.classifiers.paradigms import LogLossLeftRightImagery
 
 
 # TODO: CSP+LDA diagnostics include
@@ -53,7 +53,17 @@ cv = CrossSubjectSplitter(cv_class=GroupKFold, **dict(n_splits=5))
 for cv_ind, (train, test) in enumerate(cv.split(y, metadata)):
     # Load classifier from one fold of evaluation
     subject = groups[test[0]]
-    with open(path.join(data_path, "Search_CrossSubject", "BNCI2014-001", str(subject), "csp_lda", f"fitted_model_{cv_ind}.pkl"), "rb") as pickle_file:
+    with open(
+        path.join(
+            data_path,
+            "Search_CrossSubject",
+            "BNCI2014-001",
+            str(subject),
+            "csp_lda",
+            f"fitted_model_{cv_ind}.pkl",
+        ),
+        "rb",
+    ) as pickle_file:
         model = load(pickle_file)
 
     # Measure scores per session same as evaluation
