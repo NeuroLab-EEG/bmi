@@ -2,29 +2,24 @@ name: Lint Python code
 
 on:
   push:
-    branches: [main]
+    branches: ["main"]
   pull_request:
-    branches: [main]
+    branches: ["main"]
 
 jobs:
   lint:
-    runs_on: ubuntu-latest
-
-  steps:
-    - uses: actions/checkout
-
-    - name: Setup Python
-      uses: actions/setup-python
-      with:
-        python-version: 3.12
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8 black
-
-    - name: Run flake8
-      run: flake8 src
-
-    - name: Run black
-      run: black src --check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python
+        with:
+          python-version: 3.12
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black
+      - name: Run flake8
+        run: flake8 src
+      - name: Run black
+        run: black src --check
