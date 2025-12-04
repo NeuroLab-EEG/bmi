@@ -37,7 +37,7 @@ Create `.env` file in root of git repository.
 DATA_PATH=/path/to/data
 ```
 
-## Background command
+## Background commands
 
 ```bash
 nohup python -m path.to.command > output.log 2>&1 &
