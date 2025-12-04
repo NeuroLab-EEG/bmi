@@ -1,16 +1,20 @@
 # Bayesian Motor Imagery (BMI)
 
+## Python version management
+
+Follow [pyenv](https://github.com/pyenv/pyenv) installation instructions for recent release of Python.
+
 ## Python virtual environment
 
 ```bash
 # Create new virtual environment
-python3 -m venv .venv
+python -m venv .venv
 
 # Activate the environment
 source .venv/bin/activate
 
 # Install packages
-pip install numpy pandas scikit-learn
+pip install tensorflow[and-cuda]
 
 # Deactivate
 deactivate
@@ -20,6 +24,9 @@ pip freeze > requirements.txt
 
 # Recreate an environment elsewhere
 pip install -r requirements.txt
+
+# List packages that are not dependencies of other packages
+pip list --not-required
 ```
 
 ## Environment variables
