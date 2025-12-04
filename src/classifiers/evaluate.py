@@ -60,7 +60,7 @@ evaluation_sf.process(
     ),
 )
 
-# Initialize deep learning evaluation
+# Initialize deep learning based evaluation
 evaluation_dl = CrossSubjectEvaluation(
     paradigm=LogLossLeftRightImagery(),
     datasets=[
