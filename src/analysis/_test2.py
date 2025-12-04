@@ -16,7 +16,7 @@ from moabb.evaluations import CrossSubjectSplitter
 from sklearn.model_selection import GroupKFold
 from sklearn.metrics import get_scorer
 from sklearn.preprocessing import LabelEncoder
-from classifiers.paradigms import LogLossLeftRightImagery
+from src.classifiers.paradigms import LogLossLeftRightImagery
 
 
 # TODO: CSP+LDA diagnostics include
@@ -53,7 +53,17 @@ cv = CrossSubjectSplitter(cv_class=GroupKFold, **dict(n_splits=5))
 for cv_ind, (train, test) in enumerate(cv.split(y, metadata)):
     # Load classifier from one fold of evaluation
     subject = groups[test[0]]
-    with open(path.join(data_path, "Search_CrossSubject", "BNCI2014-001", str(subject), "csp_lda", f"fitted_model_{cv_ind}.pkl"), "rb") as pickle_file:
+    with open(
+        path.join(
+            data_path,
+            "Search_CrossSubject",
+            "BNCI2014-001",
+            str(subject),
+            "csp_lda",
+            f"fitted_model_{cv_ind}.pkl",
+        ),
+        "rb",
+    ) as pickle_file:
         model = load(pickle_file)
 
     # Measure scores per session same as evaluation

@@ -12,8 +12,13 @@ def plot_basic():
     Plot basic probability from experiment design
     """
     d = Digraph(filename="basic", format="png")
-    d.attr("node", shape="rect", style="filled",
-           fillcolor="lightblue", fontname="Helvetica")
+    d.attr(
+        "node",
+        shape="rect",
+        style="filled",
+        fillcolor="lightblue",
+        fontname="Helvetica",
+    )
 
     d.node("datasets")
 
@@ -30,14 +35,16 @@ def plot_basic():
         s.node("freq", "<p(y &#124; x, &#952;)>")
         s.node("bayes", "<p(y &#124; x, D)>")
 
-    d.edges([
-        ("datasets", "frequentist models"),
-        ("datasets", "bayesian models"),
-        ("bayesian models", "priors"),
-        ("priors", "inferences"),
-        ("inferences", "bayes"),
-        ("frequentist models", "freq")
-    ])
+    d.edges(
+        [
+            ("datasets", "frequentist models"),
+            ("datasets", "bayesian models"),
+            ("bayesian models", "priors"),
+            ("priors", "inferences"),
+            ("inferences", "bayes"),
+            ("frequentist models", "freq"),
+        ]
+    )
 
     d.view()
 
@@ -47,10 +54,17 @@ def plot_detail():
     Plot detailed probability from experiment design
     """
     d = Digraph(filename="detail", format="png")
-    d.attr("node", shape="plain", style="filled",
-           fillcolor="lightblue", fontname="Helvetica")
+    d.attr(
+        "node",
+        shape="plain",
+        style="filled",
+        fillcolor="lightblue",
+        fontname="Helvetica",
+    )
 
-    d.node("datasets", """<
+    d.node(
+        "datasets",
+        """<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR>
             <TD>PhysionetMI</TD>
@@ -62,11 +76,14 @@ def plot_detail():
             <TD>Shin2017A</TD>
             <TD>BNCI2014_001</TD>
         </TR>
-    </TABLE>>""")
+    </TABLE>>""",
+    )
 
     with d.subgraph() as s:
         s.attr(rank="same")
-        s.node("frequentist models", """<
+        s.node(
+            "frequentist models",
+            """<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
                 <TD>CSP+LDA</TD>
@@ -78,8 +95,11 @@ def plot_detail():
                 <TD>SCNN</TD>
                 <TD>DCNN</TD>
             </TR>
-        </TABLE>>""")
-        s.node("bayesian models", """<
+        </TABLE>>""",
+        )
+        s.node(
+            "bayesian models",
+            """<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR>
                 <TD>CSP+BLDA</TD>
@@ -91,44 +111,59 @@ def plot_detail():
                 <TD>BSCNN</TD>
                 <TD>BDCNN</TD>
             </TR>
-        </TABLE>>""")
+        </TABLE>>""",
+        )
 
-    d.node("priors", """<
+    d.node(
+        "priors",
+        """<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR>
             <TD>Gaussian</TD>
             <TD>Laplace</TD>
             <TD>Cauchy</TD>
         </TR>
-    </TABLE>>""")
-    d.node("inferences", """<
+    </TABLE>>""",
+    )
+    d.node(
+        "inferences",
+        """<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
         <TR>
             <TD>LA</TD>
             <TD>VI</TD>
             <TD>HMC</TD>
         </TR>
-    </TABLE>>""")
+    </TABLE>>""",
+    )
 
     with d.subgraph() as s:
         s.attr(rank="same")
-        s.node("freq", """<
+        s.node(
+            "freq",
+            """<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR><TD>p(y &#124; x, &#952;)</TD></TR>
-        </TABLE>>""")
-        s.node("bayes", """<
+        </TABLE>>""",
+        )
+        s.node(
+            "bayes",
+            """<
         <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
             <TR><TD>p(y &#124; x, D)</TD></TR>
-        </TABLE>>""")
+        </TABLE>>""",
+        )
 
-    d.edges([
-        ("datasets", "frequentist models"),
-        ("datasets", "bayesian models"),
-        ("bayesian models", "priors"),
-        ("priors", "inferences"),
-        ("inferences", "bayes"),
-        ("frequentist models", "freq")
-    ])
+    d.edges(
+        [
+            ("datasets", "frequentist models"),
+            ("datasets", "bayesian models"),
+            ("bayesian models", "priors"),
+            ("priors", "inferences"),
+            ("inferences", "bayes"),
+            ("frequentist models", "freq"),
+        ]
+    )
 
     d.view()
 

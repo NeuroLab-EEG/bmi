@@ -21,7 +21,7 @@ datasets = [
     ("Cho2017", "MNE-BIDS-cho2017"),
     ("Schirrmeister2017", "MNE-BIDS-schirrmeister2017"),
     ("Shin2017A", "MNE-BIDS-shin2017-a"),
-    ("BNCI2014_001", "MNE-BIDS-bnci2014-001")
+    ("BNCI2014_001", "MNE-BIDS-bnci2014-001"),
 ]
 
 # Plot channel montages
@@ -29,13 +29,14 @@ for name, subdir in datasets:
     # Define directory
     root = path.join(path.expanduser(data_path), subdir)
     bids_paths = find_matching_paths(
-        root=root, subjects="1", datatypes="eeg", extensions=".edf")
+        root=root, subjects="1", datatypes="eeg", extensions=".edf"
+    )
     bids_path = bids_paths[0]
-    
+
     # Read directory
     raw = read_raw_bids(bids_path=bids_path, verbose=False)
     raw.set_montage("standard_1005")
-    
+
     # Plot montage
     fig = raw.plot_sensors(show_names=True, sphere="auto", show=False)
     fig.suptitle(name)
