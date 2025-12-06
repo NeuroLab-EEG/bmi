@@ -38,7 +38,6 @@ params = [
     (ts_svm(), LogLossLeftRightImagery(resample=160), PhysionetMI(), False, -1),
     (scnn(), LogLossLeftRightImagery(resample=160), PhysionetMI(), True, 1),
     (dcnn(), LogLossLeftRightImagery(resample=160), PhysionetMI(), True, 1),
-
     # Lee2019_MI
     (csp_lda(), LogLossLeftRightImagery(resample=1000), Lee2019_MI(), False, -1),
     (csp_svm(), LogLossLeftRightImagery(resample=1000), Lee2019_MI(), False, -1),
@@ -46,7 +45,6 @@ params = [
     (ts_svm(), LogLossLeftRightImagery(resample=1000), Lee2019_MI(), False, -1),
     (scnn(), LogLossLeftRightImagery(resample=1000), Lee2019_MI(), True, 1),
     (dcnn(), LogLossLeftRightImagery(resample=1000), Lee2019_MI(), True, 1),
-
     # Cho2017
     (csp_lda(), LogLossLeftRightImagery(resample=512), Cho2017(), False, -1),
     (csp_svm(), LogLossLeftRightImagery(resample=512), Cho2017(), False, -1),
@@ -54,7 +52,6 @@ params = [
     (ts_svm(), LogLossLeftRightImagery(resample=512), Cho2017(), False, -1),
     (scnn(), LogLossLeftRightImagery(resample=512), Cho2017(), True, 1),
     (dcnn(), LogLossLeftRightImagery(resample=512), Cho2017(), True, 1),
-
     # Schirrmeister2017
     (csp_lda(), LogLossLeftRightImagery(resample=500), Schirrmeister2017(), False, -1),
     (csp_svm(), LogLossLeftRightImagery(resample=500), Schirrmeister2017(), False, -1),
@@ -62,7 +59,6 @@ params = [
     (ts_svm(), LogLossLeftRightImagery(resample=500), Schirrmeister2017(), False, -1),
     (scnn(), LogLossLeftRightImagery(resample=500), Schirrmeister2017(), True, 1),
     (dcnn(), LogLossLeftRightImagery(resample=500), Schirrmeister2017(), True, 1),
-
     # Shin2017A
     (csp_lda(), LogLossLeftRightImagery(resample=200), Shin2017A(), False, -1),
     (csp_svm(), LogLossLeftRightImagery(resample=200), Shin2017A(), False, -1),
@@ -70,7 +66,6 @@ params = [
     (ts_svm(), LogLossLeftRightImagery(resample=200), Shin2017A(), False, -1),
     (scnn(), LogLossLeftRightImagery(resample=200), Shin2017A(), True, 1),
     (dcnn(), LogLossLeftRightImagery(resample=200), Shin2017A(), True, 1),
-
     # BNCI2014_001
     (csp_lda(), LogLossLeftRightImagery(resample=250), BNCI2014_001(), False, -1),
     (csp_svm(), LogLossLeftRightImagery(resample=250), BNCI2014_001(), False, -1),

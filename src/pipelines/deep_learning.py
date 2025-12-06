@@ -7,11 +7,7 @@ References:
     - https://adriangb.com/scikeras/stable/generated/scikeras.wrappers.KerasClassifier.html  # noqa: E501
 """
 
-from moabb.pipelines.features import (
-    Resampler_Epoch,
-    Convert_Epoch_Array,
-    StandardScaler_Epoch,
-)
+from moabb.pipelines.features import Convert_Epoch_Array, StandardScaler_Epoch
 from sklearn.pipeline import Pipeline
 from scikeras.wrappers import KerasClassifier
 from tensorflow.keras.optimizers import Adam
@@ -182,13 +178,16 @@ def scnn():
                         validation_split=0.2,
                         callbacks=[
                             EarlyStopping(monitor="val_loss", patience=75),
-                            ReduceLROnPlateau(monitor="val_loss", patience=75, factor=0.5),
+                            ReduceLROnPlateau(
+                                monitor="val_loss", patience=75, factor=0.5
+                            ),
                         ],
                     ),
                 ),
             ]
         )
     }, {}
+
 
 def dcnn():
     return {
@@ -208,7 +207,9 @@ def dcnn():
                         validation_split=0.2,
                         callbacks=[
                             EarlyStopping(monitor="val_loss", patience=75),
-                            ReduceLROnPlateau(monitor="val_loss", patience=75, factor=0.5),
+                            ReduceLROnPlateau(
+                                monitor="val_loss", patience=75, factor=0.5
+                            ),
                         ],
                     ),
                 ),

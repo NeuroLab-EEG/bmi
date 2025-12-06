@@ -23,6 +23,7 @@ def ts_lr():
         )
     }, {}
 
+
 def ts_svm():
     return {
         "ts_svm": Pipeline(
@@ -32,9 +33,4 @@ def ts_svm():
                 ("svc", SVC(kernel="linear")),
             ]
         )
-    }, {
-        "ts_svm": {
-            "svc__C": [0.5, 1, 1.5],
-            "svc__kernel": ["rbf", "linear"]
-        }
-    }
+    }, {"ts_svm": {"svc__C": [0.5, 1, 1.5], "svc__kernel": ["rbf", "linear"]}}

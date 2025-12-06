@@ -23,6 +23,7 @@ def csp_lda():
         )
     }, {}
 
+
 def csp_svm():
     return {
         "csp_svm": Pipeline(
