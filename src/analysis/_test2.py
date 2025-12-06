@@ -14,7 +14,7 @@ from moabb.datasets import BNCI2014_001
 from moabb.utils import set_download_dir
 from moabb.evaluations import CrossSubjectSplitter
 from sklearn.model_selection import GroupKFold
-from sklearn.metrics import get_scorer
+from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 from src.classifiers.paradigms import LogLossLeftRightImagery
 
@@ -33,6 +33,7 @@ set_download_dir(data_path)
 # Load dataset
 dataset = BNCI2014_001()
 paradigm = LogLossLeftRightImagery()
+# paradigm = LogLossLeftRightImagery(resample=160)
 X, y, metadata = paradigm.get_data(dataset=dataset)
 
 # Transform labels
@@ -45,7 +46,7 @@ sessions = metadata.session.values
 
 # Define scoring rules
 # TODO: Add more scoring rules
-scorer = get_scorer(paradigm.scoring)
+# scorer = get_scorer(paradigm.scoring)
 
 # Split dataset into same folds as evaluation
 cv = CrossSubjectSplitter(cv_class=GroupKFold, **dict(n_splits=5))
@@ -69,5 +70,7 @@ for cv_ind, (train, test) in enumerate(cv.split(y, metadata)):
     # Measure scores per session same as evaluation
     for session in np.unique(sessions[test]):
         ix = sessions[test] == session
-        score = scorer(model, X[test[ix]], y[test[ix]])
+        # score = scorer(model, X[test[ix]], y[test[ix]])
+        y_pred = model.predict(X[test[ix]])
+        score = accuracy_score(y[test[ix]], y_pred)
         print(score)
