@@ -45,7 +45,7 @@ df = Results(
     CrossSubjectEvaluation, LogLossLeftRightImagery, hdf5_path=data_path
 ).to_dataframe()
 
-# Initialize aggregated results
+# Initialize combined results
 df[["nll", "brier", "ece", "mcc", "acc", "auroc"]] = np.nan
 
 # Define metrics collection parameters
