@@ -31,7 +31,7 @@ def ts_svm():
             [
                 ("cov", Covariances(estimator="oas")),
                 ("ts", TangentSpace(metric="riemann")),
-                ("svc", SVC(kernel="linear")),
+                ("svc", SVC(kernel="linear", probability=True)),
             ]
         )
     }, {"ts_svm": {"svc__C": [0.5, 1, 1.5], "svc__kernel": ["rbf", "linear"]}}

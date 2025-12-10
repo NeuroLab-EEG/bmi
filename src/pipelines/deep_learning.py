@@ -50,7 +50,6 @@ class ShallowConvNet(KerasClassifier):
         **kwargs
     ):
         super().__init__(**kwargs)
-
         self.loss = loss
         self.optimizer = optimizer
         self.epochs = epochs
@@ -101,7 +100,6 @@ class DeepConvNet(KerasClassifier):
         **kwargs
     ):
         super().__init__(**kwargs)
-
         self.loss = loss
         self.optimizer = optimizer
         self.epochs = epochs

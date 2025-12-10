@@ -31,7 +31,7 @@ def csp_svm():
             [
                 ("cov", Covariances(estimator="oas")),
                 ("csp", CSP(nfilter=6)),
-                ("svc", SVC(kernel="linear")),
+                ("svc", SVC(kernel="linear", probability=True)),
             ]
         )
     }, {
