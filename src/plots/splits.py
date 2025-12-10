@@ -1,5 +1,5 @@
 """
-Grouped and stacked bar charts showing class balances per fold
+Generate grouped and stacked bar charts showing class balances per fold
 References:
     - https://matplotlib.org/stable/gallery/lines_bars_and_markers/barchart.html
     - https://matplotlib.org/stable/gallery/lines_bars_and_markers/bar_stacked.html

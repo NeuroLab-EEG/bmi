@@ -1,4 +1,5 @@
 """
+Define paradigm with custom scoring rule
 References:
     - https://scikit-learn.org/stable/modules/model_evaluation.html
     - https://scikit-learn.org/stable/modules/model_evaluation.html#log-loss

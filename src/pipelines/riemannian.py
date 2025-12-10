@@ -1,4 +1,5 @@
 """
+Build pipelines with Riemannian spatial filters
 References:
     - https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
     - https://github.com/NeuroTechX/moabb/blob/develop/pipelines/TSLR.yml

@@ -1,4 +1,5 @@
 """
+Build deep learning pipelines
 References:
     - https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
     - https://github.com/NeuroTechX/moabb/blob/v1.1.2/pipelines/Keras_ShallowConvNet.yml  # noqa: E501
