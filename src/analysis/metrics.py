@@ -63,78 +63,84 @@ params = [
         "csp_lda",
         LogLossLeftRightImagery(resample=160),
         PhysionetMI(),
+        False
     ),
     (
         "PhysionetMotorImagery",
         "csp_svm",
         LogLossLeftRightImagery(resample=160),
         PhysionetMI(),
+        False
     ),
     (
         "PhysionetMotorImagery",
         "ts_lr",
         LogLossLeftRightImagery(resample=160),
         PhysionetMI(),
+        False
     ),
     (
         "PhysionetMotorImagery",
         "ts_svm",
         LogLossLeftRightImagery(resample=160),
         PhysionetMI(),
+        False
     ),
     (
         "PhysionetMotorImagery",
         "scnn",
         LogLossLeftRightImagery(resample=160),
         PhysionetMI(),
+        True
     ),
     (
         "PhysionetMotorImagery",
         "dcnn",
         LogLossLeftRightImagery(resample=160),
         PhysionetMI(),
+        True
     ),
     # Lee2019_MI
-    ("", "csp_lda", LogLossLeftRightImagery(resample=1000), Lee2019_MI()),
-    ("", "csp_svm", LogLossLeftRightImagery(resample=1000), Lee2019_MI()),
-    ("", "ts_lr", LogLossLeftRightImagery(resample=1000), Lee2019_MI()),
-    ("", "ts_svm", LogLossLeftRightImagery(resample=1000), Lee2019_MI()),
-    ("", "scnn", LogLossLeftRightImagery(resample=1000), Lee2019_MI()),
-    ("", "dcnn", LogLossLeftRightImagery(resample=1000), Lee2019_MI()),
+    ("", "csp_lda", LogLossLeftRightImagery(resample=1000), Lee2019_MI(), False),
+    ("", "csp_svm", LogLossLeftRightImagery(resample=1000), Lee2019_MI(), False),
+    ("", "ts_lr", LogLossLeftRightImagery(resample=1000), Lee2019_MI(), False),
+    ("", "ts_svm", LogLossLeftRightImagery(resample=1000), Lee2019_MI(), False),
+    ("", "scnn", LogLossLeftRightImagery(resample=1000), Lee2019_MI(), True),
+    ("", "dcnn", LogLossLeftRightImagery(resample=1000), Lee2019_MI(), True),
     # Cho2017
-    ("", "csp_lda", LogLossLeftRightImagery(resample=512), Cho2017()),
-    ("", "csp_svm", LogLossLeftRightImagery(resample=512), Cho2017()),
-    ("", "ts_lr", LogLossLeftRightImagery(resample=512), Cho2017()),
-    ("", "ts_svm", LogLossLeftRightImagery(resample=512), Cho2017()),
-    ("", "scnn", LogLossLeftRightImagery(resample=512), Cho2017()),
-    ("", "dcnn", LogLossLeftRightImagery(resample=512), Cho2017()),
+    ("", "csp_lda", LogLossLeftRightImagery(resample=512), Cho2017(), False),
+    ("", "csp_svm", LogLossLeftRightImagery(resample=512), Cho2017(), False),
+    ("", "ts_lr", LogLossLeftRightImagery(resample=512), Cho2017(), False),
+    ("", "ts_svm", LogLossLeftRightImagery(resample=512), Cho2017(), False),
+    ("", "scnn", LogLossLeftRightImagery(resample=512), Cho2017(), True),
+    ("", "dcnn", LogLossLeftRightImagery(resample=512), Cho2017(), True),
     # Schirrmeister2017
-    ("", "csp_lda", LogLossLeftRightImagery(resample=500), Schirrmeister2017()),
-    ("", "csp_svm", LogLossLeftRightImagery(resample=500), Schirrmeister2017()),
-    ("", "ts_lr", LogLossLeftRightImagery(resample=500), Schirrmeister2017()),
-    ("", "ts_svm", LogLossLeftRightImagery(resample=500), Schirrmeister2017()),
-    ("", "scnn", LogLossLeftRightImagery(resample=500), Schirrmeister2017()),
-    ("", "dcnn", LogLossLeftRightImagery(resample=500), Schirrmeister2017()),
+    ("", "csp_lda", LogLossLeftRightImagery(resample=500), Schirrmeister2017(), False),
+    ("", "csp_svm", LogLossLeftRightImagery(resample=500), Schirrmeister2017(), False),
+    ("", "ts_lr", LogLossLeftRightImagery(resample=500), Schirrmeister2017(), False),
+    ("", "ts_svm", LogLossLeftRightImagery(resample=500), Schirrmeister2017(), False),
+    ("", "scnn", LogLossLeftRightImagery(resample=500), Schirrmeister2017(), True),
+    ("", "dcnn", LogLossLeftRightImagery(resample=500), Schirrmeister2017(), True),
     # Shin2017A
-    ("", "csp_lda", LogLossLeftRightImagery(resample=200), Shin2017A()),
-    ("", "csp_svm", LogLossLeftRightImagery(resample=200), Shin2017A()),
-    ("", "ts_lr", LogLossLeftRightImagery(resample=200), Shin2017A()),
-    ("", "ts_svm", LogLossLeftRightImagery(resample=200), Shin2017A()),
-    ("", "scnn", LogLossLeftRightImagery(resample=200), Shin2017A()),
-    ("", "dcnn", LogLossLeftRightImagery(resample=200), Shin2017A()),
+    ("", "csp_lda", LogLossLeftRightImagery(resample=200), Shin2017A(), False),
+    ("", "csp_svm", LogLossLeftRightImagery(resample=200), Shin2017A(), False),
+    ("", "ts_lr", LogLossLeftRightImagery(resample=200), Shin2017A(), False),
+    ("", "ts_svm", LogLossLeftRightImagery(resample=200), Shin2017A(), False),
+    ("", "scnn", LogLossLeftRightImagery(resample=200), Shin2017A(), True),
+    ("", "dcnn", LogLossLeftRightImagery(resample=200), Shin2017A(), True),
     # BNCI2014_001
-    ("BNCI2014-001", "csp_lda", LogLossLeftRightImagery(resample=250), BNCI2014_001()),
-    ("BNCI2014-001", "csp_svm", LogLossLeftRightImagery(resample=250), BNCI2014_001()),
-    ("BNCI2014-001", "ts_lr", LogLossLeftRightImagery(resample=250), BNCI2014_001()),
-    ("BNCI2014-001", "ts_svm", LogLossLeftRightImagery(resample=250), BNCI2014_001()),
-    ("BNCI2014-001", "scnn", LogLossLeftRightImagery(resample=250), BNCI2014_001()),
-    ("BNCI2014-001", "dcnn", LogLossLeftRightImagery(resample=250), BNCI2014_001()),
+    ("BNCI2014-001", "csp_lda", LogLossLeftRightImagery(resample=250), BNCI2014_001(), False),
+    ("BNCI2014-001", "csp_svm", LogLossLeftRightImagery(resample=250), BNCI2014_001(), False),
+    ("BNCI2014-001", "ts_lr", LogLossLeftRightImagery(resample=250), BNCI2014_001(), False),
+    ("BNCI2014-001", "ts_svm", LogLossLeftRightImagery(resample=250), BNCI2014_001(), False),
+    ("BNCI2014-001", "scnn", LogLossLeftRightImagery(resample=250), BNCI2014_001(), True),
+    ("BNCI2014-001", "dcnn", LogLossLeftRightImagery(resample=250), BNCI2014_001(), True),
 ]
 
 # Generate combined results
-for name, pipeline, paradigm, dataset in params:
+for name, pipeline, paradigm, dataset, epochs in params:
     # Prepare dataset
-    X, y, metadata = paradigm.get_data(dataset=dataset)
+    X, y, metadata = paradigm.get_data(dataset=dataset, return_epochs=epochs)
     le = LabelEncoder()
     y = le.fit_transform(y)
     groups = metadata.subject.values
@@ -164,9 +170,10 @@ for name, pipeline, paradigm, dataset in params:
         for session in np.unique(sessions[test]):
             # Compute actual and expected predictions
             ix = sessions[test] == session
+            X_session = X[test[ix]]
             y_true = y[test[ix]]
-            y_pred = model.predict(X[test[ix]])
-            y_prob = model.predict_proba(X[test[ix]])[:, 1]
+            y_pred = model.predict(X_session)
+            y_prob = model.predict_proba(X_session)[:, 1]
 
             # Score predictions
             nll = log_loss(y_true, y_prob)
@@ -174,7 +181,7 @@ for name, pipeline, paradigm, dataset in params:
             ece = ece_score(y_true, y_prob)
             mcc = matthews_corrcoef(y_true, y_pred)
             acc = accuracy_score(y_true, y_pred)
-            auroc = roc_auc_score(y_true, y_pred)
+            auroc = roc_auc_score(y_true, y_prob)
 
             # Combine raw results and additional scores
             df.loc[

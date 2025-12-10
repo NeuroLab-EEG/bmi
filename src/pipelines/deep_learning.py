@@ -27,12 +27,15 @@ from keras.layers import (
 from keras.models import Model
 from keras.constraints import max_norm
 from tensorflow.keras import backend as K
+from tensorflow.keras.utils import register_keras_serializable
 
 
+@register_keras_serializable()
 def square(x):
     return K.square(x)
 
 
+@register_keras_serializable()
 def log(x):
     return K.log(K.clip(x, min_value=1e-7, max_value=10000))
 
