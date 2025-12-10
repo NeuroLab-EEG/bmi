@@ -7,15 +7,10 @@ References:
 """
 
 import numpy as np
-from sklearn.metrics import log_loss, make_scorer
+from sklearn.metrics import get_scorer
 from moabb.paradigms import LeftRightImagery
-
-
-def nll_score(y_true, y_proba):
-    return log_loss(y_true, y_proba, labels=np.unique(y_true))
-
 
 class LogLossLeftRightImagery(LeftRightImagery):
     @property
     def scoring(self):
-        return make_scorer(nll_score, greater_is_better=False)
+        return get_scorer("neg_log_loss")
