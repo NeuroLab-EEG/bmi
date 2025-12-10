@@ -50,21 +50,43 @@ df[["nll", "brier", "ece", "mcc", "acc", "auroc"]] = np.nan
 
 # Define metrics collection parameters
 params = [
-    ("", "csp_lda", ),
-    ("", "csp_svm", ),
-    ("", "ts_lr", ),
-    ("", "ts_svm", ),
-    ("", "scnn", ),
-    ("", "dcnn", ),
-
     # PhysionetMI
-    ("PhysionetMotorImagery", "csp_lda", LogLossLeftRightImagery(resample=160), PhysionetMI()),
-    ("PhysionetMotorImagery", "csp_svm", LogLossLeftRightImagery(resample=160), PhysionetMI()),
-    ("PhysionetMotorImagery", "ts_lr", LogLossLeftRightImagery(resample=160), PhysionetMI()),
-    ("PhysionetMotorImagery", "ts_svm", LogLossLeftRightImagery(resample=160), PhysionetMI()),
-    ("PhysionetMotorImagery", "scnn", LogLossLeftRightImagery(resample=160), PhysionetMI()),
-    ("PhysionetMotorImagery", "dcnn", LogLossLeftRightImagery(resample=160), PhysionetMI()),
-
+    (
+        "PhysionetMotorImagery",
+        "csp_lda",
+        LogLossLeftRightImagery(resample=160),
+        PhysionetMI(),
+    ),
+    (
+        "PhysionetMotorImagery",
+        "csp_svm",
+        LogLossLeftRightImagery(resample=160),
+        PhysionetMI(),
+    ),
+    (
+        "PhysionetMotorImagery",
+        "ts_lr",
+        LogLossLeftRightImagery(resample=160),
+        PhysionetMI(),
+    ),
+    (
+        "PhysionetMotorImagery",
+        "ts_svm",
+        LogLossLeftRightImagery(resample=160),
+        PhysionetMI(),
+    ),
+    (
+        "PhysionetMotorImagery",
+        "scnn",
+        LogLossLeftRightImagery(resample=160),
+        PhysionetMI(),
+    ),
+    (
+        "PhysionetMotorImagery",
+        "dcnn",
+        LogLossLeftRightImagery(resample=160),
+        PhysionetMI(),
+    ),
     # Lee2019_MI
     ("", "csp_lda", LogLossLeftRightImagery(resample=1000), Lee2019_MI()),
     ("", "csp_svm", LogLossLeftRightImagery(resample=1000), Lee2019_MI()),
@@ -72,7 +94,6 @@ params = [
     ("", "ts_svm", LogLossLeftRightImagery(resample=1000), Lee2019_MI()),
     ("", "scnn", LogLossLeftRightImagery(resample=1000), Lee2019_MI()),
     ("", "dcnn", LogLossLeftRightImagery(resample=1000), Lee2019_MI()),
-
     # Cho2017
     ("", "csp_lda", LogLossLeftRightImagery(resample=512), Cho2017()),
     ("", "csp_svm", LogLossLeftRightImagery(resample=512), Cho2017()),
@@ -80,7 +101,6 @@ params = [
     ("", "ts_svm", LogLossLeftRightImagery(resample=512), Cho2017()),
     ("", "scnn", LogLossLeftRightImagery(resample=512), Cho2017()),
     ("", "dcnn", LogLossLeftRightImagery(resample=512), Cho2017()),
-
     # Schirrmeister2017
     ("", "csp_lda", LogLossLeftRightImagery(resample=500), Schirrmeister2017()),
     ("", "csp_svm", LogLossLeftRightImagery(resample=500), Schirrmeister2017()),
@@ -88,15 +108,13 @@ params = [
     ("", "ts_svm", LogLossLeftRightImagery(resample=500), Schirrmeister2017()),
     ("", "scnn", LogLossLeftRightImagery(resample=500), Schirrmeister2017()),
     ("", "dcnn", LogLossLeftRightImagery(resample=500), Schirrmeister2017()),
-
     # Shin2017A
     ("", "csp_lda", LogLossLeftRightImagery(resample=200), Shin2017A()),
     ("", "csp_svm", LogLossLeftRightImagery(resample=200), Shin2017A()),
     ("", "ts_lr", LogLossLeftRightImagery(resample=200), Shin2017A()),
     ("", "ts_svm", LogLossLeftRightImagery(resample=200), Shin2017A()),
     ("", "scnn", LogLossLeftRightImagery(resample=200), Shin2017A()),
-    ("", "dcnn", LogLossLeftRightImagery(resample=200), Shin2017A()),    
-
+    ("", "dcnn", LogLossLeftRightImagery(resample=200), Shin2017A()),
     # BNCI2014_001
     ("BNCI2014-001", "csp_lda", LogLossLeftRightImagery(resample=250), BNCI2014_001()),
     ("BNCI2014-001", "csp_svm", LogLossLeftRightImagery(resample=250), BNCI2014_001()),

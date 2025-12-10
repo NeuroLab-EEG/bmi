@@ -10,9 +10,11 @@ References:
 from sklearn.metrics import log_loss
 from moabb.paradigms import LeftRightImagery
 
+
 def nll_score(estimator, X, y_true):
     y_prob = estimator.predict_proba(X)
     return -log_loss(y_true, y_prob)
+
 
 class LogLossLeftRightImagery(LeftRightImagery):
     @property
