@@ -1,4 +1,5 @@
 """
+Collect additional metrics from trained models
 References:
     - https://github.com/NeuroTechX/moabb/blob/develop/moabb/analysis/results.py
     - https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/noplot_load_model.html  # noqa: E501
