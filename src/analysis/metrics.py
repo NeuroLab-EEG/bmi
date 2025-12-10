@@ -22,7 +22,14 @@ from sklearn.metrics import (
 )
 from sklearn.calibration import calibration_curve
 from sklearn.preprocessing import LabelEncoder
-from moabb.datasets import BNCI2014_001
+from moabb.datasets import (
+    PhysionetMI,
+    Lee2019_MI,
+    Cho2017,
+    Schirrmeister2017,
+    Shin2017A,
+    BNCI2014_001,
+)
 from moabb.evaluations import CrossSubjectEvaluation, CrossSubjectSplitter
 from moabb.analysis.results import Results
 from src.evaluation.paradigms import LogLossLeftRightImagery
