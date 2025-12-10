@@ -16,7 +16,7 @@ from moabb.datasets import (
     BNCI2014_001,
 )
 from moabb.evaluations import CrossSubjectEvaluation
-from src.classifiers.paradigms import LogLossLeftRightImagery
+from src.evaluation.paradigms import LogLossLeftRightImagery
 from src.pipelines.euclidean import csp_lda, csp_svm
 from src.pipelines.riemannian import ts_lr, ts_svm
 from src.pipelines.deep_learning import scnn, dcnn
