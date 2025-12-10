@@ -63,42 +63,42 @@ params = [
         "csp_lda",
         LogLossLeftRightImagery(resample=160),
         PhysionetMI(),
-        False
+        False,
     ),
     (
         "PhysionetMotorImagery",
         "csp_svm",
         LogLossLeftRightImagery(resample=160),
         PhysionetMI(),
-        False
+        False,
     ),
     (
         "PhysionetMotorImagery",
         "ts_lr",
         LogLossLeftRightImagery(resample=160),
         PhysionetMI(),
-        False
+        False,
     ),
     (
         "PhysionetMotorImagery",
         "ts_svm",
         LogLossLeftRightImagery(resample=160),
         PhysionetMI(),
-        False
+        False,
     ),
     (
         "PhysionetMotorImagery",
         "scnn",
         LogLossLeftRightImagery(resample=160),
         PhysionetMI(),
-        True
+        True,
     ),
     (
         "PhysionetMotorImagery",
         "dcnn",
         LogLossLeftRightImagery(resample=160),
         PhysionetMI(),
-        True
+        True,
     ),
     # Lee2019_MI
     ("", "csp_lda", LogLossLeftRightImagery(resample=1000), Lee2019_MI(), False),
@@ -129,12 +129,48 @@ params = [
     ("", "scnn", LogLossLeftRightImagery(resample=200), Shin2017A(), True),
     ("", "dcnn", LogLossLeftRightImagery(resample=200), Shin2017A(), True),
     # BNCI2014_001
-    ("BNCI2014-001", "csp_lda", LogLossLeftRightImagery(resample=250), BNCI2014_001(), False),
-    ("BNCI2014-001", "csp_svm", LogLossLeftRightImagery(resample=250), BNCI2014_001(), False),
-    ("BNCI2014-001", "ts_lr", LogLossLeftRightImagery(resample=250), BNCI2014_001(), False),
-    ("BNCI2014-001", "ts_svm", LogLossLeftRightImagery(resample=250), BNCI2014_001(), False),
-    ("BNCI2014-001", "scnn", LogLossLeftRightImagery(resample=250), BNCI2014_001(), True),
-    ("BNCI2014-001", "dcnn", LogLossLeftRightImagery(resample=250), BNCI2014_001(), True),
+    (
+        "BNCI2014-001",
+        "csp_lda",
+        LogLossLeftRightImagery(resample=250),
+        BNCI2014_001(),
+        False,
+    ),
+    (
+        "BNCI2014-001",
+        "csp_svm",
+        LogLossLeftRightImagery(resample=250),
+        BNCI2014_001(),
+        False,
+    ),
+    (
+        "BNCI2014-001",
+        "ts_lr",
+        LogLossLeftRightImagery(resample=250),
+        BNCI2014_001(),
+        False,
+    ),
+    (
+        "BNCI2014-001",
+        "ts_svm",
+        LogLossLeftRightImagery(resample=250),
+        BNCI2014_001(),
+        False,
+    ),
+    (
+        "BNCI2014-001",
+        "scnn",
+        LogLossLeftRightImagery(resample=250),
+        BNCI2014_001(),
+        True,
+    ),
+    (
+        "BNCI2014-001",
+        "dcnn",
+        LogLossLeftRightImagery(resample=250),
+        BNCI2014_001(),
+        True,
+    ),
 ]
 
 # Generate combined results
