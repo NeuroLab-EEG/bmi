@@ -107,6 +107,7 @@ params = [
     ("BNCI2014_001", LogLossLeftRightImagery(resample=250), BNCI2014_001()),
 ]
 
+# Generate grouped and stacked plots
 for name, paradigm, dataset in params:
     # Initialize data structures
     train_left, train_right, test_left, test_right = [], [], [], []
@@ -119,6 +120,7 @@ for name, paradigm, dataset in params:
     # Split dataset into same folds as evaluation
     cv = CrossSubjectSplitter(cv_class=GroupKFold, **dict(n_splits=5))
 
+    # Count class balance per fold
     for cv_ind, (train, test) in enumerate(cv.split(y, metadata)):
         # Fill train counts
         train = Counter(y[train])
