@@ -6,9 +6,9 @@ References:
     - https://moabb.neurotechx.com/docs/generated/moabb.paradigms.LeftRightImagery.html
 """
 
-import numpy as np
 from sklearn.metrics import get_scorer
 from moabb.paradigms import LeftRightImagery
+
 
 class LogLossLeftRightImagery(LeftRightImagery):
     @property

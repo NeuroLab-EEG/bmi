@@ -7,7 +7,6 @@ References:
     - https://github.com/NeuroTechX/moabb/blob/develop/moabb/evaluations/evaluations.py#L581-L772  # noqa: E501
 """
 
-import pandas as pd
 import numpy as np
 from os import path, getenv
 from dotenv import load_dotenv
@@ -22,9 +21,7 @@ from sklearn.metrics import (
 )
 from sklearn.calibration import calibration_curve
 from sklearn.preprocessing import LabelEncoder
-from moabb.datasets import (
-    BNCI2014_001
-)
+from moabb.datasets import BNCI2014_001
 from moabb.evaluations import CrossSubjectEvaluation, CrossSubjectSplitter
 from moabb.analysis.results import Results
 from src.evaluation.paradigms import LogLossLeftRightImagery
@@ -36,10 +33,6 @@ def ece_score(y_true, y_prob, n_bins=10):
     bin_idx = np.digitize(y_prob, bin_edges) - 1
     counts = np.array([np.sum(bin_idx == i) for i in range(len(prob_true))])
     return np.sum(np.abs(prob_true - prob_pred) * counts / len(y_prob))
-
-# def ece_score(prob_true, prob_pred, y_prob):
-#     return np.sum(np.abs(prob_true - prob_pred) * np.histogram(y_prob, bins=10)[0] / len(y_prob))
-#     # return np.sum(np.abs(prob_true - prob_pred) * np.bincount(np.digitize(y_prob, np.linspace(0,1,11)))[1:]/len(y_prob))
 
 
 # Load environment variables
@@ -106,18 +99,11 @@ for name, pipeline, paradigm, dataset in params:
 
             # Combine raw results and additional scores
             df.loc[
-                (df["subject"] == str(subject)) &
-                (df["session"] == session) &
-                (df["dataset"] == name) &
-                (df["pipeline"] == pipeline),
-                [
-                    "nll",
-                    "brier",
-                    "ece",
-                    "mcc",
-                    "acc",
-                    "auroc"
-                ]
+                (df["subject"] == str(subject))
+                & (df["session"] == session)
+                & (df["dataset"] == name)
+                & (df["pipeline"] == pipeline),
+                ["nll", "brier", "ece", "mcc", "acc", "auroc"],
             ] = [nll, brier, ece, mcc, acc, auroc]
 
 # Save combined results to disk
