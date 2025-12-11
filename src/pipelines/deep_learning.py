@@ -9,7 +9,7 @@ References:
 """
 
 from moabb.pipelines.features import Convert_Epoch_Array, StandardScaler_Epoch
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import make_pipeline
 from scikeras.wrappers import KerasClassifier
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
@@ -164,57 +164,47 @@ class DeepConvNet(KerasClassifier):
 
 def scnn():
     return {
-        "scnn": Pipeline(
-            [
-                ("cea", Convert_Epoch_Array()),
-                ("sse", StandardScaler_Epoch()),
-                (
-                    "net",
-                    ShallowConvNet(
-                        loss="sparse_categorical_crossentropy",
-                        optimizer=Adam(learning_rate=0.001),
-                        epochs=300,
-                        batch_size=64,
-                        verbose=0,
-                        random_state=42,
-                        validation_split=0.2,
-                        callbacks=[
-                            EarlyStopping(monitor="val_loss", patience=75),
-                            ReduceLROnPlateau(
-                                monitor="val_loss", patience=75, factor=0.5
-                            ),
-                        ],
+        "SCNN": make_pipeline(
+            Convert_Epoch_Array(),
+            StandardScaler_Epoch(),
+            ShallowConvNet(
+                loss="sparse_categorical_crossentropy",
+                optimizer=Adam(learning_rate=0.001),
+                epochs=300,
+                batch_size=64,
+                verbose=0,
+                random_state=42,
+                validation_split=0.2,
+                callbacks=[
+                    EarlyStopping(monitor="val_loss", patience=75),
+                    ReduceLROnPlateau(
+                        monitor="val_loss", patience=75, factor=0.5
                     ),
-                ),
-            ]
+                ],
+            ),
         )
     }, {}
 
 
 def dcnn():
     return {
-        "dcnn": Pipeline(
-            [
-                ("cea", Convert_Epoch_Array()),
-                ("sse", StandardScaler_Epoch()),
-                (
-                    "net",
-                    DeepConvNet(
-                        loss="sparse_categorical_crossentropy",
-                        optimizer=Adam(learning_rate=0.001),
-                        epochs=300,
-                        batch_size=64,
-                        verbose=0,
-                        random_state=42,
-                        validation_split=0.2,
-                        callbacks=[
-                            EarlyStopping(monitor="val_loss", patience=75),
-                            ReduceLROnPlateau(
-                                monitor="val_loss", patience=75, factor=0.5
-                            ),
-                        ],
+        "DCNN": make_pipeline(
+            Convert_Epoch_Array(),
+            StandardScaler_Epoch(),
+            DeepConvNet(
+                loss="sparse_categorical_crossentropy",
+                optimizer=Adam(learning_rate=0.001),
+                epochs=300,
+                batch_size=64,
+                verbose=0,
+                random_state=42,
+                validation_split=0.2,
+                callbacks=[
+                    EarlyStopping(monitor="val_loss", patience=75),
+                    ReduceLROnPlateau(
+                        monitor="val_loss", patience=75, factor=0.5
                     ),
-                ),
-            ]
+                ],
+            ),
         )
     }, {}

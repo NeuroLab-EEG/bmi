@@ -8,30 +8,26 @@ References:
 
 from pyriemann.estimation import Covariances
 from pyriemann.tangentspace import TangentSpace
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import make_pipeline
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
 
 
 def ts_lr():
     return {
-        "ts_lr": Pipeline(
-            [
-                ("cov", Covariances(estimator="oas")),
-                ("ts", TangentSpace(metric="riemann")),
-                ("lr", LogisticRegression(C=1.0)),
-            ]
+        "TS+LR": make_pipeline(
+            Covariances(estimator="oas"),
+            TangentSpace(metric="riemann"),
+            LogisticRegression(C=1.0),
         )
     }, {}
 
 
 def ts_svm():
     return {
-        "ts_svm": Pipeline(
-            [
-                ("cov", Covariances(estimator="oas")),
-                ("ts", TangentSpace(metric="riemann")),
-                ("svc", SVC(kernel="linear", probability=True)),
-            ]
+        "TS+SVM": make_pipeline(
+            Covariances(estimator="oas"),
+            TangentSpace(metric="riemann"),
+            SVC(kernel="linear", probability=True),
         )
-    }, {"ts_svm": {"svc__C": [0.5, 1, 1.5], "svc__kernel": ["rbf", "linear"]}}
+    }, {"TS+SVM": {"svc__C": [0.5, 1, 1.5], "svc__kernel": ["rbf", "linear"]}}
