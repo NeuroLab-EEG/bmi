@@ -1,8 +1,8 @@
 """
 Explore accuracy/AUROC for two models over all datasets
 References:
-    - https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_statistical_analysis.html
-    - https://moabb.neurotechx.com/docs/generated/moabb.analysis.plotting.paired_plot.html#moabb.analysis.plotting.paired_plot
+    - https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_statistical_analysis.html  # noqa: E501
+    - https://moabb.neurotechx.com/docs/generated/moabb.analysis.plotting.paired_plot.html#moabb.analysis.plotting.paired_plot  # noqa: E501
 """
 
 import pandas as pd

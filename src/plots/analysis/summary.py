@@ -1,7 +1,7 @@
 """
 Generate summary plot for all algorithms
 References:
-    - https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_statistical_analysis.html
+    - https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_statistical_analysis.html  # noqa: E501
 """
 
 import pandas as pd
@@ -10,7 +10,7 @@ from os import path, getenv
 from dotenv import load_dotenv
 from moabb.analysis.meta_analysis import (
     compute_dataset_statistics,
-    find_significant_differences
+    find_significant_differences,
 )
 from moabb.analysis.plotting import summary_plot
 
