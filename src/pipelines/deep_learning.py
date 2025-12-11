@@ -177,9 +177,7 @@ def scnn():
                 validation_split=0.2,
                 callbacks=[
                     EarlyStopping(monitor="val_loss", patience=75),
-                    ReduceLROnPlateau(
-                        monitor="val_loss", patience=75, factor=0.5
-                    ),
+                    ReduceLROnPlateau(monitor="val_loss", patience=75, factor=0.5),
                 ],
             ),
         )
@@ -201,9 +199,7 @@ def dcnn():
                 validation_split=0.2,
                 callbacks=[
                     EarlyStopping(monitor="val_loss", patience=75),
-                    ReduceLROnPlateau(
-                        monitor="val_loss", patience=75, factor=0.5
-                    ),
+                    ReduceLROnPlateau(monitor="val_loss", patience=75, factor=0.5),
                 ],
             ),
         )
