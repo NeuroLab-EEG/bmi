@@ -24,9 +24,9 @@ data_path = getenv("DATA_PATH")
 
 # Read results from disk
 results = pd.read_csv(path.join(data_path, "results.csv"))
+results["score"] = results[METRIC]
 
 # Compute statistics
-results["score"] = results[METRIC]
 stats = compute_dataset_statistics(results)
 P, T = find_significant_differences(stats)
 

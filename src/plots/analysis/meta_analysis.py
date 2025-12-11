@@ -1,5 +1,5 @@
 """
-Generate tree plot for two algorithms
+Generate tree plot for two algorithms over all datasets
 References:
     - https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_statistical_analysis.html
 """
@@ -23,9 +23,9 @@ data_path = getenv("DATA_PATH")
 
 # Read results from disk
 results = pd.read_csv(path.join(data_path, "results.csv"))
+results["score"] = results[METRIC]
 
 # Compute statistics
-results["score"] = results[METRIC]
 stats = compute_dataset_statistics(results)
 
 # Generate pairwise tree plot
