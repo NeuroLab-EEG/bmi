@@ -6,8 +6,12 @@ References:
     - https://github.com/NeuroTechX/moabb/blob/v1.1.2/pipelines/Keras_DeepConvNet.yml
     - https://github.com/NeuroTechX/moabb/blob/v1.1.2/moabb/pipelines/deep_learning.py
     - https://adriangb.com/scikeras/stable/generated/scikeras.wrappers.KerasClassifier.html  # noqa: E501
+    - https://www.tensorflow.org/api_docs/python/tf/config/experimental/enable_op_determinism  # noqa: E501
 """
 
+import tensorflow as tf
+from os import getenv
+from dotenv import load_dotenv
 from moabb.pipelines.features import Convert_Epoch_Array, StandardScaler_Epoch
 from sklearn.pipeline import make_pipeline
 from scikeras.wrappers import KerasClassifier
@@ -28,6 +32,15 @@ from keras.models import Model
 from keras.constraints import max_norm
 from tensorflow.keras import backend as K
 from tensorflow.keras.utils import register_keras_serializable
+
+
+# Load environment variables
+load_dotenv()
+random_state = int(getenv("RANDOM_STATE"))
+
+# Set random seed for reproducibility
+tf.keras.utils.set_random_seed(random_state)
+tf.config.experimental.enable_op_determinism()
 
 
 @register_keras_serializable()
@@ -173,7 +186,7 @@ def scnn():
                 epochs=300,
                 batch_size=64,
                 verbose=0,
-                random_state=42,
+                random_state=random_state,
                 validation_split=0.2,
                 callbacks=[
                     EarlyStopping(monitor="val_loss", patience=75),
@@ -195,7 +208,7 @@ def dcnn():
                 epochs=300,
                 batch_size=64,
                 verbose=0,
-                random_state=42,
+                random_state=random_state,
                 validation_split=0.2,
                 callbacks=[
                     EarlyStopping(monitor="val_loss", patience=75),
