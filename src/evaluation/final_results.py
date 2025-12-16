@@ -32,7 +32,7 @@ from moabb.datasets import (
 )
 from moabb.evaluations import CrossSubjectEvaluation, CrossSubjectSplitter
 from moabb.analysis.results import Results
-from src.evaluation.paradigms import LogLossLeftRightImagery
+from src.paradigm.paradigm import LogLossLeftRightImagery
 
 
 def ece_score(y_true, y_prob, n_bins=10):
@@ -410,4 +410,4 @@ for name, new_name, pipeline, paradigm, dataset, epochs in params:
 
 # Save combined results to disk
 df_rounded = df.round(6)
-df_rounded.to_csv(path.join(data_path, "results.csv"), index=False)
+df_rounded.to_csv(path.join(data_path, "final_results.csv"), index=False)
