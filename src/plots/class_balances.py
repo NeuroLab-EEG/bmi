@@ -10,7 +10,7 @@ import numpy as np
 from os import getenv
 from collections import Counter
 from dotenv import load_dotenv
-from src.evaluation.paradigms import LogLossLeftRightImagery
+from src.paradigm.paradigm import LogLossLeftRightImagery
 from sklearn.model_selection import GroupKFold
 from sklearn.preprocessing import LabelEncoder
 from moabb.datasets import (
