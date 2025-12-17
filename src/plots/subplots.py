@@ -7,7 +7,11 @@ References:
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-img_paths = ["picture1.png", "picture2.png", "picture3.png",]
+img_paths = [
+    "picture1.png",
+    "picture2.png",
+    "picture3.png",
+]
 captions = ["caption1", "caption2", "caption3"]
 
 fig, axs = plt.subplots(1, 3, layout="constrained", figsize=(8, 4))
