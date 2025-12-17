@@ -14,15 +14,15 @@ from moabb.analysis.plotting import meta_analysis_plot
 
 # Define metric and algorithms to compare
 METRIC = "acc"
-ALGO1 = "dcnn"
-ALGO2 = "csp_lda"
+ALGO1 = "CSP+LDA"
+ALGO2 = "DCNN"
 
 # Load environment variables
 load_dotenv()
 data_path = getenv("DATA_PATH")
 
 # Read results from disk
-results = pd.read_csv(path.join(data_path, "results.csv"))
+results = pd.read_csv(path.join(data_path, "final_results.csv"))
 results["score"] = results[METRIC]
 
 # Compute statistics

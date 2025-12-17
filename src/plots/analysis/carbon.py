@@ -16,7 +16,7 @@ load_dotenv()
 data_path = getenv("DATA_PATH")
 
 # Read results from disk
-results = pd.read_csv(path.join(data_path, "results.csv"))
+results = pd.read_csv(path.join(data_path, "final_results.csv"))
 
 # Plot carbon emission
 plt.rcParams["font.family"] = "sans-serif"

@@ -13,15 +13,15 @@ from moabb.analysis.plotting import paired_plot
 
 # Define metric and algorithms to compare
 METRIC = "acc"
-ALGO1 = "csp_svm"
-ALGO2 = "ts_svm"
+ALGO1 = "CSP+SVM"
+ALGO2 = "TS+SVM"
 
 # Load environment variables
 load_dotenv()
 data_path = getenv("DATA_PATH")
 
 # Read results from disk
-results = pd.read_csv(path.join(data_path, "results.csv"))
+results = pd.read_csv(path.join(data_path, "final_results.csv"))
 results["score"] = results[METRIC]
 
 # Generate paired plot
