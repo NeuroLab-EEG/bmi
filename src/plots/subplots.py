@@ -8,24 +8,14 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
 img_paths = [
-    "PhysionetMI.png",
-    "Lee2019_MI.png",
-    "Cho2017.png",
-    "Schirrmeister2017.png",
-    "Shin2017A.png",
-    "BNCI2014_001.png",
+    "picture1.png",
+    "picture2.png",
+    "picture3.png",
 ]
-captions = [
-    "PhysionetMI",
-    "Lee2019_MI",
-    "Cho2017",
-    "Schirrmeister2017",
-    "Shin2017A",
-    "BNCI2014_001",
-]
+captions = ["caption1", "caption2", "caption3"]
 
-fig, axs = plt.subplots(2, 3, layout="constrained", figsize=(8, 4))
-fig.suptitle("Train/Test Class Balances per Fold", fontsize=12)
+fig, axs = plt.subplots(1, 3, layout="constrained", figsize=(8, 4))
+fig.suptitle("Figure Title", fontsize=12)
 
 for ax, img_path, caption in zip(axs.flat, img_paths, captions):
     img = mpimg.imread(img_path)
@@ -35,4 +25,4 @@ for ax, img_path, caption in zip(axs.flat, img_paths, captions):
 
 fig.align_titles()
 
-plt.savefig("splits.png", dpi=300)
+plt.savefig("figure", dpi=300)
