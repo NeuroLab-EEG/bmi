@@ -16,6 +16,8 @@ from moabb.datasets import (
 from moabb.datasets.utils import plot_datasets_grid
 
 # Visualize datasets with bubble plots
+plt.rcParams["font.family"] = "sans-serif"
+plt.rcParams["font.sans-serif"] = ["DejaVu Sans"]
 fig = plot_datasets_grid(
     n_col=2,
     datasets=[
@@ -27,6 +29,6 @@ fig = plot_datasets_grid(
         BNCI2014_001(),
     ],
 )
-fig.suptitle("Subjects & Sessions\nBubble Plot")
+fig.suptitle("Subjects & Sessions Bubble Plot")
 fig.tight_layout()
 plt.savefig("bubble")

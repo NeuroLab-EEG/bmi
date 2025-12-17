@@ -39,6 +39,5 @@ for name, subdir in datasets:
 
     # Plot montage
     fig = raw.plot_sensors(show_names=True, sphere="auto", show=False)
-    fig.suptitle(name)
     plt.tight_layout()
     plt.savefig(name)

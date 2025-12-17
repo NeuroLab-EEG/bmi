@@ -35,10 +35,15 @@ Create `.env` file in root of git repository.
 
 ```bash
 DATA_PATH=/path/to/data
+RANDOM_STATE=1
 ```
 
 ## Background commands
 
 ```bash
+# Start job
 nohup python -m path.to.command > output.log 2>&1 &
+
+# Find long running job
+ps aux | grep "python -m path.to.command"
 ```

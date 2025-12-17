@@ -1,4 +1,5 @@
 """
+Customize paradigm scoring rule
 References:
     - https://scikit-learn.org/stable/modules/model_evaluation.html
     - https://scikit-learn.org/stable/modules/model_evaluation.html#log-loss
@@ -6,16 +7,16 @@ References:
     - https://moabb.neurotechx.com/docs/generated/moabb.paradigms.LeftRightImagery.html
 """
 
-import numpy as np
-from sklearn.metrics import log_loss, make_scorer
+from sklearn.metrics import log_loss
 from moabb.paradigms import LeftRightImagery
 
 
-def nll_score(y_true, y_proba):
-    return log_loss(y_true, y_proba, labels=np.unique(y_true))
+def nll_score(estimator, X, y_true):
+    y_prob = estimator.predict_proba(X)
+    return -log_loss(y_true, y_prob)
 
 
 class LogLossLeftRightImagery(LeftRightImagery):
     @property
     def scoring(self):
-        return make_scorer(nll_score, greater_is_better=False)
+        return nll_score

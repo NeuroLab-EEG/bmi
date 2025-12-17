@@ -1,21 +1,23 @@
 """
+Save raw results from evaluations to disk as readable CSV
 References:
     - https://github.com/NeuroTechX/moabb/blob/develop/moabb/analysis/results.py
 """
 
-from os import getenv
+from os import path, getenv
 from dotenv import load_dotenv
 from moabb.analysis.results import Results
 from moabb.evaluations import CrossSubjectEvaluation
-from src.classifiers.paradigms import LogLossLeftRightImagery
-
+from src.paradigm.paradigm import LogLossLeftRightImagery
 
 # Load environment variables
 load_dotenv()
 data_path = getenv("DATA_PATH")
 
-# Read results
+# Read raw results
 df = Results(
     CrossSubjectEvaluation, LogLossLeftRightImagery, hdf5_path=data_path
 ).to_dataframe()
-print(df)
+
+# Save raw results to disk
+df.to_csv(path.join(data_path, "raw_results.csv"), index=False)
