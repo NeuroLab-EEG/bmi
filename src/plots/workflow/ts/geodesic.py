@@ -40,8 +40,8 @@ class Geodesic:
         points_on_geodesic = geodesic(gs.linspace(0.0, 1.0, 10))
 
         # Plot points and geodesic
-        ax = visualization.plot(point_a, ax=ax, space="S2", s=100, label="Point A")
-        ax = visualization.plot(point_b, ax=ax, space="S2", s=100, label="Point B")
+        ax = visualization.plot(point_a, ax=ax, space="S2", s=100, label="Point x")
+        ax = visualization.plot(point_b, ax=ax, space="S2", s=100, label="Point y")
         ax = visualization.plot(points_on_geodesic, ax=ax, space="S2", color="black", label="Geodesic")
 
         # Plot tangent vector
