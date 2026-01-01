@@ -28,8 +28,8 @@ class ODE:
 
         # Format figure display
         ax.legend(handles=handles, labels=labels, loc='upper left', bbox_to_anchor=(1.05, 1))
-        ax.set_xlabel("x", fontsize=14)
-        ax.set_ylabel("y", fontsize=14)
+        ax.set_xlabel("X1", fontsize=14)
+        ax.set_ylabel("X2", fontsize=14, rotation=0, labelpad=15)
         ax.set_title("Ordinary Differential Equation on the SPD Manifold", fontsize=14)
         fig.savefig("ode", bbox_inches="tight", dpi=300)
 

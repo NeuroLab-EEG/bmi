@@ -142,9 +142,9 @@ class Pipeline:
         ax.scatter(overall_mean[0], overall_mean[1], overall_mean[2], color="gold", s=500, marker="*")
 
         # Label plot
-        ax.set_xlabel("X")
-        ax.set_ylabel("Y")
-        ax.set_zlabel("Z")
+        ax.set_xlabel("X1")
+        ax.set_ylabel("X2")
+        ax.set_zlabel("X3")
         ax.set_title("SPD Manifold")
 
 Pipeline()

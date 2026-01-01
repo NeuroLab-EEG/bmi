@@ -50,6 +50,9 @@ class Geodesic:
 
         # Label plot
         ax.legend(bbox_to_anchor=(1.2, 1), loc="upper left")
+        ax.set_xlabel("U1")
+        ax.set_ylabel("U2")
+        ax.set_zlabel("U3")
         ax.set_title("Manifold")
 
     def subplot_tanget_space(self, ax):
@@ -89,8 +92,8 @@ class Geodesic:
         ax.set_aspect("equal")
         ax.set_xlim(-1.0, 1.0)
         ax.set_ylim(-1.0, 1.0)
-        ax.set_xlabel("X")
-        ax.set_ylabel("Y", rotation=0)
+        ax.set_xlabel("J1")
+        ax.set_ylabel("J2", rotation=0)
         ax.set_title("Tangent Space")
 
 Geodesic()
