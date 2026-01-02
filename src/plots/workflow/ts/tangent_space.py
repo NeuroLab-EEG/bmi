@@ -59,7 +59,6 @@ class TangentSpace:
                      color="tab:green", alpha=0.7)
 
         # Label plot
-        ax.set_facecolor("lightgray")
         ax.set_xlabel("U1")
         ax.set_ylabel("U2")
         ax.set_title("Logarithmic Maps")
@@ -70,7 +69,6 @@ class TangentSpace:
         ax.scatter(self.x_black, self.y_black, color="black", s=30)
 
         # Label plot
-        ax.set_facecolor("lightgray")
         ax.set_xlabel("V1")
         ax.set_ylabel("V2")
         ax.set_title("Tangent Space")

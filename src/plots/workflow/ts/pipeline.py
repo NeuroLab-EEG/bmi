@@ -113,7 +113,7 @@ class Pipeline:
         ax.set_zlabel("Channels")
         ax.set_title("Sample Covariance Matrices")
 
-    def subplot_spd_manifold(self, ax):
+    def subplot_spd_manifold(self, ax):        
         # Plot 3D surface
         x = np.linspace(-6, 6, 100)
         y = np.linspace(-6, 6, 100)
