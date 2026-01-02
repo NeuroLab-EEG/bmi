@@ -66,7 +66,15 @@ class CSP:
         self.V_transformed = eigvecs
 
     def _plot_covariance(
-        self, ax, covariance, eigvals, eigvecs, color, edgecolor, alpha=1.0, points=False
+        self,
+        ax,
+        covariance,
+        eigvals,
+        eigvecs,
+        color,
+        edgecolor,
+        alpha=1.0,
+        points=False,
     ):
         # Initialize constants
         A, D, Q = covariance, eigvals, eigvecs
@@ -83,7 +91,7 @@ class CSP:
             angle=theta,
             edgecolor=edgecolor,
             facecolor=to_rgba(edgecolor, alpha=0.2),
-            zorder=1
+            zorder=1,
         )
 
         # Plot data points and ellipse
@@ -110,7 +118,7 @@ class CSP:
             scale=1,
             width=0.01,
             color=edgecolor,
-            zorder=3
+            zorder=3,
         )
         plt.quiver(
             x0,
@@ -122,7 +130,7 @@ class CSP:
             scale=1,
             width=0.01,
             color=edgecolor,
-            zorder=3
+            zorder=3,
         )
 
     def _center_axes(self, ax):

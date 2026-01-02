@@ -23,9 +23,11 @@ class Pipeline:
 
         plt.rcParams["font.family"] = "sans-serif"
         plt.rcParams["font.sans-serif"] = ["DejaVu Sans"]
-        fig, axs = plt.subplots(nrows=1, ncols=3, figsize=(12, 4), subplot_kw={"projection": "3d"})
+        fig, axs = plt.subplots(
+            nrows=1, ncols=3, figsize=(12, 4), subplot_kw={"projection": "3d"}
+        )
         fig.subplots_adjust(left=0.05, wspace=0.5)
-        
+
         self.subplot_raw_signals(axs[0])
         self.subplot_covariance_matrices(axs[1])
         self.subplot_spd_manifold(axs[2])
@@ -87,12 +89,12 @@ class Pipeline:
         covariances = Covariances().fit_transform(
             self.rng.standard_normal((nrows, nchannels, nsamples))
         )
-        
+
         # Normalize plot color scale
         vmin = min(cov.min() for cov in covariances)
         vmax = max(cov.max() for cov in covariances)
         norm = colors.Normalize(vmin=vmin, vmax=vmax)
-        
+
         # Plot each covariance matrix
         for y_idx, cov in enumerate(covariances):
             cov = np.rot90(cov)
@@ -100,11 +102,13 @@ class Pipeline:
             X, Z = np.meshgrid(edges, edges, indexing="ij")
             Y = np.full_like(X, y_idx)
             ax.plot_surface(
-                X, Y, Z,
+                X,
+                Y,
+                Z,
                 facecolors=plt.cm.viridis(norm(cov)),
                 rstride=1,
                 cstride=1,
-                shade=False
+                shade=False,
             )
 
         # Label plot
@@ -113,7 +117,7 @@ class Pipeline:
         ax.set_zlabel("Channels")
         ax.set_title("Sample Covariance Matrices")
 
-    def subplot_spd_manifold(self, ax):        
+    def subplot_spd_manifold(self, ax):
         # Plot 3D surface
         x = np.linspace(-6, 6, 100)
         y = np.linspace(-6, 6, 100)
@@ -139,12 +143,20 @@ class Pipeline:
         mean_red = np.array([x_red.mean(), y_red.mean(), z_red.mean()])
         mean_black = np.array([x_black.mean(), y_black.mean(), z_black.mean()])
         overall_mean = (mean_red + mean_black) / 2
-        ax.scatter(overall_mean[0], overall_mean[1], overall_mean[2], color="gold", s=500, marker="*")
+        ax.scatter(
+            overall_mean[0],
+            overall_mean[1],
+            overall_mean[2],
+            color="gold",
+            s=500,
+            marker="*",
+        )
 
         # Label plot
         ax.set_xlabel("X1")
         ax.set_ylabel("X2")
         ax.set_zlabel("X3")
         ax.set_title("SPD Manifold")
+
 
 Pipeline()

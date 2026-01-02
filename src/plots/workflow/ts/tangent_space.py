@@ -52,11 +52,16 @@ class TangentSpace:
         ax.scatter(overall_mean[0], overall_mean[1], color="gold", s=500, marker="*")
 
         # Plot vectors from cluster points to mean point
-        all_points = np.vstack((np.column_stack((x_red, y_red)), np.column_stack((x_black, y_black))))
+        all_points = np.vstack(
+            (np.column_stack((x_red, y_red)), np.column_stack((x_black, y_black)))
+        )
         for point in all_points:
-            ax.plot([point[0], overall_mean[0]],
-                     [point[1], overall_mean[1]],
-                     color="tab:green", alpha=0.7)
+            ax.plot(
+                [point[0], overall_mean[0]],
+                [point[1], overall_mean[1]],
+                color="tab:green",
+                alpha=0.7,
+            )
 
         # Label plot
         ax.set_xlabel("U1")
@@ -80,10 +85,11 @@ class TangentSpace:
         # Plot decision boundary
         x = np.linspace(-6, 6, 100)
         L, k, x0 = 6, 1.0, 0
-        y_sigmoid = L / (1 + np.exp(k*(x - x0))) - L/2
+        y_sigmoid = L / (1 + np.exp(k * (x - x0))) - L / 2
         ax.plot(x, y_sigmoid, color="blue", linewidth=2, linestyle="--")
 
         # Label plot
         ax.set_title("Decision Boundary")
+
 
 TangentSpace()
