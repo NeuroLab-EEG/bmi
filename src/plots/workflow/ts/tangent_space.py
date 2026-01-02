@@ -1,5 +1,5 @@
 """
-Tangent space visualization
+Vectorization of SPD manifold points and tangent space classification
 """
 
 import numpy as np
