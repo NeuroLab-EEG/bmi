@@ -8,6 +8,7 @@ References:
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import to_rgba
 from matplotlib.patches import Ellipse
 
 
@@ -39,7 +40,7 @@ class CSP:
                 [np.sin(np.pi / 3), np.sin(5 * np.pi / 6)],
             ]
         )
-        self.Q = np.array([[9.0, 0.0], [0.0, 1.5]])
+        self.Q = np.array([[10.0, 0.0], [0.0, 0.75]])
         self.D = self.V @ self.Q @ self.V.T
         self.DM = self.V @ np.diag(1.0 / np.sqrt(np.diag(self.Q))) @ self.V.T
         self.D_whitened = self.DM @ self.D @ self.DM.T
@@ -65,17 +66,21 @@ class CSP:
         self.V_transformed = eigvecs
 
     def _plot_covariance(
-        self, ax, covariance, eigvals, eigvecs, color, edgecolor, alpha=1.0
+        self,
+        ax,
+        covariance,
+        eigvals,
+        eigvecs,
+        color,
+        edgecolor,
+        alpha=1.0,
+        points=False,
     ):
         # Initialize constants
         A, D, Q = covariance, eigvals, eigvecs
 
-        # Randomly sample data points
-        data = self.rng.multivariate_normal(self.mean, A, size=800)
-        x, y = data.T
-
         # Build ellipse
-        n_std = 2.3
+        n_std = 2.3 if points else 1.0
         width = 2 * n_std * np.sqrt(D[0, 0])
         height = 2 * n_std * np.sqrt(D[1, 1])
         theta = np.degrees(np.arctan(Q[1, 0] / Q[0, 0]))
@@ -85,12 +90,17 @@ class CSP:
             height=height,
             angle=theta,
             edgecolor=edgecolor,
-            facecolor="none",
+            facecolor=to_rgba(edgecolor, alpha=0.2),
+            zorder=1,
         )
 
         # Plot data points and ellipse
         ax.add_patch(ellipse)
-        plt.scatter(x, y, s=3, color=color, alpha=alpha)
+        if points:
+            data = self.rng.multivariate_normal(self.mean, A, size=800)
+            x, y = data.T
+            plt.scatter(x, y, s=3, color=color, alpha=alpha, zorder=2)
+        ax.autoscale_view()
         ax.grid(True)
         self._center_axes(ax)
 
@@ -106,8 +116,9 @@ class CSP:
             angles="xy",
             scale_units="xy",
             scale=1,
-            width=0.005,
+            width=0.01,
             color=edgecolor,
+            zorder=3,
         )
         plt.quiver(
             x0,
@@ -117,8 +128,9 @@ class CSP:
             angles="xy",
             scale_units="xy",
             scale=1,
-            width=0.005,
+            width=0.01,
             color=edgecolor,
+            zorder=3,
         )
 
     def _center_axes(self, ax):
@@ -229,13 +241,13 @@ class CSP:
 
         ax1 = fig.add_subplot(121, aspect="equal")
         self._plot_covariance(ax1, self.C, self.P, self.U, "blue", "red")
-        ax1.set_title("First Covariance Matrix")
+        ax1.set_title("First Averaged SCM")
 
         ax2 = fig.add_subplot(122, aspect="equal")
         self._plot_covariance(ax2, self.D, self.Q, self.V, "green", "purple")
-        ax2.set_title("Second Covariance Matrix")
+        ax2.set_title("Second Averaged SCM")
 
-        plt.savefig("both_covariances_subplots")
+        plt.savefig("scms_subplots")
 
     def plot_covariances_sum_subplots(self):
         fig = plt.figure(figsize=(8, 4))
@@ -243,13 +255,13 @@ class CSP:
         ax1 = fig.add_subplot(121, aspect="equal")
         self._plot_covariance(ax1, self.C, self.P, self.U, "blue", "red", alpha=0.5)
         self._plot_covariance(ax1, self.D, self.Q, self.V, "green", "purple", alpha=0.5)
-        ax1.set_title("Both Covariance Matrices")
+        ax1.set_title("Both SCMs")
 
         ax2 = fig.add_subplot(122, aspect="equal")
         self._plot_covariance(ax2, self.E, self.R, self.W, "brown", "black")
-        ax2.set_title("Covariance Matrices Summed")
+        ax2.set_title("Summed SCMs")
 
-        plt.savefig("covariances_sum_subplots")
+        plt.savefig("scms_sum_subplots")
 
     def plot_covariances_transformed_subplots(self):
         fig = plt.figure(figsize=(8, 4))
@@ -258,7 +270,7 @@ class CSP:
         self._plot_covariance(
             ax1, self.E_whitened, self.R_whitened, self.W, "brown", "black"
         )
-        ax1.set_title("Covariances Summed & Whitened")
+        ax1.set_title("SCMs Summed & Whitened")
 
         ax2 = fig.add_subplot(122, aspect="equal")
         self._plot_covariance(
@@ -279,9 +291,9 @@ class CSP:
             "purple",
             alpha=0.5,
         )
-        ax2.set_title("Covariance Matrices Transformed")
+        ax2.set_title("SCMs Transformed")
 
-        plt.savefig("covariances_transformed_subplots")
+        plt.savefig("scms_transformed_subplots")
 
 
 csp = CSP()
