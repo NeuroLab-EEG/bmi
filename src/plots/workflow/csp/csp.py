@@ -80,7 +80,7 @@ class CSP:
         A, D, Q = covariance, eigvals, eigvecs
 
         # Build ellipse
-        n_std = 2.3
+        n_std = 2.3 if points else 1.0
         width = 2 * n_std * np.sqrt(D[0, 0])
         height = 2 * n_std * np.sqrt(D[1, 1])
         theta = np.degrees(np.arctan(Q[1, 0] / Q[0, 0]))
