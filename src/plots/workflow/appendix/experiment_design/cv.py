@@ -67,7 +67,7 @@ class CrossValidation:
             "Fold 5": [12, 12, 12, 12, 12],
         }
         color = "tab:blue"
-        title = "Mean of Outer CV"
+        title = "Outer 5-Fold CV"
         self._cv(ax, folds, color, title)
 
     def inner_cv(self, ax):
@@ -78,7 +78,7 @@ class CrossValidation:
             "Fold 3": [16, 16, 16],
         }
         color = "tab:orange"
-        title = "Max of Inner CV"
+        title = "Inner 3-Fold CV"
         self._cv(ax, folds, color, title)
 
 
