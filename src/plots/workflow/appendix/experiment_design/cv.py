@@ -1,5 +1,5 @@
 """
-Visualization of 5-fold cross-validation.
+Visualization of cross-validation.
 
 References
 ----------
@@ -11,48 +11,75 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 
 
-# Create data splits from folds
-folds = {
-    "Fold 1": [10, 10, 10, 10, 10],
-    "Fold 2": [10, 10, 10, 10, 10],
-    "Fold 3": [10, 10, 10, 10, 10],
-    "Fold 4": [10, 10, 10, 10, 10],
-    "Fold 5": [10, 10, 10, 10, 10],
-}
+class CrossValidation:
+    def __init__(self):
+        # Create plot
+        fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(6, 3))
 
-# Prepare data for plot
-labels = list(folds.keys())
-data = np.array(list(folds.values()))
-data_cum = data.cumsum(axis=1)
-active = mcolors.to_rgba("tab:blue")
-inactive = mcolors.to_rgba("tab:cyan")
-colors = [
-    (inactive, active, active, active, active),
-    (active, inactive, active, active, active),
-    (active, active, inactive, active, active),
-    (active, active, active, inactive, active),
-    (active, active, active, active, inactive),
-]
+        self.outer_cv(axs[0])
+        self.inner_cv(axs[1])
 
-# Create plot
-fig, ax = plt.subplots(figsize=(6, 3))
-ax.invert_yaxis()
-ax.xaxis.set_visible(False)
-ax.set_xlim(0, np.sum(data, axis=1).max())
+        fig.tight_layout()
+        fig.savefig("cv")
 
-# Plot data
-for idx in range(data.shape[1]):
-    widths = data[:, idx]
-    starts = data_cum[:, idx] - widths
-    ax.barh(
-        labels,
-        widths,
-        left=starts,
-        height=0.5,
-        color=colors[idx],
-    )
+    def _cv(self, ax, folds, color, title):
+        # Prepare data for plot
+        labels = list(folds.keys())
+        data = np.array(list(folds.values()))
+        data_cum = data.cumsum(axis=1)
+        active = mcolors.to_rgba(color, 1.0)
+        inactive = mcolors.to_rgba(color, 0.5)
+        colors = [
+            (inactive, active, active, active, active),
+            (active, inactive, active, active, active),
+            (active, active, inactive, active, active),
+            (active, active, active, inactive, active),
+            (active, active, active, active, inactive),
+        ]
 
-# Label plot
-plt.title("5-Fold Cross-Validation Design")
-fig.tight_layout()
-fig.savefig("cv")
+        # Configure plot
+        ax.invert_yaxis()
+        ax.xaxis.set_visible(False)
+        ax.set_xlim(0, np.sum(data, axis=1).max())
+
+        # Plot data
+        for idx in range(data.shape[1]):
+            widths = data[:, idx]
+            starts = data_cum[:, idx] - widths
+            ax.barh(
+                labels,
+                widths,
+                left=starts,
+                height=0.5,
+                color=colors[idx],
+            )
+
+        # Label plot
+        ax.set_title(title)
+
+    def outer_cv(self, ax):
+        # Configure data for plot
+        folds = {
+            "Fold 1": [12, 12, 12, 12, 12],
+            "Fold 2": [12, 12, 12, 12, 12],
+            "Fold 3": [12, 12, 12, 12, 12],
+            "Fold 4": [12, 12, 12, 12, 12],
+            "Fold 5": [12, 12, 12, 12, 12],
+        }
+        color = "tab:blue"
+        title = "Mean of Outer CV"
+        self._cv(ax, folds, color, title)
+
+    def inner_cv(self, ax):
+        # Configure data for plot
+        folds = {
+            "Fold 1": [16, 16, 16],
+            "Fold 2": [16, 16, 16],
+            "Fold 3": [16, 16, 16],
+        }
+        color = "tab:orange"
+        title = "Max of Inner CV"
+        self._cv(ax, folds, color, title)
+
+
+CrossValidation()
