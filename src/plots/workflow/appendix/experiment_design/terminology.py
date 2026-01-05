@@ -1,0 +1,89 @@
+"""
+Plot of terminology from experiment.
+
+References
+----------
+.. [1] https://matplotlib.org/stable/gallery/lines_bars_and_markers/broken_barh.html
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+
+
+class Terminology:
+    def __init__(self):
+        # Define segments
+        self.sessions = [(0, 16)]
+        self.runs = [(0, 5), (5.5, 5), (11, 5)]
+        self.trials = [
+            ((0, 1), (1, 1), (2, 1), (3, 1), (4, 1)),
+            ((5.5, 1), (6.5, 1), (7.5, 1), (8.5, 1), (9.5, 1)),
+            ((11, 1), (12, 1), (13, 1), (14, 1), (15, 1))
+        ]
+
+        # Define sizing
+        self.row_height = 0.5
+        self.row_gap = 0.55
+        self.y_session = 1.0
+        self.y_runs = self.y_session + self.row_gap
+        self.y_trials = self.y_runs + self.row_gap
+
+        # Create plot
+        fig, ax = plt.subplots(constrained_layout=True)
+        self.plot_sessions(ax)
+        self.plot_runs(ax)
+        self.plot_trials(ax)
+
+        # Configure plot
+        ax.set_xlim(0, 16)
+        ax.tick_params(axis='x', labelsize=14)
+        ax.set_yticks(
+            [self.y_session + self.row_height/2,
+            self.y_runs + self.row_height/2,
+            self.y_trials + self.row_height/2],
+            labels=["Session", "Runs", "Trials"],
+            fontsize=14
+        )
+        ax.invert_yaxis()
+        ax.set_title("One Session from One Subject", fontsize=14)
+        ax.set_xlabel("Time", fontsize=14)
+
+        fig.savefig("terminology")
+
+    def plot_sessions(self, ax):
+        ax.broken_barh(self.sessions, (self.y_session, self.row_height), color="tab:red")
+        self._label_bars(ax, self.sessions, self.y_session, self.row_height, ["S1"])
+
+    def plot_runs(self, ax):
+        ax.broken_barh(self.runs, (self.y_runs, self.row_height), color=[
+            mcolors.to_rgba("tab:purple", 0.6),
+            mcolors.to_rgba("tab:purple", 0.8),
+            mcolors.to_rgba("tab:purple", 1.0)
+        ])
+        self._label_bars(ax, self.runs, self.y_runs, self.row_height, ["R1", "R2", "R3"])
+
+    def plot_trials(self, ax):
+        for idx in range(3):
+            ax.broken_barh(self.trials[idx], (self.y_trials, self.row_height), color=[
+                mcolors.to_rgba("tab:brown", 0.6),
+                mcolors.to_rgba("tab:brown", 0.7),
+                mcolors.to_rgba("tab:brown", 0.8),
+                mcolors.to_rgba("tab:brown", 0.9),
+                mcolors.to_rgba("tab:brown", 1.0)
+            ])
+            self._label_bars(ax, self.trials[idx], self.y_trials, self.row_height, ["T1", "T2", "T3", "T4", "T5"])
+
+    def _label_bars(self, ax, segments, y, height, labels):
+        for (start, width), label in zip(segments, labels):
+            ax.text(
+                start + width / 2,
+                y + height / 2,
+                label,
+                ha="center",
+                va="center",
+                fontsize=12,
+                color="black"
+            )
+
+Terminology()
