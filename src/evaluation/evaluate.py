@@ -1,8 +1,10 @@
 """
-Perform cross-subject evaluation with binary classification
-References:
-    - https://moabb.neurotechx.com/docs/generated/moabb.evaluations.CrossSubjectEvaluation.html#moabb.evaluations.CrossSubjectEvaluation  # noqa: E501
-    - https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_select_electrodes_resample.html  # noqa: E501
+Perform cross-subject evaluation with binary classification.
+
+References
+----------
+.. [1] https://moabb.neurotechx.com/docs/generated/moabb.evaluations.CrossSubjectEvaluation.html#moabb.evaluations.CrossSubjectEvaluation  # noqa: E501
+.. [2] https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_select_electrodes_resample.html  # noqa: E501
 """
 
 from os import getenv

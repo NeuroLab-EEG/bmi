@@ -1,7 +1,9 @@
 """
-Save raw results from evaluations to disk as readable CSV
-References:
-    - https://github.com/NeuroTechX/moabb/blob/develop/moabb/analysis/results.py
+Save raw results from evaluations to disk as readable CSV.
+
+References
+----------
+.. [1] https://github.com/NeuroTechX/moabb/blob/develop/moabb/analysis/results.py
 """
 
 from os import path, getenv

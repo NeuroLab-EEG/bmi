@@ -1,8 +1,10 @@
 """
-Plot tangent space, manifold, and geodesic between two points
-References:
-    - https://geomstats.github.io/notebooks/04_practical_methods__from_vector_spaces_to_manifolds.html  # noqa: E501
-    - https://matplotlib.org/stable/api/_as_gen/matplotlib.patches.Arrow.html#matplotlib-patches-arrow  # noqa: E501
+Plot tangent space, manifold, and geodesic between two points.
+
+References
+----------
+.. [1] https://geomstats.github.io/notebooks/04_practical_methods__from_vector_spaces_to_manifolds.html  # noqa: E501
+.. [2] https://matplotlib.org/stable/api/_as_gen/matplotlib.patches.Arrow.html#matplotlib-patches-arrow  # noqa: E501
 """
 
 import numpy as np

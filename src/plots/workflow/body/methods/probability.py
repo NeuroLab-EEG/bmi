@@ -1,7 +1,9 @@
 """
-Plot probability from experiment design
-References:
-    - https://graphviz.readthedocs.io/en/stable/examples.html
+Plot probability from experiment design.
+
+References
+----------
+.. [1] https://graphviz.readthedocs.io/en/stable/examples.html
 """
 
 from graphviz import Digraph

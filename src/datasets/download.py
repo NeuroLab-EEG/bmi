@@ -1,10 +1,12 @@
 """
-Cache MOABB database
-References:
-    - https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/plot_changing_download_directory.html  # noqa: E501
-    - https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/plot_bids_conversion.html  # noqa: E501
-    - https://moabb.neurotechx.com/docs/paper_results.html#motor-imagery-left-vs-right-hand  # noqa: E501
-    - https://moabb.neurotechx.com/docs/dataset_summary.html#motor-imagery
+Cache MOABB database.
+
+References
+----------
+.. [1] https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/plot_changing_download_directory.html  # noqa: E501
+.. [2] https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/plot_bids_conversion.html  # noqa: E501
+.. [3] https://moabb.neurotechx.com/docs/paper_results.html#motor-imagery-left-vs-right-hand  # noqa: E501
+.. [4] https://moabb.neurotechx.com/docs/dataset_summary.html#motor-imagery
 """
 
 from os import getenv

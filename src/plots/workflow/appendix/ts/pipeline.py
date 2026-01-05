@@ -1,9 +1,11 @@
 """
-Plot data preprocessing pipeline for tangent space classification
-References:
-    - https://matplotlib.org/stable/gallery/mplot3d/subplot3d.html
-    - https://matplotlib.org/stable/gallery/mplot3d/bars3d.html
-    - https://matplotlib.org/stable/gallery/mplot3d/surface3d_2.html
+Plot data preprocessing pipeline for tangent space classification.
+
+References
+----------
+.. [1] https://matplotlib.org/stable/gallery/mplot3d/subplot3d.html
+.. [2] https://matplotlib.org/stable/gallery/mplot3d/bars3d.html
+.. [3] https://matplotlib.org/stable/gallery/mplot3d/surface3d_2.html
 """
 
 import numpy as np

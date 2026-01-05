@@ -1,7 +1,9 @@
 """
-Plot experiment design
-References:
-    - https://graphviz.readthedocs.io/en/stable/examples.html
+Plot experiment design.
+
+References
+----------
+.. [1] https://graphviz.readthedocs.io/en/stable/examples.html
 """
 
 from graphviz import Digraph

@@ -1,8 +1,10 @@
 """
-Generate grouped and stacked bar charts showing class balances per fold
-References:
-    - https://matplotlib.org/stable/gallery/lines_bars_and_markers/barchart.html
-    - https://matplotlib.org/stable/gallery/lines_bars_and_markers/bar_stacked.html
+Generate grouped and stacked bar charts showing class balances per fold.
+
+References
+----------
+.. [1] https://matplotlib.org/stable/gallery/lines_bars_and_markers/barchart.html
+.. [2] https://matplotlib.org/stable/gallery/lines_bars_and_markers/bar_stacked.html
 """
 
 import matplotlib.pyplot as plt

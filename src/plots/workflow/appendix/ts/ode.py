@@ -1,8 +1,10 @@
 """
-Plot ordinary differential equation (ODE) on the SPD manifold
-References:
-    - https://matplotlib.org/stable/gallery/lines_bars_and_markers/axline.html
-    - https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.annotate.html
+Plot ordinary differential equation (ODE) on the SPD manifold.
+
+References
+----------
+.. [1] https://matplotlib.org/stable/gallery/lines_bars_and_markers/axline.html
+.. [2] https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.annotate.html
 """
 
 import numpy as np

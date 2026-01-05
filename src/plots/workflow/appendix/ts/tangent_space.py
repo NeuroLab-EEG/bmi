@@ -1,5 +1,5 @@
 """
-Vectorization of SPD manifold points and tangent space classification
+Vectorization of SPD manifold points and tangent space classification.
 """
 
 import numpy as np

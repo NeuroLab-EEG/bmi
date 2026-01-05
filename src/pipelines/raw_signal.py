@@ -1,10 +1,12 @@
 """
-Build pipelines with Euclidean spatial filters
-References:
-    - https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
-    - https://github.com/NeuroTechX/moabb/blob/develop/pipelines/CSP.yml
-    - https://github.com/NeuroTechX/moabb/blob/develop/pipelines/CSP_SVM_grid.yml
-    - https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC  # noqa: E501
+Build pipelines with Euclidean spatial filters.
+
+References
+----------
+.. [1] https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
+.. [2] https://github.com/NeuroTechX/moabb/blob/develop/pipelines/CSP.yml
+.. [3] https://github.com/NeuroTechX/moabb/blob/develop/pipelines/CSP_SVM_grid.yml
+.. [4] https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC  # noqa: E501
 """
 
 from os import getenv
