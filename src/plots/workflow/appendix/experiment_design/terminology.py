@@ -14,29 +14,29 @@ import matplotlib.colors as mcolors
 class Terminology:
     def __init__(self):
         # Define segments
-        self.sessions = [(0, 16)]
-        self.runs = [(0, 5), (5.5, 5), (11, 5)]
+        self.sessions = [(0, 32)]
+        self.runs = [(0, 10), (11, 10), (22, 10)]
         self.trials = [
-            ((0, 1), (1, 1), (2, 1), (3, 1), (4, 1)),
-            ((5.5, 1), (6.5, 1), (7.5, 1), (8.5, 1), (9.5, 1)),
-            ((11, 1), (12, 1), (13, 1), (14, 1), (15, 1))
+            ((0, 2), (2, 2), (4, 2), (6, 2), (8, 2)),
+            ((11, 2), (13, 2), (15, 2), (17, 2), (19, 2)),
+            ((22, 2), (24, 2), (26, 2), (28, 2), (30, 2))
         ]
 
         # Define sizing
         self.row_height = 0.5
-        self.row_gap = 0.55
+        self.row_gap = 0.7
         self.y_session = 1.0
         self.y_runs = self.y_session + self.row_gap
         self.y_trials = self.y_runs + self.row_gap
 
         # Create plot
-        fig, ax = plt.subplots(constrained_layout=True)
+        fig, ax = plt.subplots(figsize=(9, 3), constrained_layout=True)
         self.plot_sessions(ax)
         self.plot_runs(ax)
         self.plot_trials(ax)
 
         # Configure plot
-        ax.set_xlim(0, 16)
+        ax.set_xlim(0, 32)
         ax.tick_params(axis='x', labelsize=14)
         ax.set_yticks(
             [self.y_session + self.row_height/2,
@@ -57,8 +57,8 @@ class Terminology:
 
     def plot_runs(self, ax):
         ax.broken_barh(self.runs, (self.y_runs, self.row_height), color=[
-            mcolors.to_rgba("tab:purple", 0.6),
-            mcolors.to_rgba("tab:purple", 0.8),
+            mcolors.to_rgba("tab:purple", 1.0),
+            mcolors.to_rgba("tab:purple", 1.0),
             mcolors.to_rgba("tab:purple", 1.0)
         ])
         self._label_bars(ax, self.runs, self.y_runs, self.row_height, ["R1", "R2", "R3"])
@@ -66,9 +66,9 @@ class Terminology:
     def plot_trials(self, ax):
         for idx in range(3):
             ax.broken_barh(self.trials[idx], (self.y_trials, self.row_height), color=[
-                mcolors.to_rgba("tab:brown", 0.2),
-                mcolors.to_rgba("tab:brown", 0.4),
-                mcolors.to_rgba("tab:brown", 0.6),
+                mcolors.to_rgba("tab:brown", 1.0),
+                mcolors.to_rgba("tab:brown", 0.8),
+                mcolors.to_rgba("tab:brown", 1.0),
                 mcolors.to_rgba("tab:brown", 0.8),
                 mcolors.to_rgba("tab:brown", 1.0),
             ])
