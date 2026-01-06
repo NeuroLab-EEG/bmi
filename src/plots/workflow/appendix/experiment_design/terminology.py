@@ -66,11 +66,11 @@ class Terminology:
     def plot_trials(self, ax):
         for idx in range(3):
             ax.broken_barh(self.trials[idx], (self.y_trials, self.row_height), color=[
+                mcolors.to_rgba("tab:brown", 0.2),
+                mcolors.to_rgba("tab:brown", 0.4),
                 mcolors.to_rgba("tab:brown", 0.6),
-                mcolors.to_rgba("tab:brown", 0.7),
                 mcolors.to_rgba("tab:brown", 0.8),
-                mcolors.to_rgba("tab:brown", 0.9),
-                mcolors.to_rgba("tab:brown", 1.0)
+                mcolors.to_rgba("tab:brown", 1.0),
             ])
             self._label_bars(ax, self.trials[idx], self.y_trials, self.row_height, ["T1", "T2", "T3", "T4", "T5"])
 
