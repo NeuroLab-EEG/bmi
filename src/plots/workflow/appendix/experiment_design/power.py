@@ -22,7 +22,7 @@ class Power():
         # Initialize values
         mu = [0, 33]
         sigma = [12, 11]
-        color = ["tab:pink", "tab:gray"]
+        color = ["tab:orange", "tab:green"]
         alpha = 0.05
         x_crit = norm.ppf(1 - alpha, loc=mu[0], scale=sigma[0])
 
@@ -47,7 +47,7 @@ class Power():
         # Shade beta
         x_fill = np.linspace(x[0], x_crit, 200)
         y_fill = norm.pdf(x_fill, loc=mu[1], scale=sigma[1])
-        ax.fill_between(x_fill, 0, y_fill, color=color[1], alpha=0.3, hatch="\\\\\\", label="$\\beta$")
+        ax.fill_between(x_fill, 0, y_fill, color=color[1], alpha=0.3, hatch="\\\\\\", label="$1 - \\beta$")
 
         # Shade power
         x_fill = np.linspace(x_crit, x[-1], 200)
@@ -56,16 +56,22 @@ class Power():
 
         # Label plot
         ax.set_title("Right-Tailed Experiment")
+        ax.set_xlabel("X")
+        ax.set_ylabel("Y", rotation=0, labelpad=15)
         ax.legend(loc="upper left")
 
     def plot_power(self, ax):
         x = np.linspace(0, 12, 200)
-        sigma = [expit(x - 5), expit(x - 7)]
+        sigma = [expit(x - 3), expit(x - 5), expit(x - 7), expit(x - 9)]
+        color = ["tab:pink", "tab:gray", "tab:olive", "tab:cyan"]
+        label = ["$\\phi_1$", "$\\phi_2$", "$\\phi_3$", "$\\phi_4$"]
 
-        ax.plot(x, sigma[0], color="tab:olive", label="$\\phi_1$")
-        ax.plot(x, sigma[1], color="tab:cyan", label="$\\phi_2$")
+        for sigma, color, label in zip(sigma, color, label):
+            ax.plot(x, sigma, color=color, label=label)
 
         ax.set_title("Power Curves")
+        ax.set_xlabel("$\\theta$")
+        ax.set_ylabel("$\\beta(\\theta)$", rotation=0, labelpad=15)
         ax.legend()
 
 Power()
