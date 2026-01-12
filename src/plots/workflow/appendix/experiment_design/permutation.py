@@ -62,7 +62,7 @@ class Permutation():
         sums = [sum(d * s for d, s in zip(data, sign_combo)) for sign_combo in signs]
         
         # Plot distribution
-        ax.hist(sums, bins=9, color="skyblue", edgecolor="black")
+        ax.hist(sums, bins=10, color="skyblue", edgecolor="black")
         ax.set_title("Permutation Distribution", fontsize=self.subplot_title_fontsize)
         ax.tick_params(axis="both", labelsize=self.subplot_fontsize)
         
