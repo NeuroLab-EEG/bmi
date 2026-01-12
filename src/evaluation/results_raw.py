@@ -22,4 +22,4 @@ df = Results(
 ).to_dataframe()
 
 # Save raw results to disk
-df.to_csv(path.join(data_path, "raw_results.csv"), index=False)
+df.to_csv(path.join(data_path, "results_raw.csv"), index=False)
