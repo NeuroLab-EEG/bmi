@@ -8,7 +8,7 @@ from scipy.stats import norm
 from scipy.special import expit
 
 
-class Power():
+class Power:
     def __init__(self):
         fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(10, 4))
 
@@ -47,12 +47,22 @@ class Power():
         # Shade beta
         x_fill = np.linspace(x[0], x_crit, 200)
         y_fill = norm.pdf(x_fill, loc=mu[1], scale=sigma[1])
-        ax.fill_between(x_fill, 0, y_fill, color=color[1], alpha=0.3, hatch="\\\\\\", label="$1 - \\beta$")
+        ax.fill_between(
+            x_fill,
+            0,
+            y_fill,
+            color=color[1],
+            alpha=0.3,
+            hatch="\\\\\\",
+            label="$1 - \\beta$",
+        )
 
         # Shade power
         x_fill = np.linspace(x_crit, x[-1], 200)
         y_fill = norm.pdf(x_fill, loc=mu[1], scale=sigma[1])
-        ax.fill_between(x_fill, 0, y_fill, color=color[1], alpha=0.3, hatch="///", label="Power")
+        ax.fill_between(
+            x_fill, 0, y_fill, color=color[1], alpha=0.3, hatch="///", label="Power"
+        )
 
         # Label plot
         ax.set_title("Right-Tailed Experiment")
@@ -73,5 +83,6 @@ class Power():
         ax.set_xlabel("$\\theta$")
         ax.set_ylabel("$\\beta(\\theta)$", rotation=0, labelpad=15)
         ax.legend()
+
 
 Power()

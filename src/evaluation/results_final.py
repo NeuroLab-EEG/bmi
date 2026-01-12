@@ -122,7 +122,9 @@ for name, new_name, pipeline, paradigm, dataset, epochs, n_splits in parameters:
                 & (results["dataset"] == name)
                 & (results["pipeline"] == pipeline)
             ].iloc[0]
-            emissions_row = emissions[emissions["experiment_id"] == f"{pipeline}+{new_name}"].iloc[0]
+            emissions_row = emissions[
+                emissions["experiment_id"] == f"{pipeline}+{new_name}"
+            ].iloc[0]
 
             # Merge scores and emissions
             data.loc[len(data)] = {
@@ -162,7 +164,7 @@ for name, new_name, pipeline, paradigm, dataset, epochs, n_splits in parameters:
                 "longitude": emissions_row["longitude"],
                 "latitude": emissions_row["latitude"],
                 "ram_total_size": emissions_row["ram_total_size"],
-                "tracking_mode": emissions_row["tracking_mode"]
+                "tracking_mode": emissions_row["tracking_mode"],
             }
 
 # Save combined results to disk

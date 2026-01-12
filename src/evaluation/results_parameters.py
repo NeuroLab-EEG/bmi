@@ -355,12 +355,7 @@ bnci2014_001 = [
 ]
 
 parameters = (
-    physionetmi
-    + lee2019_mi
-    + cho2017
-    + schirrmeister2017
-    + shin2017a
-    + bnci2014_001
+    physionetmi + lee2019_mi + cho2017 + schirrmeister2017 + shin2017a + bnci2014_001
 )
 
 columns = [

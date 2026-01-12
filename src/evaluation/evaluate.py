@@ -29,7 +29,7 @@ for name, (pipeline, grid), paradigm, dataset, epochs, n_splits in parameters:
         output_dir=data_path,
         save_to_file=True,
         log_level="critical",
-        tracking_mode="process"
+        tracking_mode="process",
     )
 
     # Initialize evaluation

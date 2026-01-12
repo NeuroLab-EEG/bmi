@@ -12,7 +12,7 @@ from matplotlib.gridspec import GridSpec
 from itertools import product
 
 
-class Permutation():
+class Permutation:
     def __init__(self):
         self.figure_title_fontsize = 18
         self.subplot_title_fontsize = 16
@@ -41,34 +41,53 @@ class Permutation():
         ax.set_xticks([])
         ax.set_yticks([])
         ax.set_title(title, fontsize=self.subplot_title_fontsize)
-        ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=self.subplot_fontsize, transform=ax.transAxes, multialignment="center")
+        ax.text(
+            0.5,
+            0.5,
+            text,
+            ha="center",
+            va="center",
+            fontsize=self.subplot_fontsize,
+            transform=ax.transAxes,
+            multialignment="center",
+        )
 
     def subplot_original_data(self, ax):
         self._build_suplot(ax, "Original Data", "1, 2, 3.3, 2.4, 5")
 
     def subplot_hypothesis(self, ax):
-        self._build_suplot(ax, "Hypothesis", "$H \\colon \\theta=\\theta_0 \\qquad K \\colon \\theta < \\theta_0$")
+        self._build_suplot(
+            ax,
+            "Hypothesis",
+            "$H \\colon \\theta=\\theta_0 \\qquad K \\colon \\theta < \\theta_0$",
+        )
 
     def subplot_test_statistic(self, ax):
         self._build_suplot(ax, "Test Statistic", "$\\theta_0 = 1+2+3.3+2.4+5 = 13.7$")
 
     def subplot_sign_permutation(self, ax):
-        self._build_suplot(ax, "Sign Permutation", "$+1,+2,+3.3,+2.4,+5$\n$-1,+2,+3.3,+2.4,+5$\n$\\cdots$\n$-1,-2,-3.3,-2.4,-5$")
+        self._build_suplot(
+            ax,
+            "Sign Permutation",
+            "$+1,+2,+3.3,+2.4,+5$\n$-1,+2,+3.3,+2.4,+5$\n$\\cdots$\n$-1,-2,-3.3,-2.4,-5$",
+        )
 
     def subplot_significance(self, ax):
         # Generate permutation test distribution
         data = [1, 2, 3.3, 2.4, 5]
         signs = product([-1, 1], repeat=len(data))
         sums = [sum(d * s for d, s in zip(data, sign_combo)) for sign_combo in signs]
-        
+
         # Plot distribution
         ax.hist(sums, bins=10, color="skyblue", edgecolor="black")
         ax.set_title("Permutation Distribution", fontsize=self.subplot_title_fontsize)
         ax.tick_params(axis="both", labelsize=self.subplot_fontsize)
-        
+
         # Plot hypotheses
         ax.axvline(x=0, color="red", linestyle="-", linewidth=4, label="$\\theta$")
-        ax.axvline(x=13.7, color="green", linestyle="-", linewidth=4, label="$\\theta_0$")
+        ax.axvline(
+            x=13.7, color="green", linestyle="-", linewidth=4, label="$\\theta_0$"
+        )
         ax.legend(fontsize=self.subplot_fontsize)
 
 
