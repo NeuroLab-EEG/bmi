@@ -4,11 +4,11 @@ Build deep learning pipelines.
 References
 ----------
 .. [1] https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
-.. [2] https://github.com/NeuroTechX/moabb/blob/v1.1.2/pipelines/Keras_ShallowConvNet.yml  # noqa: E501
+.. [2] https://github.com/NeuroTechX/moabb/blob/v1.1.2/pipelines/Keras_ShallowConvNet.yml
 .. [3] https://github.com/NeuroTechX/moabb/blob/v1.1.2/pipelines/Keras_DeepConvNet.yml
 .. [4] https://github.com/NeuroTechX/moabb/blob/v1.1.2/moabb/pipelines/deep_learning.py
-.. [5] https://adriangb.com/scikeras/stable/generated/scikeras.wrappers.KerasClassifier.html  # noqa: E501
-.. [6] https://www.tensorflow.org/api_docs/python/tf/config/experimental/enable_op_determinism  # noqa: E501
+.. [5] https://adriangb.com/scikeras/stable/generated/scikeras.wrappers.KerasClassifier.html
+.. [6] https://www.tensorflow.org/api_docs/python/tf/config/experimental/enable_op_determinism
 """
 
 import tensorflow as tf

@@ -6,7 +6,7 @@ References
 .. [1] https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html
 .. [2] https://github.com/NeuroTechX/moabb/blob/develop/pipelines/TSLR.yml
 .. [3] https://github.com/NeuroTechX/moabb/blob/develop/pipelines/TSSVM_grid.yml
-.. [4] https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC  # noqa: E501
+.. [4] https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC
 """
 
 from os import getenv
