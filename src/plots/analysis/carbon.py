@@ -3,7 +3,7 @@ Plot carbon emission from training models.
 
 References
 ----------
-.. [1] https://moabb.neurotechx.com/docs/auto_examples/how_to_benchmark/example_codecarbon.html  # noqa: E501
+.. [1] https://moabb.neurotechx.com/docs/auto_examples/how_to_benchmark/example_codecarbon.html
 """
 
 import pandas as pd

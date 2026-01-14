@@ -4,7 +4,7 @@ Generate plots demonstrating CSP.
 References
 ----------
 .. [1] https://numpy.org/doc/stable/reference/random/index.html
-.. [2] https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.multivariate_normal.html  # noqa: E501
+.. [2] https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.multivariate_normal.html
 .. [3] https://matplotlib.org/stable/gallery/units/ellipse_with_units.html
 """
 

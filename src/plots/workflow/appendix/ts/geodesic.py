@@ -3,8 +3,8 @@ Plot tangent space, manifold, and geodesic between two points.
 
 References
 ----------
-.. [1] https://geomstats.github.io/notebooks/04_practical_methods__from_vector_spaces_to_manifolds.html  # noqa: E501
-.. [2] https://matplotlib.org/stable/api/_as_gen/matplotlib.patches.Arrow.html#matplotlib-patches-arrow  # noqa: E501
+.. [1] https://geomstats.github.io/notebooks/04_practical_methods__from_vector_spaces_to_manifolds.html
+.. [2] https://matplotlib.org/stable/api/_as_gen/matplotlib.patches.Arrow.html#matplotlib-patches-arrow
 """
 
 import numpy as np

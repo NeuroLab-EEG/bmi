@@ -3,7 +3,7 @@ Generate summary plot for all algorithms.
 
 References
 ----------
-.. [1] https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_statistical_analysis.html  # noqa: E501
+.. [1] https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_statistical_analysis.html
 """
 
 import pandas as pd
