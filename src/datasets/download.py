@@ -27,13 +27,13 @@ class Download:
     def __init__(self):
         # Configure download
         load_dotenv()
-        data_path = getenv("DATA_PATH")
-        set_download_dir(data_path)
+        self.data_path = getenv("DATA_PATH")
+        set_download_dir(self.data_path)
 
     def download(self):
         for dataset in self.datasets():
             d = dataset(accept=True) if dataset is Shin2017A else dataset()
-            d.get_data(cache_config=dict(path=data_path, save_raw=True))
+            d.get_data(cache_config=dict(path=self.data_path, save_raw=True))
 
     def datasets(self):
         yield from [
