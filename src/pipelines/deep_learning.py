@@ -58,15 +58,7 @@ def log(x):
 
 class ShallowConvNet(KerasClassifier):
     def __init__(
-        self,
-        loss,
-        optimizer,
-        epochs,
-        batch_size,
-        verbose,
-        random_state,
-        validation_split,
-        **kwargs
+        self, loss, optimizer, epochs, batch_size, verbose, random_state, validation_split, **kwargs
     ):
         super().__init__(**kwargs)
         self.loss = loss
@@ -100,23 +92,13 @@ class ShallowConvNet(KerasClassifier):
         softmax = Activation("softmax")(dense)
 
         model = Model(inputs=input_main, outputs=softmax)
-        model.compile(
-            loss=compile_kwargs["loss"], optimizer=compile_kwargs["optimizer"]
-        )
+        model.compile(loss=compile_kwargs["loss"], optimizer=compile_kwargs["optimizer"])
         return model
 
 
 class DeepConvNet(KerasClassifier):
     def __init__(
-        self,
-        loss,
-        optimizer,
-        epochs,
-        batch_size,
-        verbose,
-        random_state,
-        validation_split,
-        **kwargs
+        self, loss, optimizer, epochs, batch_size, verbose, random_state, validation_split, **kwargs
     ):
         super().__init__(**kwargs)
         self.loss = loss
@@ -144,25 +126,19 @@ class DeepConvNet(KerasClassifier):
         block1 = MaxPooling2D(pool_size=(1, 3), strides=(1, 3))(block1)
         block1 = Dropout(0.5)(block1)
 
-        block2 = Conv2D(50, (1, 10), kernel_constraint=max_norm(2.0, axis=(0, 1, 2)))(
-            block1
-        )
+        block2 = Conv2D(50, (1, 10), kernel_constraint=max_norm(2.0, axis=(0, 1, 2)))(block1)
         block2 = BatchNormalization(epsilon=1e-05, momentum=0.9)(block2)
         block2 = Activation("elu")(block2)
         block2 = MaxPooling2D(pool_size=(1, 3), strides=(1, 3))(block2)
         block2 = Dropout(0.5)(block2)
 
-        block3 = Conv2D(100, (1, 10), kernel_constraint=max_norm(2.0, axis=(0, 1, 2)))(
-            block2
-        )
+        block3 = Conv2D(100, (1, 10), kernel_constraint=max_norm(2.0, axis=(0, 1, 2)))(block2)
         block3 = BatchNormalization(epsilon=1e-05, momentum=0.9)(block3)
         block3 = Activation("elu")(block3)
         block3 = MaxPooling2D(pool_size=(1, 3), strides=(1, 3))(block3)
         block3 = Dropout(0.5)(block3)
 
-        block4 = Conv2D(200, (1, 10), kernel_constraint=max_norm(2.0, axis=(0, 1, 2)))(
-            block3
-        )
+        block4 = Conv2D(200, (1, 10), kernel_constraint=max_norm(2.0, axis=(0, 1, 2)))(block3)
         block4 = BatchNormalization(epsilon=1e-05, momentum=0.9)(block4)
         block4 = Activation("elu")(block4)
         block4 = MaxPooling2D(pool_size=(1, 3), strides=(1, 3))(block4)
@@ -172,9 +148,7 @@ class DeepConvNet(KerasClassifier):
         softmax = Activation("softmax")(dense)
 
         model = Model(inputs=input_main, outputs=softmax)
-        model.compile(
-            loss=compile_kwargs["loss"], optimizer=compile_kwargs["optimizer"]
-        )
+        model.compile(loss=compile_kwargs["loss"], optimizer=compile_kwargs["optimizer"])
         return model
 
 

@@ -25,9 +25,7 @@ class Pipeline:
 
         plt.rcParams["font.family"] = "sans-serif"
         plt.rcParams["font.sans-serif"] = ["DejaVu Sans"]
-        fig, axs = plt.subplots(
-            nrows=1, ncols=3, figsize=(12, 4), subplot_kw={"projection": "3d"}
-        )
+        fig, axs = plt.subplots(nrows=1, ncols=3, figsize=(12, 4), subplot_kw={"projection": "3d"})
         fig.subplots_adjust(left=0.05, wspace=0.5)
 
         self.subplot_raw_signals(axs[0])
@@ -88,9 +86,7 @@ class Pipeline:
         nchannels = 6
 
         # Generate covariance matrices
-        covariances = Covariances().fit_transform(
-            self.rng.standard_normal((nrows, nchannels, nsamples))
-        )
+        covariances = Covariances().fit_transform(self.rng.standard_normal((nrows, nchannels, nsamples)))
 
         # Normalize plot color scale
         vmin = min(cov.min() for cov in covariances)

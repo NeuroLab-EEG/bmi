@@ -30,9 +30,7 @@ datasets = [
 for name, subdir in datasets:
     # Define directory
     root = path.join(path.expanduser(data_path), subdir)
-    bids_paths = find_matching_paths(
-        root=root, subjects="1", datatypes="eeg", extensions=".edf"
-    )
+    bids_paths = find_matching_paths(root=root, subjects="1", datatypes="eeg", extensions=".edf")
     bids_path = bids_paths[0]
 
     # Read directory

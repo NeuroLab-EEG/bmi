@@ -60,10 +60,11 @@ def ece_score(y_true, y_prob, n_bins=10):
     return ece
 
 
-class Scores():
+class Scores:
     """
     Helper class to extract multiple scores from ML classifiers.
     """
+
     def __init__(self):
         # Load environment variables
         load_dotenv()
@@ -75,25 +76,27 @@ class Scores():
         ).to_dataframe()
 
         # Initialize final results
-        self.scores = pd.DataFrame(columns=[
-            "score",
-            "time",
-            "samples",
-            "carbon_emission",
-            "subject",
-            "session",
-            "channels",
-            "n_sessions",
-            "dataset",
-            "pipeline",
-            "codecarbon_task_name",
-            "nll",
-            "brier",
-            "ece",
-            "mcc",
-            "acc",
-            "auroc",
-        ])
+        self.scores = pd.DataFrame(
+            columns=[
+                "score",
+                "time",
+                "samples",
+                "carbon_emission",
+                "subject",
+                "session",
+                "channels",
+                "n_sessions",
+                "dataset",
+                "pipeline",
+                "codecarbon_task_name",
+                "nll",
+                "brier",
+                "ece",
+                "mcc",
+                "acc",
+                "auroc",
+            ]
+        )
 
     def extract(self):
         # Iterate over parameters from dataset-pipeline combinations

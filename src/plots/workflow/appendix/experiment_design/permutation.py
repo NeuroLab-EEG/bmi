@@ -84,9 +84,7 @@ class Permutation:
 
         # Plot hypotheses
         ax.axvline(x=0, color="red", linestyle="-", linewidth=4, label="$\\theta$")
-        ax.axvline(
-            x=13.7, color="green", linestyle="-", linewidth=4, label="$\\theta_0$"
-        )
+        ax.axvline(x=13.7, color="green", linestyle="-", linewidth=4, label="$\\theta_0$")
         ax.legend(fontsize=self.subplot_fontsize)
 
 

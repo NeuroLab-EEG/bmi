@@ -49,9 +49,4 @@ class TSSVM(Pipeline):
         }
 
     def params(self):
-        return {
-            "TS+SVM": {
-                "svc__C": [0.5, 1, 1.5],
-                "svc__kernel": ["rbf", "linear"]
-            }
-        }
+        return {"TS+SVM": {"svc__C": [0.5, 1, 1.5], "svc__kernel": ["rbf", "linear"]}}

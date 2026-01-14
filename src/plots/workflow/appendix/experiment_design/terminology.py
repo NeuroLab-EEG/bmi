@@ -52,9 +52,7 @@ class Terminology:
         fig.savefig("terminology")
 
     def plot_sessions(self, ax):
-        ax.broken_barh(
-            self.sessions, (self.y_session, self.row_height), color="tab:red"
-        )
+        ax.broken_barh(self.sessions, (self.y_session, self.row_height), color="tab:red")
         self._label_bars(ax, self.sessions, self.y_session, self.row_height, ["S1"])
 
     def plot_runs(self, ax):
@@ -63,9 +61,7 @@ class Terminology:
             (self.y_runs, self.row_height),
             color=["tab:purple", "tab:purple", "tab:purple"],
         )
-        self._label_bars(
-            ax, self.runs, self.y_runs, self.row_height, ["R1", "R2", "R3"]
-        )
+        self._label_bars(ax, self.runs, self.y_runs, self.row_height, ["R1", "R2", "R3"])
 
     def plot_trials(self, ax):
         for idx in range(3):
@@ -81,9 +77,7 @@ class Terminology:
                 self.row_height,
                 ["T1", "T2", "T3", "T4", "T5"],
             )
-            self._draw_trial_dividers(
-                ax, self.trials[idx], self.y_trials, self.row_height
-            )
+            self._draw_trial_dividers(ax, self.trials[idx], self.y_trials, self.row_height)
 
     def _label_bars(self, ax, segments, y, height, labels):
         for (start, width), label in zip(segments, labels):
@@ -100,9 +94,7 @@ class Terminology:
     def _draw_trial_dividers(self, ax, segments, y, height):
         for start, width in segments[:-1]:
             x = start + width
-            ax.vlines(
-                x, y, y + height, colors="black", linewidth=1.5, linestyles="solid"
-            )
+            ax.vlines(x, y, y + height, colors="black", linewidth=1.5, linestyles="solid")
 
 
 Terminology()

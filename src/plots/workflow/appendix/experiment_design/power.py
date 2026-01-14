@@ -60,9 +60,7 @@ class Power:
         # Shade power
         x_fill = np.linspace(x_crit, x[-1], 200)
         y_fill = norm.pdf(x_fill, loc=mu[1], scale=sigma[1])
-        ax.fill_between(
-            x_fill, 0, y_fill, color=color[1], alpha=0.3, hatch="///", label="Power"
-        )
+        ax.fill_between(x_fill, 0, y_fill, color=color[1], alpha=0.3, hatch="///", label="Power")
 
         # Label plot
         ax.set_title("Right-Tailed Experiment")

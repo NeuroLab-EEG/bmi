@@ -156,9 +156,7 @@ class CSP:
     def plot_first_covariance_whitened(self):
         fig = plt.figure(figsize=(4, 4))
         ax = fig.add_subplot(111, aspect="equal")
-        self._plot_covariance(
-            ax, self.C_whitened, self.P_whitened, self.U, "blue", "red"
-        )
+        self._plot_covariance(ax, self.C_whitened, self.P_whitened, self.U, "blue", "red")
         ax.set_title("First Covariance Matrix Whitened")
         plt.savefig("covariance_whitened")
 
@@ -172,9 +170,7 @@ class CSP:
     def plot_second_covariance_whitened(self):
         fig = plt.figure(figsize=(4, 4))
         ax = fig.add_subplot(111, aspect="equal")
-        self._plot_covariance(
-            ax, self.D_whitened, self.Q_whitened, self.V, "green", "purple"
-        )
+        self._plot_covariance(ax, self.D_whitened, self.Q_whitened, self.V, "green", "purple")
         ax.set_title("Second Covariance Matrix Whitened")
         plt.savefig("covariance_whitened_second")
 
@@ -189,12 +185,8 @@ class CSP:
     def plot_both_covariances_whitened(self):
         fig = plt.figure(figsize=(4, 4))
         ax = fig.add_subplot(111, aspect="equal")
-        self._plot_covariance(
-            ax, self.C_whitened, self.P_whitened, self.U, "blue", "red", alpha=0.5
-        )
-        self._plot_covariance(
-            ax, self.D_whitened, self.Q_whitened, self.V, "green", "purple", alpha=0.5
-        )
+        self._plot_covariance(ax, self.C_whitened, self.P_whitened, self.U, "blue", "red", alpha=0.5)
+        self._plot_covariance(ax, self.D_whitened, self.Q_whitened, self.V, "green", "purple", alpha=0.5)
         ax.set_title("Both Covariances Matrices Whitened")
         plt.savefig("both_covariances_whitened")
 
@@ -208,9 +200,7 @@ class CSP:
     def plot_covariances_sum_whitened(self):
         fig = plt.figure(figsize=(4, 4))
         ax = fig.add_subplot(111, aspect="equal")
-        self._plot_covariance(
-            ax, self.E_whitened, self.R_whitened, self.W, "brown", "black"
-        )
+        self._plot_covariance(ax, self.E_whitened, self.R_whitened, self.W, "brown", "black")
         ax.set_title("Covariance Matrices Summed & Whitened")
         plt.savefig("covariances_sum_whitened")
 
@@ -269,9 +259,7 @@ class CSP:
         fig = plt.figure(figsize=(8, 4))
 
         ax1 = fig.add_subplot(121, aspect="equal")
-        self._plot_covariance(
-            ax1, self.E_whitened, self.R_whitened, self.W, "brown", "black"
-        )
+        self._plot_covariance(ax1, self.E_whitened, self.R_whitened, self.W, "brown", "black")
         ax1.set_title("SCMs Summed & Whitened")
 
         ax2 = fig.add_subplot(122, aspect="equal")

@@ -14,7 +14,7 @@ from moabb.evaluations import CrossSubjectEvaluation
 from src.paradigm.paradigm import LogLossLeftRightImagery
 
 
-class Raw():
+class Raw:
     def __init__(self):
         # Load environment variables
         load_dotenv()
