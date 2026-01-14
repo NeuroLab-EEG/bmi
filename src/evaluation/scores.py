@@ -180,11 +180,11 @@ class Scores:
         self.scores.to_csv(path.join(self.data_path, "scores.csv"), index=False)
 
     def params(self):
-        # yield from self.physionetmi()
-        # yield from self.lee2019_mi()
-        # yield from self.cho2017()
-        # yield from self.schirrmeister2017()
-        # yield from self.shin2017a()
+        yield from self.physionetmi()
+        yield from self.lee2019_mi()
+        yield from self.cho2017()
+        yield from self.schirrmeister2017()
+        yield from self.shin2017a()
         yield from self.bnci2014_001()
 
     def physionetmi(self):
