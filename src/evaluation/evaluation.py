@@ -3,8 +3,8 @@ Perform cross-subject evaluation with binary classification.
 
 References
 ----------
-.. [1] https://moabb.neurotechx.com/docs/generated/moabb.evaluations.CrossSubjectEvaluation.html#moabb.evaluations.CrossSubjectEvaluation  # noqa: E501
-.. [2] https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_select_electrodes_resample.html  # noqa: E501
+.. [1] https://moabb.neurotechx.com/docs/generated/moabb.evaluations.CrossSubjectEvaluation.html#moabb.evaluations.CrossSubjectEvaluation
+.. [2] https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_select_electrodes_resample.html
 """
 
 from os import getenv
@@ -33,7 +33,7 @@ class Evaluation:
         set_download_dir(self.data_path)
 
     def evaluate(self):
-        for pipeline, paradigm, resample, dataset, epochs, splits in self.parameters():
+        for pipeline, paradigm, resample, dataset, epochs, splits in self.params():
             evaluation = CrossSubjectEvaluation(
                 datasets=[dataset()],
                 paradigm=paradigm(resample=resample),
@@ -45,7 +45,7 @@ class Evaluation:
             p = pipeline()
             evaluation.process(p.pipeline(), p.params())
 
-    def parameters(self):
+    def params(self):
         yield from self.physionetmi()
         yield from self.lee2019_mi()
         yield from self.cho2017()
@@ -54,64 +54,52 @@ class Evaluation:
         yield from self.bnci2014_001()
 
     def physionetmi(self):
-        yield from [
-            (CSPLDA, LogLossLeftRightImagery, 160, PhysionetMI, False, 10),
-            (CSPSVM, LogLossLeftRightImagery, 160, PhysionetMI, False, 10),
-            (TSLR, LogLossLeftRightImagery, 160, PhysionetMI, False, 10),
-            (TSSVM, LogLossLeftRightImagery, 160, PhysionetMI, False, 10),
-            (SCNN, LogLossLeftRightImagery, 160, PhysionetMI, True, 10),
-            (DCNN, LogLossLeftRightImagery, 160, PhysionetMI, True, 10),
-        ]
+        yield (CSPLDA, LogLossLeftRightImagery, 160, PhysionetMI, False, 10)
+        yield (CSPSVM, LogLossLeftRightImagery, 160, PhysionetMI, False, 10)
+        yield (TSLR, LogLossLeftRightImagery, 160, PhysionetMI, False, 10)
+        yield (TSSVM, LogLossLeftRightImagery, 160, PhysionetMI, False, 10)
+        yield (SCNN, LogLossLeftRightImagery, 160, PhysionetMI, True, 10)
+        yield (DCNN, LogLossLeftRightImagery, 160, PhysionetMI, True, 10)
 
     def lee2019_mi(self):
-        yield from [
-            (CSPLDA, LogLossLeftRightImagery, 1000, Lee2019_MI, False, 10),
-            (CSPSVM, LogLossLeftRightImagery, 1000, Lee2019_MI, False, 10),
-            (TSLR, LogLossLeftRightImagery, 1000, Lee2019_MI, False, 10),
-            (TSSVM, LogLossLeftRightImagery, 1000, Lee2019_MI, False, 10),
-            (SCNN, LogLossLeftRightImagery, 1000, Lee2019_MI, True, 10),
-            (DCNN, LogLossLeftRightImagery, 1000, Lee2019_MI, True, 10),
-        ]
+        yield (CSPLDA, LogLossLeftRightImagery, 1000, Lee2019_MI, False, 10)
+        yield (CSPSVM, LogLossLeftRightImagery, 1000, Lee2019_MI, False, 10)
+        yield (TSLR, LogLossLeftRightImagery, 1000, Lee2019_MI, False, 10)
+        yield (TSSVM, LogLossLeftRightImagery, 1000, Lee2019_MI, False, 10)
+        yield (SCNN, LogLossLeftRightImagery, 1000, Lee2019_MI, True, 10)
+        yield (DCNN, LogLossLeftRightImagery, 1000, Lee2019_MI, True, 10)
 
     def cho2017(self):
-        yield from [
-            (CSPLDA, LogLossLeftRightImagery, 512, Cho2017, False, 10),
-            (CSPSVM, LogLossLeftRightImagery, 512, Cho2017, False, 10),
-            (TSLR, LogLossLeftRightImagery, 512, Cho2017, False, 10),
-            (TSSVM, LogLossLeftRightImagery, 512, Cho2017, False, 10),
-            (SCNN, LogLossLeftRightImagery, 512, Cho2017, True, 10),
-            (DCNN, LogLossLeftRightImagery, 512, Cho2017, True, 10),
-        ]
+        yield (CSPLDA, LogLossLeftRightImagery, 512, Cho2017, False, 10)
+        yield (CSPSVM, LogLossLeftRightImagery, 512, Cho2017, False, 10)
+        yield (TSLR, LogLossLeftRightImagery, 512, Cho2017, False, 10)
+        yield (TSSVM, LogLossLeftRightImagery, 512, Cho2017, False, 10)
+        yield (SCNN, LogLossLeftRightImagery, 512, Cho2017, True, 10)
+        yield (DCNN, LogLossLeftRightImagery, 512, Cho2017, True, 10)
 
     def schirrmeister2017(self):
-        yield from [
-            (CSPLDA, LogLossLeftRightImagery, 500, Schirrmeister2017, False, 5),
-            (CSPSVM, LogLossLeftRightImagery, 500, Schirrmeister2017, False, 5),
-            (TSLR, LogLossLeftRightImagery, 500, Schirrmeister2017, False, 5),
-            (TSSVM, LogLossLeftRightImagery, 500, Schirrmeister2017, False, 5),
-            (SCNN, LogLossLeftRightImagery, 500, Schirrmeister2017, True, 5),
-            (DCNN, LogLossLeftRightImagery, 500, Schirrmeister2017, True, 5),
-        ]
+        yield (CSPLDA, LogLossLeftRightImagery, 500, Schirrmeister2017, False, 5)
+        yield (CSPSVM, LogLossLeftRightImagery, 500, Schirrmeister2017, False, 5)
+        yield (TSLR, LogLossLeftRightImagery, 500, Schirrmeister2017, False, 5)
+        yield (TSSVM, LogLossLeftRightImagery, 500, Schirrmeister2017, False, 5)
+        yield (SCNN, LogLossLeftRightImagery, 500, Schirrmeister2017, True, 5)
+        yield (DCNN, LogLossLeftRightImagery, 500, Schirrmeister2017, True, 5)
 
     def shin2017a(self):
-        yield from [
-            (CSPLDA, LogLossLeftRightImagery, 200, Shin2017A, False, 5),
-            (CSPSVM, LogLossLeftRightImagery, 200, Shin2017A, False, 5),
-            (TSLR, LogLossLeftRightImagery, 200, Shin2017A, False, 5),
-            (TSSVM, LogLossLeftRightImagery, 200, Shin2017A, False, 5),
-            (SCNN, LogLossLeftRightImagery, 200, Shin2017A, True, 5),
-            (DCNN, LogLossLeftRightImagery, 200, Shin2017A, True, 5),
-        ]
+        yield (CSPLDA, LogLossLeftRightImagery, 200, Shin2017A, False, 5)
+        yield (CSPSVM, LogLossLeftRightImagery, 200, Shin2017A, False, 5)
+        yield (TSLR, LogLossLeftRightImagery, 200, Shin2017A, False, 5)
+        yield (TSSVM, LogLossLeftRightImagery, 200, Shin2017A, False, 5)
+        yield (SCNN, LogLossLeftRightImagery, 200, Shin2017A, True, 5)
+        yield (DCNN, LogLossLeftRightImagery, 200, Shin2017A, True, 5)
 
     def bnci2014_001(self):
-        yield from [
-            (CSPLDA, LogLossLeftRightImagery, 250, BNCI2014_001, False, 9),
-            (CSPSVM, LogLossLeftRightImagery, 250, BNCI2014_001, False, 9),
-            (TSLR, LogLossLeftRightImagery, 250, BNCI2014_001, False, 9),
-            (TSSVM, LogLossLeftRightImagery, 250, BNCI2014_001, False, 9),
-            (SCNN, LogLossLeftRightImagery, 250, BNCI2014_001, True, 9),
-            (DCNN, LogLossLeftRightImagery, 250, BNCI2014_001, True, 9),
-        ]
+        yield (CSPLDA, LogLossLeftRightImagery, 250, BNCI2014_001, False, 9)
+        yield (CSPSVM, LogLossLeftRightImagery, 250, BNCI2014_001, False, 9)
+        yield (TSLR, LogLossLeftRightImagery, 250, BNCI2014_001, False, 9)
+        yield (TSSVM, LogLossLeftRightImagery, 250, BNCI2014_001, False, 9)
+        yield (SCNN, LogLossLeftRightImagery, 250, BNCI2014_001, True, 9)
+        yield (DCNN, LogLossLeftRightImagery, 250, BNCI2014_001, True, 9)
 
 
 Evaluation().evaluate()
