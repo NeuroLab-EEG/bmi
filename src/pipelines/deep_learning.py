@@ -34,6 +34,7 @@ from keras.models import Model
 from keras.constraints import max_norm
 from tensorflow.keras import backend as K
 from tensorflow.keras.utils import register_keras_serializable
+from src.pipelines.pipeline import Pipeline
 
 
 # Load environment variables
@@ -177,45 +178,53 @@ class DeepConvNet(KerasClassifier):
         return model
 
 
-def scnn():
-    return {
-        "SCNN": make_pipeline(
-            Convert_Epoch_Array(),
-            StandardScaler_Epoch(),
-            ShallowConvNet(
-                loss="sparse_categorical_crossentropy",
-                optimizer=Adam(learning_rate=0.001),
-                epochs=300,
-                batch_size=64,
-                verbose=0,
-                random_state=random_state,
-                validation_split=0.2,
-                callbacks=[
-                    EarlyStopping(monitor="val_loss", patience=75),
-                    ReduceLROnPlateau(monitor="val_loss", patience=75, factor=0.5),
-                ],
-            ),
-        )
-    }, {}
+class SCNN(Pipeline):
+    def pipeline(self):
+        return {
+            "SCNN": make_pipeline(
+                Convert_Epoch_Array(),
+                StandardScaler_Epoch(),
+                ShallowConvNet(
+                    loss="sparse_categorical_crossentropy",
+                    optimizer=Adam(learning_rate=0.001),
+                    epochs=300,
+                    batch_size=64,
+                    verbose=0,
+                    random_state=random_state,
+                    validation_split=0.2,
+                    callbacks=[
+                        EarlyStopping(monitor="val_loss", patience=75),
+                        ReduceLROnPlateau(monitor="val_loss", patience=75, factor=0.5),
+                    ],
+                ),
+            )
+        }
+
+    def params(self):
+        return {}
 
 
-def dcnn():
-    return {
-        "DCNN": make_pipeline(
-            Convert_Epoch_Array(),
-            StandardScaler_Epoch(),
-            DeepConvNet(
-                loss="sparse_categorical_crossentropy",
-                optimizer=Adam(learning_rate=0.001),
-                epochs=300,
-                batch_size=64,
-                verbose=0,
-                random_state=random_state,
-                validation_split=0.2,
-                callbacks=[
-                    EarlyStopping(monitor="val_loss", patience=75),
-                    ReduceLROnPlateau(monitor="val_loss", patience=75, factor=0.5),
-                ],
-            ),
-        )
-    }, {}
+class DCNN(Pipeline):
+    def pipeline(self):
+        return {
+            "DCNN": make_pipeline(
+                Convert_Epoch_Array(),
+                StandardScaler_Epoch(),
+                DeepConvNet(
+                    loss="sparse_categorical_crossentropy",
+                    optimizer=Adam(learning_rate=0.001),
+                    epochs=300,
+                    batch_size=64,
+                    verbose=0,
+                    random_state=random_state,
+                    validation_split=0.2,
+                    callbacks=[
+                        EarlyStopping(monitor="val_loss", patience=75),
+                        ReduceLROnPlateau(monitor="val_loss", patience=75, factor=0.5),
+                    ],
+                ),
+            )
+        }
+
+    def params(self):
+        return {}
