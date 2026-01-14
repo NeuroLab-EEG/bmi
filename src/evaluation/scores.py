@@ -23,7 +23,6 @@ from sklearn.metrics import (
     accuracy_score,
     roc_auc_score,
 )
-from sklearn.calibration import calibration_curve
 from sklearn.preprocessing import LabelEncoder
 from moabb.evaluations import CrossSubjectEvaluation, CrossSubjectSplitter
 from moabb.analysis.results import Results
@@ -147,10 +146,10 @@ class Scores():
 
                     # Lookup current row from raw results
                     cur = self.results[
-                        (results["subject"] == str(subject))
-                        & (results["session"] == session)
-                        & (results["dataset"] == name)
-                        & (results["pipeline"] == pipeline)
+                        (self.results["subject"] == str(subject))
+                        & (self.results["session"] == session)
+                        & (self.results["dataset"] == dir_name)
+                        & (self.results["pipeline"] == pipeline_name)
                     ].iloc[0]
 
                     # Save new row with all scores

@@ -6,7 +6,6 @@ References
 .. [1] https://matplotlib.org/stable/gallery/subplots_axes_and_figures/gridspec_customization.html
 """
 
-import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 from itertools import product

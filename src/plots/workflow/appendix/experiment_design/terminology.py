@@ -6,9 +6,7 @@ References
 .. [1] https://matplotlib.org/stable/gallery/lines_bars_and_markers/broken_barh.html
 """
 
-import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 
 
 class Terminology:
