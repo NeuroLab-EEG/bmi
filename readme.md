@@ -29,7 +29,7 @@ pip install -r requirements.txt
 pip list --not-required
 ```
 
-## Environment variables
+## Environment configurtions
 
 Create `.env` and `.codecarbon.config` files in root of git repository.
 
