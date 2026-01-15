@@ -31,11 +31,21 @@ pip list --not-required
 
 ## Environment variables
 
-Create `.env` file in root of git repository.
+Create `.env` and `.codecarbon.config` files in root of git repository.
 
 ```bash
+# .env
 DATA_PATH=/path/to/data
 RANDOM_STATE=1
+```
+
+```bash
+# .codecarbon.config
+[codecarbon]
+save_to_file=true
+output_dir=/path/to/output/dir
+log_level=error
+tracking_mode=process
 ```
 
 ## Background commands
