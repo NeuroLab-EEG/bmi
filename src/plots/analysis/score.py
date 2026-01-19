@@ -13,7 +13,6 @@ from os import path, getenv
 from dotenv import load_dotenv
 from moabb.analysis.plotting import score_plot
 
-
 # Define metric for exploration
 METRIC = "acc"
 

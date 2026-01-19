@@ -12,7 +12,6 @@ from os import path, getenv
 from dotenv import load_dotenv
 from moabb.analysis.plotting import codecarbon_plot
 
-
 # Load environment variables
 load_dotenv()
 data_path = getenv("DATA_PATH")

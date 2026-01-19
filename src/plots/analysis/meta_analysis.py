@@ -13,7 +13,6 @@ from dotenv import load_dotenv
 from moabb.analysis.meta_analysis import compute_dataset_statistics
 from moabb.analysis.plotting import meta_analysis_plot
 
-
 # Define metric and algorithms to compare
 METRIC = "acc"
 ALGO1 = "CSP+LDA"

@@ -16,7 +16,6 @@ from moabb.analysis.meta_analysis import (
 )
 from moabb.analysis.plotting import summary_plot
 
-
 # Define metric for analysis
 METRIC = "acc"
 
