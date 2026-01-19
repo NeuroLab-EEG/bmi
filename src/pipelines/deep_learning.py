@@ -37,25 +37,6 @@ from tensorflow.keras.utils import register_keras_serializable
 from src.pipelines.pipeline import Pipeline
 
 
-# Load environment variables
-load_dotenv()
-random_state = int(getenv("RANDOM_STATE"))
-
-# Set random seed for reproducibility
-tf.keras.utils.set_random_seed(random_state)
-tf.config.experimental.enable_op_determinism()
-
-
-@register_keras_serializable()
-def square(x):
-    return K.square(x)
-
-
-@register_keras_serializable()
-def log(x):
-    return K.log(K.clip(x, min_value=1e-7, max_value=10000))
-
-
 class ShallowConvNet(KerasClassifier):
     def __init__(
         self, loss, optimizer, epochs, batch_size, verbose, random_state, validation_split, **kwargs
@@ -68,6 +49,16 @@ class ShallowConvNet(KerasClassifier):
         self.verbose = verbose
         self.random_state = random_state
         self.validation_split = validation_split
+
+    @staticmethod
+    @register_keras_serializable()
+    def square(x):
+        return K.square(x)
+
+    @staticmethod
+    @register_keras_serializable()
+    def log(x):
+        return K.log(K.clip(x, min_value=1e-7, max_value=10000))
 
     def _keras_build_fn(self, compile_kwargs):
         input_main = Input(shape=(self.X_shape_[1], self.X_shape_[2], 1))
@@ -83,9 +74,9 @@ class ShallowConvNet(KerasClassifier):
             kernel_constraint=max_norm(2.0, axis=(0, 1, 2)),
         )(block1)
         block1 = BatchNormalization(epsilon=1e-05, momentum=0.9)(block1)
-        block1 = Activation(square)(block1)
+        block1 = Activation(self.square)(block1)
         block1 = AveragePooling2D(pool_size=(1, 75), strides=(1, 15))(block1)
-        block1 = Activation(log)(block1)
+        block1 = Activation(self.log)(block1)
         block1 = Dropout(0.5)(block1)
         flatten = Flatten()(block1)
         dense = Dense(self.n_classes_, kernel_constraint=max_norm(0.5))(flatten)
@@ -153,6 +144,15 @@ class DeepConvNet(KerasClassifier):
 
 
 class SCNN(Pipeline):
+    def __init__(self):
+        # Load environment variables
+        load_dotenv()
+        self.random_state = int(getenv("RANDOM_STATE"))
+
+        # Set random seed for reproducibility
+        tf.keras.utils.set_random_seed(self.random_state)
+        tf.config.experimental.enable_op_determinism()
+
     def pipeline(self):
         return {
             "SCNN": make_pipeline(
@@ -164,7 +164,7 @@ class SCNN(Pipeline):
                     epochs=300,
                     batch_size=64,
                     verbose=0,
-                    random_state=random_state,
+                    random_state=self.random_state,
                     validation_split=0.2,
                     callbacks=[
                         EarlyStopping(monitor="val_loss", patience=75),
@@ -179,6 +179,15 @@ class SCNN(Pipeline):
 
 
 class DCNN(Pipeline):
+    def __init__(self):
+        # Load environment variables
+        load_dotenv()
+        self.random_state = int(getenv("RANDOM_STATE"))
+
+        # Set random seed for reproducibility
+        tf.keras.utils.set_random_seed(self.random_state)
+        tf.config.experimental.enable_op_determinism()
+
     def pipeline(self):
         return {
             "DCNN": make_pipeline(
@@ -190,7 +199,7 @@ class DCNN(Pipeline):
                     epochs=300,
                     batch_size=64,
                     verbose=0,
-                    random_state=random_state,
+                    random_state=self.random_state,
                     validation_split=0.2,
                     callbacks=[
                         EarlyStopping(monitor="val_loss", patience=75),

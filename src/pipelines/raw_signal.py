@@ -19,11 +19,6 @@ from sklearn.svm import SVC
 from src.pipelines.pipeline import Pipeline
 
 
-# Load environment variables
-load_dotenv()
-random_state = int(getenv("RANDOM_STATE"))
-
-
 class CSPLDA(Pipeline):
     def pipeline(self):
         return {
@@ -39,12 +34,17 @@ class CSPLDA(Pipeline):
 
 
 class CSPSVM(Pipeline):
+    def __init__(self):
+        # Load environment variables
+        load_dotenv()
+        self.random_state = int(getenv("RANDOM_STATE"))
+
     def pipeline(self):
         return {
             "CSP+SVM": make_pipeline(
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
-                SVC(kernel="linear", probability=True, random_state=random_state),
+                SVC(kernel="linear", probability=True, random_state=self.random_state),
             )
         }
 
