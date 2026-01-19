@@ -3,7 +3,7 @@ annotated-types==0.7.0
 anyio==4.12.0
 arrow==1.4.0
 astunparse==1.6.3
-black==25.11.0
+black==26.1.0
 certifi==2026.1.4
 cffi==2.0.0
 cfgv==3.5.0
@@ -58,7 +58,7 @@ memory-profiler==0.61.0
 ml_dtypes==0.5.4
 mne==1.11.0
 mne-bids==0.18.0
--e git+ssh://git@github.com/davisethan/moabb.git@c7a045601f83950d3ffeab396c1d79e122bf647a#egg=moabb
+-e git+ssh://git@github.com/davisethan/moabb.git@c362bd28eaa821d698ae51aac91b01348e51b5fc#egg=moabb
 mpmath==1.3.0
 mypy_extensions==1.1.0
 namex==0.1.0
@@ -86,7 +86,7 @@ opt_einsum==3.4.0
 optree==0.18.0
 packaging==25.0
 pandas==2.3.3
-pathspec==0.12.1
+pathspec==1.0.3
 pillow==12.1.0
 pipdeptree==2.30.0
 platformdirs==4.5.1
@@ -111,7 +111,7 @@ pyro-ppl==1.9.1
 pytest==9.0.2
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.1
-pytokens==0.3.0
+pytokens==0.4.0
 pytz==2025.2
 PyYAML==6.0.3
 questionary==2.1.1
