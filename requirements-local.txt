@@ -1,6 +1,7 @@
 annotated-types==0.7.0
 anyio==4.12.1
 arrow==1.4.0
+black==26.1.0
 certifi==2026.1.4
 cffi==2.0.0
 cfgv==3.5.0
@@ -18,6 +19,8 @@ edfio==0.4.11
 EDFlib-Python==1.0.8
 fief-client==0.20.0
 filelock==3.20.3
+flake8==7.3.0
+Flake8-pyproject==1.2.4
 fonttools==4.61.1
 h11==0.16.0
 h5py==3.15.1
@@ -34,16 +37,19 @@ lazy_loader==0.4
 markdown-it-py==4.0.0
 MarkupSafe==3.0.3
 matplotlib==3.10.8
+mccabe==0.7.0
 mdurl==0.1.2
 memory-profiler==0.61.0
 mne==1.11.0
 mne-bids==0.18.0
--e git+https://github.com/davisethan/moabb.git@2386fd3d6b7f627cfc763e8552d2f8d9bdd9c4b0#egg=moabb
+-e git+https://github.com/davisethan/moabb.git@c362bd28eaa821d698ae51aac91b01348e51b5fc#egg=moabb
+mypy_extensions==1.1.0
 nodeenv==1.10.0
 numpy==2.4.1
 nvidia-ml-py==13.590.44
 packaging==25.0
 pandas==2.3.3
+pathspec==1.0.3
 pillow==12.1.0
 platformdirs==4.5.1
 pluggy==1.6.0
@@ -53,15 +59,18 @@ prometheus_client==0.24.1
 prompt_toolkit==3.0.52
 psutil==7.2.1
 py-cpuinfo==9.0.0
+pycodestyle==2.14.0
 pycparser==2.23
 pydantic==2.12.5
 pydantic_core==2.41.5
+pyflakes==3.4.0
 Pygments==2.19.2
 pyparsing==3.3.1
 pyriemann==0.10
 pytest==9.0.2
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.1
+pytokens==0.4.0
 pytz==2025.2
 PyYAML==6.0.3
 questionary==2.1.1
