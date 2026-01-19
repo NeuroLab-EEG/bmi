@@ -148,11 +148,11 @@ class Scores:
                     auroc = roc_auc_score(y_true, y_prob)
 
                     # Lookup current row from raw results
-                    cur = self.results[
-                        (self.results["subject"] == str(subject))
-                        & (self.results["session"] == session)
-                        & (self.results["dataset"] == dir_name)
-                        & (self.results["pipeline"] == pipeline_name)
+                    cur = self.raw[
+                        (self.raw["subject"] == str(subject))
+                        & (self.raw["session"] == session)
+                        & (self.raw["dataset"] == dir_name)
+                        & (self.raw["pipeline"] == pipeline_name)
                     ].iloc[0]
 
                     # Save new row with all scores

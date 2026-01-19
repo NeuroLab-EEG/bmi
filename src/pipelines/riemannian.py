@@ -19,18 +19,13 @@ from sklearn.linear_model import LogisticRegression
 from src.pipelines.pipeline import Pipeline
 
 
-# Load environment variables
-load_dotenv()
-random_state = int(getenv("RANDOM_STATE"))
-
-
 class TSLR(Pipeline):
     def pipeline(self):
         return {
             "TS+LR": make_pipeline(
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
-                LogisticRegression(C=1.0),
+                LogisticRegression(C=1.0, max_iter=1000),
             )
         }
 
@@ -39,12 +34,17 @@ class TSLR(Pipeline):
 
 
 class TSSVM(Pipeline):
+    def __init__(self):
+        # Load environment variables
+        load_dotenv()
+        self.random_state = int(getenv("RANDOM_STATE"))
+
     def pipeline(self):
         return {
             "TS+SVM": make_pipeline(
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
-                SVC(kernel="linear", probability=True, random_state=random_state),
+                SVC(kernel="linear", probability=True, random_state=self.random_state),
             )
         }
 
