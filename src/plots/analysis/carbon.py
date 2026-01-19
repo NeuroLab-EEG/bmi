@@ -1,7 +1,9 @@
 """
-Plot carbon emission from training models
-References:
-    - https://moabb.neurotechx.com/docs/auto_examples/how_to_benchmark/example_codecarbon.html  # noqa: E501
+Plot carbon emission from training models.
+
+References
+----------
+.. [1] https://moabb.neurotechx.com/docs/auto_examples/how_to_benchmark/example_codecarbon.html
 """
 
 import pandas as pd
@@ -9,7 +11,6 @@ import matplotlib.pyplot as plt
 from os import path, getenv
 from dotenv import load_dotenv
 from moabb.analysis.plotting import codecarbon_plot
-
 
 # Load environment variables
 load_dotenv()

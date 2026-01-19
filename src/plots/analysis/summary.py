@@ -1,7 +1,9 @@
 """
-Generate summary plot for all algorithms
-References:
-    - https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_statistical_analysis.html  # noqa: E501
+Generate summary plot for all algorithms.
+
+References
+----------
+.. [1] https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_statistical_analysis.html
 """
 
 import pandas as pd
@@ -13,7 +15,6 @@ from moabb.analysis.meta_analysis import (
     find_significant_differences,
 )
 from moabb.analysis.plotting import summary_plot
-
 
 # Define metric for analysis
 METRIC = "acc"

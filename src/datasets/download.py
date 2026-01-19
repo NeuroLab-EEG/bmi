@@ -1,10 +1,12 @@
 """
-Cache MOABB database
-References:
-    - https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/plot_changing_download_directory.html  # noqa: E501
-    - https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/plot_bids_conversion.html  # noqa: E501
-    - https://moabb.neurotechx.com/docs/paper_results.html#motor-imagery-left-vs-right-hand  # noqa: E501
-    - https://moabb.neurotechx.com/docs/dataset_summary.html#motor-imagery
+Cache MOABB database.
+
+References
+----------
+.. [1] https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/plot_changing_download_directory.html
+.. [2] https://moabb.neurotechx.com/docs/auto_examples/data_management_and_configuration/plot_bids_conversion.html
+.. [3] https://moabb.neurotechx.com/docs/paper_results.html#motor-imagery-left-vs-right-hand
+.. [4] https://moabb.neurotechx.com/docs/dataset_summary.html#motor-imagery
 """
 
 from os import getenv
@@ -17,25 +19,30 @@ from moabb.datasets import (
     Schirrmeister2017,
     Shin2017A,
     BNCI2014_001,
+    BNCI2014_004,
 )
 
 
-# Load environment variables
-load_dotenv()
-data_path = getenv("DATA_PATH")
+class Download:
+    def __init__(self):
+        # Configure download
+        load_dotenv()
+        self.data_path = getenv("DATA_PATH")
+        set_download_dir(self.data_path)
 
-# Change download directory
-set_download_dir(data_path)
+    def download(self):
+        for dataset in self.datasets():
+            d = dataset(accept=True) if dataset is Shin2017A else dataset()
+            d.get_data(cache_config=dict(path=self.data_path, save_raw=True))
 
-# Download MOABB datasets
-datasets = [
-    PhysionetMI,
-    Lee2019_MI,
-    Cho2017,
-    Schirrmeister2017,
-    Shin2017A,
-    BNCI2014_001,
-]
-for dataset in datasets:
-    d = dataset(accept=True) if dataset is Shin2017A else dataset()
-    d.get_data(cache_config=dict(path=data_path, save_raw=True))
+    def datasets(self):
+        yield PhysionetMI
+        yield Lee2019_MI
+        yield Cho2017
+        yield Schirrmeister2017
+        yield Shin2017A
+        yield BNCI2014_001
+        yield BNCI2014_004
+
+
+Download().download()

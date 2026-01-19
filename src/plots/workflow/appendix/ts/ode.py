@@ -1,8 +1,10 @@
 """
-Plot ordinary differential equation (ODE) on the SPD manifold
-References:
-    - https://matplotlib.org/stable/gallery/lines_bars_and_markers/axline.html
-    - https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.annotate.html
+Plot ordinary differential equation (ODE) on the SPD manifold.
+
+References
+----------
+.. [1] https://matplotlib.org/stable/gallery/lines_bars_and_markers/axline.html
+.. [2] https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.annotate.html
 """
 
 import numpy as np
@@ -23,16 +25,12 @@ class ODE:
 
         # Create custom formatted legend
         handles, labels = ax.get_legend_handles_labels()
-        arrow_proxy = Line2D(
-            [0], [0], color="black", markersize=8, linestyle="-", linewidth=2
-        )
+        arrow_proxy = Line2D([0], [0], color="black", markersize=8, linestyle="-", linewidth=2)
         handles.append(arrow_proxy)
         labels.append("Logarithmic Map")
 
         # Format figure display
-        ax.legend(
-            handles=handles, labels=labels, loc="upper left", bbox_to_anchor=(1.05, 1)
-        )
+        ax.legend(handles=handles, labels=labels, loc="upper left", bbox_to_anchor=(1.05, 1))
         ax.set_xlabel("X1", fontsize=14)
         ax.set_ylabel("X2", fontsize=14, rotation=0, labelpad=15)
         ax.set_title("Ordinary Differential Equation on the SPD Manifold", fontsize=14)

@@ -1,8 +1,10 @@
 """
-Plot an EEG dataset channel montage
-References:
-    - https://mne.tools/mne-bids/stable/auto_examples/read_bids_datasets.html
-    - https://mne.tools/stable/auto_tutorials/intro/40_sensor_locations.html
+Plot an EEG dataset channel montage.
+
+References
+----------
+.. [1] https://mne.tools/mne-bids/stable/auto_examples/read_bids_datasets.html
+.. [2] https://mne.tools/stable/auto_tutorials/intro/40_sensor_locations.html
 """
 
 import matplotlib.pyplot as plt
@@ -28,9 +30,7 @@ datasets = [
 for name, subdir in datasets:
     # Define directory
     root = path.join(path.expanduser(data_path), subdir)
-    bids_paths = find_matching_paths(
-        root=root, subjects="1", datatypes="eeg", extensions=".edf"
-    )
+    bids_paths = find_matching_paths(root=root, subjects="1", datatypes="eeg", extensions=".edf")
     bids_path = bids_paths[0]
 
     # Read directory

@@ -1,7 +1,9 @@
 """
-Subplots of images generated from other scripts
-References:
-    - https://matplotlib.org/stable/gallery/subplots_axes_and_figures/align_labels_demo.html  # noqa: E501
+Subplots of images generated from other scripts.
+
+References
+----------
+.. [1] https://matplotlib.org/stable/gallery/subplots_axes_and_figures/align_labels_demo.html
 """
 
 import matplotlib.pyplot as plt

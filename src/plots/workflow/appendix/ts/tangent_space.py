@@ -1,5 +1,5 @@
 """
-Vectorization of SPD manifold points and tangent space classification
+Vectorization of SPD manifold points and tangent space classification.
 """
 
 import numpy as np
@@ -52,9 +52,7 @@ class TangentSpace:
         ax.scatter(overall_mean[0], overall_mean[1], color="gold", s=500, marker="*")
 
         # Plot vectors from cluster points to mean point
-        all_points = np.vstack(
-            (np.column_stack((x_red, y_red)), np.column_stack((x_black, y_black)))
-        )
+        all_points = np.vstack((np.column_stack((x_red, y_red)), np.column_stack((x_black, y_black))))
         for point in all_points:
             ax.plot(
                 [point[0], overall_mean[0]],

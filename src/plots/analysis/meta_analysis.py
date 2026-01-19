@@ -1,7 +1,9 @@
 """
-Generate tree plot for two algorithms over all datasets
-References:
-    - https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_statistical_analysis.html  # noqa: E501
+Generate tree plot for two algorithms over all datasets.
+
+References
+----------
+.. [1] https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_statistical_analysis.html
 """
 
 import pandas as pd
@@ -10,7 +12,6 @@ from os import path, getenv
 from dotenv import load_dotenv
 from moabb.analysis.meta_analysis import compute_dataset_statistics
 from moabb.analysis.plotting import meta_analysis_plot
-
 
 # Define metric and algorithms to compare
 METRIC = "acc"

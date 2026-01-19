@@ -1,7 +1,9 @@
 """
-Visualize MOABB bubble plots
-Reference:
-    - https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_dataset_bubbles.html  # noqa: E501
+Visualize MOABB bubble plots.
+
+References
+----------
+.. [1] https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_dataset_bubbles.html
 """
 
 import matplotlib.pyplot as plt

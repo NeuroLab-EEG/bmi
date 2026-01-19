@@ -1,8 +1,10 @@
 """
-Plot tangent space, manifold, and geodesic between two points
-References:
-    - https://geomstats.github.io/notebooks/04_practical_methods__from_vector_spaces_to_manifolds.html  # noqa: E501
-    - https://matplotlib.org/stable/api/_as_gen/matplotlib.patches.Arrow.html#matplotlib-patches-arrow  # noqa: E501
+Plot tangent space, manifold, and geodesic between two points.
+
+References
+----------
+.. [1] https://geomstats.github.io/notebooks/04_practical_methods__from_vector_spaces_to_manifolds.html
+.. [2] https://matplotlib.org/stable/api/_as_gen/matplotlib.patches.Arrow.html#matplotlib-patches-arrow
 """
 
 import numpy as np
@@ -37,17 +39,13 @@ class Geodesic:
         # Compute geodesic
         sphere = Hypersphere(dim=2)
         tangent_vec = sphere.metric.log(point_b, point_a)
-        geodesic = sphere.metric.geodesic(
-            initial_point=point_a, initial_tangent_vec=tangent_vec
-        )
+        geodesic = sphere.metric.geodesic(initial_point=point_a, initial_tangent_vec=tangent_vec)
         points_on_geodesic = geodesic(gs.linspace(0.0, 1.0, 10))
 
         # Plot points and geodesic
         ax = visualization.plot(point_a, ax=ax, space="S2", s=100, label="Point x")
         ax = visualization.plot(point_b, ax=ax, space="S2", s=100, label="Point y")
-        ax = visualization.plot(
-            points_on_geodesic, ax=ax, space="S2", color="black", label="Geodesic"
-        )
+        ax = visualization.plot(points_on_geodesic, ax=ax, space="S2", color="black", label="Geodesic")
 
         # Plot tangent vector
         arrow = visualization.Arrow3D(point_a, vector=tangent_vec)
@@ -70,9 +68,7 @@ class Geodesic:
             ax.plot(x, y, color="darkgray", linewidth=0.5, zorder=0)
 
         # Plot longitude lines
-        angles = np.deg2rad(
-            np.array([0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165])
-        )
+        angles = np.deg2rad(np.array([0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165]))
         t = np.linspace(-1, 1, 100)
         for angle in angles:
             x = t * np.cos(angle)
