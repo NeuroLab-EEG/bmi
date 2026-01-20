@@ -30,12 +30,12 @@ class Download:
         self.data_path = getenv("DATA_PATH")
         set_download_dir(self.data_path)
 
-    def download(self):
-        for dataset in self.datasets():
+    def __call__(self):
+        for dataset in self._datasets():
             d = dataset(accept=True) if dataset is Shin2017A else dataset()
             d.get_data(cache_config=dict(path=self.data_path, save_raw=True))
 
-    def datasets(self):
+    def _datasets(self):
         yield PhysionetMI
         yield Lee2019_MI
         yield Cho2017
@@ -45,4 +45,4 @@ class Download:
         yield BNCI2014_004
 
 
-Download().download()
+Download()()
