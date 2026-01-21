@@ -7,6 +7,7 @@ References
 .. [2] https://moabb.neurotechx.com/docs/generated/moabb.paradigms.LeftRightImagery.html
 """
 
+import numpy as np
 from sklearn.metrics import make_scorer, matthews_corrcoef
 from moabb.paradigms import LeftRightImagery
 
@@ -20,11 +21,7 @@ class MultiScoreLeftRightImagery(LeftRightImagery):
             "acc": "accuracy",
             "auroc": "roc_auc",
             "mcc": make_scorer(matthews_corrcoef, response_method="predict"),
-            "ece": make_scorer(
-                self._ece_score,
-                response_method="predict_proba",
-                greater_is_better=False
-            ),
+            "ece": make_scorer(self._ece_score, response_method="predict_proba", greater_is_better=False),
         }
 
     def _ece_score(self, y_true, y_prob, n_bins=10):

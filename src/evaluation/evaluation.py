@@ -19,7 +19,7 @@ from moabb.datasets import (
     Shin2017A,
     BNCI2014_001,
 )
-from src.paradigm.paradigm import MultiScoreMultiScoreLeftRightImagery
+from src.paradigm.paradigm import MultiScoreLeftRightImagery
 from src.pipelines.raw_signal.csplda import CSPLDA
 from src.pipelines.raw_signal.cspsvm import CSPSVM
 from src.pipelines.riemannian.tslr import TSLR
@@ -54,7 +54,9 @@ class Evaluation:
             )
             p = pipeline()
             result = evaluation.process(p.pipeline(), p.params())
-            result.to_csv(path.join(self.data_path, f"result_{pipeline.__name__}_{dataset.__name__}.csv"), index=False)
+            result.to_csv(
+                path.join(self.data_path, f"result_{pipeline.__name__}_{dataset.__name__}.csv"), index=False
+            )
 
     def _params(self):
         yield from self._physionetmi()

@@ -16,7 +16,6 @@ from skorch import NeuralNetClassifier
 from skorch.dataset import ValidSplit
 from skorch.callbacks import EarlyStopping, LRScheduler, Callback
 from moabb.pipelines.features import Convert_Epoch_Array, StandardScaler_Epoch
-from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import make_pipeline
 from src.pipelines.pipeline import Pipeline
 from src.pipelines.deep_learning.utilities import ToFloat32
@@ -89,7 +88,7 @@ class DeepConvNet(nn.Module):
         time_after_conv1 = n_times - 9
         time_after_pool1 = (time_after_conv1 - 3) // 3 + 1
         time_after_conv2 = time_after_pool1 - 9
-        time_after_pool2 (time_after_conv2 - 3) // 3 + 1
+        time_after_pool2 = (time_after_conv2 - 3) // 3 + 1
         time_after_conv3 = time_after_pool2 - 9
         time_after_pool3 = (time_after_conv3 - 3) // 3 + 1
         time_after_conv4 = time_after_pool3 - 9
@@ -143,26 +142,26 @@ class MaxNormCallback(Callback):
         w = module.conv_temporal1.weight.data
         norm = w.norm(2, dim=(0, 1, 2), keepdim=True)
         desired = torch.clamp(norm, 0, 2.0)
-        w *= (desired / norm + 1e-8)
+        w *= desired / norm + 1e-8
 
         # Constrain block 1 spatial convolution
         w = module.conv_spatial1.weight.data
         norm = w.norm(2, dim=(0, 1, 2), keepdim=True)
         desired = torch.clamp(norm, 0, 2.0)
-        w *= (desired / (norm + 1e-8))
+        w *= desired / (norm + 1e-8)
 
         # Constrain blocks 2-4 convolution layers
         for conv_layer in [module.conv2, module.conv3, module.conv4]:
             w = conv_layer.weight.data
             norm = w.norm(2, dim=(0, 1, 2), keepdim=True)
             desired = torch.clamp(norm, 0, 2.0)
-            w *= (desired / (norm + 1e-8))
+            w *= desired / (norm + 1e-8)
 
         # Constrain fully connected layer
         w = module.fc.weight.data
         norm = w.norm(2, dim=0, keepdim=True)
         desired = torch.clamp(norm, 0, 0.5)
-        w *= (desired / (norm + 1e-8))
+        w *= desired / (norm + 1e-8)
 
 
 class SkorchDeepConvNet(NeuralNetClassifier):
@@ -246,21 +245,27 @@ class DCNN(Pipeline):
                     random_state=self.random_state,
                     train_split=0.2,
                     callbacks=[
-                        ("early_stopping", EarlyStopping(
-                            monitor="valid_loss",
-                            patience=75,
-                            lower_is_better=True,
-                            load_best=True,
-                        )),
-                        ("lr_scheduler", LRScheduler(
-                            policy="ReduceLROnPlateau",
-                            monitor="valid_loss",
-                            patience=75,
-                            factor=0.5,
-                            mode="min",
-                        ))
-                    ]
-                )
+                        (
+                            "early_stopping",
+                            EarlyStopping(
+                                monitor="valid_loss",
+                                patience=75,
+                                lower_is_better=True,
+                                load_best=True,
+                            ),
+                        ),
+                        (
+                            "lr_scheduler",
+                            LRScheduler(
+                                policy="ReduceLROnPlateau",
+                                monitor="valid_loss",
+                                patience=75,
+                                factor=0.5,
+                                mode="min",
+                            ),
+                        ),
+                    ],
+                ),
             )
         }
 

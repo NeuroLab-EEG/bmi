@@ -16,7 +16,6 @@ from skorch import NeuralNetClassifier
 from skorch.dataset import ValidSplit
 from skorch.callbacks import EarlyStopping, LRScheduler, Callback
 from moabb.pipelines.features import Convert_Epoch_Array, StandardScaler_Epoch
-from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import make_pipeline
 from src.pipelines.pipeline import Pipeline
 from src.pipelines.deep_learning.utilities import ToFloat32
@@ -70,19 +69,19 @@ class MaxNormCallback(Callback):
         w = module.conv_temporal.weight.data
         norm = w.norm(2, dim=(0, 1, 2), keepdim=True)
         desired = torch.clamp(norm, 0, 2.0)
-        w *= (desired / (norm + 1e-8))
+        w *= desired / (norm + 1e-8)
 
         # Constrain spatial convolution
         w = module.conv_spatial.weight.data
         norm = w.norm(2, dim=(0, 1, 2), keepdim=True)
         desired = torch.clamp(norm, 0, 2.0)
-        w *= (desired / (norm + 1e-8))
+        w *= desired / (norm + 1e-8)
 
         # Constrain fully connected layer
         w = module.fc.weight.data
         norm = w.norm(2, dim=0, keepdim=True)
         desired = torch.clamp(norm, 0, 0.5)
-        w *= (desired / (norm + 1e-8))
+        w *= desired / (norm + 1e-8)
 
 
 class SkorchShallowConvNet(NeuralNetClassifier):
@@ -166,21 +165,24 @@ class SCNN(Pipeline):
                     random_state=self.random_state,
                     train_split=0.2,
                     callbacks=[
-                        ("early_stopping", EarlyStopping(
-                            monitor="valid_loss",
-                            patience=75,
-                            lower_is_better=True,
-                            load_best=True
-                        )),
-                        ("lr_scheduler", LRScheduler(
-                            policy="ReduceLROnPlateau",
-                            monitor="valid_loss",
-                            patience=75,
-                            factor=0.5,
-                            mode="min"
-                        ))
-                    ]
-                )
+                        (
+                            "early_stopping",
+                            EarlyStopping(
+                                monitor="valid_loss", patience=75, lower_is_better=True, load_best=True
+                            ),
+                        ),
+                        (
+                            "lr_scheduler",
+                            LRScheduler(
+                                policy="ReduceLROnPlateau",
+                                monitor="valid_loss",
+                                patience=75,
+                                factor=0.5,
+                                mode="min",
+                            ),
+                        ),
+                    ],
+                ),
             )
         }
 
