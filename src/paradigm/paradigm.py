@@ -29,7 +29,7 @@ class MultiScoreLeftRightImagery(LeftRightImagery):
         The expected calibration error (ECE) for binary classification.
         """
         y_true = np.asarray(y_true)
-        y_prob = np.asarray(y_prob[:, 1])
+        y_prob = np.asarray(y_prob)
 
         bin_boundaries = np.linspace(0, 1, n_bins + 1)
         bin_lowers = bin_boundaries[:-1]
