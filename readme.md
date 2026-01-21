@@ -14,7 +14,7 @@ python -m venv .venv
 source .venv/bin/activate
 
 # Install packages
-pip install tensorflow[and-cuda]
+pip install moabb codecarbon torch
 
 # Deactivate
 deactivate
