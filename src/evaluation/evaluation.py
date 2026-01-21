@@ -7,7 +7,7 @@ References
 .. [2] https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_select_electrodes_resample.html
 """
 
-from os import path, getenv
+from os import path, getenv, makedirs
 from dotenv import load_dotenv
 from moabb.utils import set_download_dir
 from moabb.evaluations import CrossSubjectEvaluation
@@ -36,26 +36,33 @@ class Evaluation:
         set_download_dir(self.data_path)
 
     def __call__(self):
+        metrics_path = path.join(self.data_path, "metrics")
+        makedirs(metrics_path, exist_ok=True)
         for pipeline, paradigm, resample, dataset, jobs, epochs, splits in self._params():
+            codecarbon_path = path.join(metrics_path, dataset.__name__, "codecarbon")
+            results_path = path.join(metrics_path, dataset.__name__, "results")
+            makedirs(codecarbon_path, exist_ok=True)
+            makedirs(results_path, exist_ok=True)
             evaluation = CrossSubjectEvaluation(
                 datasets=[dataset()],
                 paradigm=paradigm(resample=resample),
                 hdf5_path=self.data_path,
+                overwrite=True,
                 n_jobs=jobs,
                 return_epochs=epochs,
                 n_splits=splits,
                 codecarbon_config=dict(
                     save_to_file=True,
-                    output_dir=path.join(self.data_path, "codecarbon"),
-                    log_level="error",
+                    output_dir=codecarbon_path,
+                    log_level="critical",
                     tracking_mode="process",
+                    country_iso_code="USA",
+                    region="washington",
                 ),
             )
             p = pipeline()
             result = evaluation.process(p.pipeline(), p.params())
-            result.to_csv(
-                path.join(self.data_path, f"result_{pipeline.__name__}_{dataset.__name__}.csv"), index=False
-            )
+            result.to_csv(path.join(results_path, f"{pipeline.__name__}.csv"), index=False)
 
     def _params(self):
         yield from self._physionetmi()
