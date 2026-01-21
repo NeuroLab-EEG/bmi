@@ -41,7 +41,6 @@ class Evaluation:
                 datasets=[dataset()],
                 paradigm=paradigm(resample=resample),
                 hdf5_path=self.data_path,
-                # overwrite=True,
                 n_jobs=jobs,
                 return_epochs=epochs,
                 n_splits=splits,
