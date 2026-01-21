@@ -1,5 +1,5 @@
 annotated-types==0.7.0
-anyio==4.12.0
+anyio==4.12.1
 arrow==1.4.0
 black==26.1.0
 certifi==2026.1.4
@@ -7,7 +7,7 @@ cffi==2.0.0
 cfgv==3.5.0
 charset-normalizer==3.4.4
 click==8.3.1
-codecarbon==3.2.0
+codecarbon==3.2.1
 contourpy==1.3.3
 coverage==7.13.1
 cryptography==46.0.3
@@ -48,7 +48,7 @@ mdurl==0.1.2
 memory-profiler==0.61.0
 mne==1.11.0
 mne-bids==0.18.0
--e git+ssh://git@github.com/davisethan/moabb.git@21a472c249bafd1b8f9f842afe2fffa60b8401fb#egg=moabb
+-e git+ssh://git@github.com/davisethan/moabb.git@53cdd43ba02e8c7f8e084dcf83d4745c89005bb7#egg=moabb
 mpmath==1.3.0
 mypy_extensions==1.1.0
 networkx==3.6.1
@@ -66,7 +66,7 @@ nvidia-curand-cu12==10.3.9.90
 nvidia-cusolver-cu12==11.7.3.90
 nvidia-cusparse-cu12==12.5.8.93
 nvidia-cusparselt-cu12==0.7.1
-nvidia-ml-py==13.580.82
+nvidia-ml-py==13.590.44
 nvidia-nccl-cu12==2.27.5
 nvidia-nvjitlink-cu12==12.8.93
 nvidia-nvshmem-cu12==3.3.20
@@ -74,7 +74,7 @@ nvidia-nvtx-cu12==12.8.90
 opt_einsum==3.4.0
 optree==0.18.0
 packaging==25.0
-pandas==2.3.3
+pandas==3.0.0
 pathspec==1.0.3
 pillow==12.1.0
 pipdeptree==2.30.0
@@ -82,12 +82,12 @@ platformdirs==4.5.1
 pluggy==1.6.0
 pooch==1.8.2
 pre_commit==4.5.1
-prometheus_client==0.23.1
+prometheus_client==0.24.1
 prompt_toolkit==3.0.52
 psutil==7.2.1
 py-cpuinfo==9.0.0
 pycodestyle==2.14.0
-pycparser==2.23
+pycparser==3.0
 pydantic==2.12.5
 pydantic_core==2.41.5
 pyflakes==3.4.0
@@ -116,19 +116,19 @@ skorch==1.3.1
 sniffio==1.3.1
 sympy==1.14.0
 tabulate==0.9.0
-termcolor==3.2.0
+termcolor==3.3.0
 threadpoolctl==3.6.0
 tikzplotlib==0.9.8
 torch==2.9.1
 tqdm==4.67.1
 triton==3.5.1
-typer==0.20.0
+typer==0.21.1
 typing-inspection==0.4.2
 typing_extensions==4.15.0
 tzdata==2025.3
 urllib3==2.6.3
 virtualenv==20.36.1
 wadler_lindig==0.1.7
-wcwidth==0.2.14
+wcwidth==0.3.0
 wheel==0.45.1
-yaspin==3.3.0
+yaspin==3.4.0
