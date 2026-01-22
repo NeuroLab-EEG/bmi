@@ -77,40 +77,40 @@ class Evaluation:
         yield (CSPSVM, MultiScoreLeftRightImagery, 160, PhysionetMI, 36, False, 10)
         yield (TSLR, MultiScoreLeftRightImagery, 160, PhysionetMI, 36, False, 10)
         yield (TSSVM, MultiScoreLeftRightImagery, 160, PhysionetMI, 36, False, 10)
-        yield (SCNN, MultiScoreLeftRightImagery, 160, PhysionetMI, 4, True, 10)
-        yield (DCNN, MultiScoreLeftRightImagery, 160, PhysionetMI, 4, True, 10)
+        yield (SCNN, MultiScoreLeftRightImagery, 160, PhysionetMI, 1, True, 10)
+        yield (DCNN, MultiScoreLeftRightImagery, 160, PhysionetMI, 1, True, 10)
 
     def _lee2019_mi(self):
         yield (CSPLDA, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 36, False, 10)
         yield (CSPSVM, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 36, False, 10)
         yield (TSLR, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 36, False, 10)
         yield (TSSVM, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 36, False, 10)
-        yield (SCNN, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 4, True, 10)
-        yield (DCNN, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 4, True, 10)
+        yield (SCNN, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 1, True, 10)
+        yield (DCNN, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 1, True, 10)
 
     def _cho2017(self):
         yield (CSPLDA, MultiScoreLeftRightImagery, 512, Cho2017, 36, False, 10)
         yield (CSPSVM, MultiScoreLeftRightImagery, 512, Cho2017, 36, False, 10)
         yield (TSLR, MultiScoreLeftRightImagery, 512, Cho2017, 36, False, 10)
         yield (TSSVM, MultiScoreLeftRightImagery, 512, Cho2017, 36, False, 10)
-        yield (SCNN, MultiScoreLeftRightImagery, 512, Cho2017, 4, True, 10)
-        yield (DCNN, MultiScoreLeftRightImagery, 512, Cho2017, 4, True, 10)
+        yield (SCNN, MultiScoreLeftRightImagery, 512, Cho2017, 1, True, 10)
+        yield (DCNN, MultiScoreLeftRightImagery, 512, Cho2017, 1, True, 10)
 
     def _schirrmeister2017(self):
         yield (CSPLDA, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 36, False, 5)
         yield (CSPSVM, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 36, False, 5)
         yield (TSLR, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 36, False, 5)
         yield (TSSVM, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 36, False, 5)
-        yield (SCNN, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 4, True, 5)
-        yield (DCNN, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 4, True, 5)
+        yield (SCNN, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 1, True, 5)
+        yield (DCNN, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 1, True, 5)
 
     def _shin2017a(self):
         yield (CSPLDA, MultiScoreLeftRightImagery, 200, Shin2017A, 36, False, 5)
         yield (CSPSVM, MultiScoreLeftRightImagery, 200, Shin2017A, 36, False, 5)
         yield (TSLR, MultiScoreLeftRightImagery, 200, Shin2017A, 36, False, 5)
         yield (TSSVM, MultiScoreLeftRightImagery, 200, Shin2017A, 36, False, 5)
-        yield (SCNN, MultiScoreLeftRightImagery, 200, Shin2017A, 4, True, 5)
-        yield (DCNN, MultiScoreLeftRightImagery, 200, Shin2017A, 4, True, 5)
+        yield (SCNN, MultiScoreLeftRightImagery, 200, Shin2017A, 1, True, 5)
+        yield (DCNN, MultiScoreLeftRightImagery, 200, Shin2017A, 1, True, 5)
 
     def _bnci2014_001(self):
         yield (CSPLDA, MultiScoreLeftRightImagery, 250, BNCI2014_001, 36, False, 9)
