@@ -39,8 +39,8 @@ class Evaluation:
         metrics_path = path.join(self.data_path, "metrics")
         makedirs(metrics_path, exist_ok=True)
         for pipeline, paradigm, resample, dataset, jobs, epochs, splits in self._params():
-            codecarbon_path = path.join(metrics_path, dataset.__name__, "codecarbon")
-            results_path = path.join(metrics_path, dataset.__name__, "results")
+            codecarbon_path = path.join(metrics_path, dataset.__name__, "emissions")
+            results_path = path.join(metrics_path, dataset.__name__, "scores")
             makedirs(codecarbon_path, exist_ok=True)
             makedirs(results_path, exist_ok=True)
             evaluation = CrossSubjectEvaluation(
