@@ -16,7 +16,7 @@ from src.pipelines.pipeline import Pipeline
 class TSLR(Pipeline):
     def pipeline(self):
         return {
-            "tslr": make_pipeline(
+            "TSLR": make_pipeline(
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
                 LogisticRegression(C=1.0, max_iter=1000),

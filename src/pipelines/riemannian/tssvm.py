@@ -24,7 +24,7 @@ class TSSVM(Pipeline):
 
     def pipeline(self):
         return {
-            "tssvm": make_pipeline(
+            "TSSVM": make_pipeline(
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
                 SVC(kernel="linear", probability=True, random_state=self.random_state),
@@ -32,4 +32,4 @@ class TSSVM(Pipeline):
         }
 
     def params(self):
-        return {"tssvm": {"svc__C": [0.5, 1, 1.5], "svc__kernel": ["rbf", "linear"]}}
+        return {"TSSVM": {"svc__C": [0.5, 1, 1.5], "svc__kernel": ["rbf", "linear"]}}

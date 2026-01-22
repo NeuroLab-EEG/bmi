@@ -24,7 +24,7 @@ class CSPSVM(Pipeline):
 
     def pipeline(self):
         return {
-            "cspsvm": make_pipeline(
+            "CSPSVM": make_pipeline(
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 SVC(kernel="linear", probability=True, random_state=self.random_state),
@@ -33,7 +33,7 @@ class CSPSVM(Pipeline):
 
     def params(self):
         return {
-            "cspsvm": {
+            "CSPSVM": {
                 "csp__nfilter": [2, 3, 4, 5, 6, 7, 8],
                 "svc__C": [0.5, 1, 1.5],
                 "svc__kernel": ["rbf", "linear"],
