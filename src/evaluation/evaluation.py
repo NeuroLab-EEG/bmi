@@ -7,6 +7,7 @@ References
 .. [2] https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_select_electrodes_resample.html
 """
 
+import numpy as np
 from os import path, getenv, makedirs
 from dotenv import load_dotenv
 from moabb.utils import set_download_dir
@@ -36,16 +37,29 @@ class Evaluation:
         set_download_dir(self.data_path)
 
     def __call__(self):
+        # Make directories
         metrics_path = path.join(self.data_path, "metrics")
         makedirs(metrics_path, exist_ok=True)
-        for pipeline, paradigm, resample, dataset, jobs, epochs, splits in self._params():
-            codecarbon_path = path.join(metrics_path, dataset.__name__, "emissions")
-            results_path = path.join(metrics_path, dataset.__name__, "scores")
-            makedirs(codecarbon_path, exist_ok=True)
-            makedirs(results_path, exist_ok=True)
+        
+        for PipelineCls, ParadigmCls, resample, DatasetCls, jobs, epochs, splits in self._params():
+            # Make subdirectories
+            emissions_path = path.join(metrics_path, DatasetCls.__name__, "emissions")
+            scores_path = path.join(metrics_path, DatasetCls.__name__, "scores")
+            makedirs(emissions_path, exist_ok=True)
+            makedirs(scores_path, exist_ok=True)
+
+            # Prepare evaluation
+            dataset = DatasetCls()
+            paradigm = ParadigmCls(resample=resample)
+            X, y, metadata = paradigm.get_data(dataset, subjects=[1])
+            pipeline = PipelineCls(
+                n_chans=X.shape[1],
+                n_outputs=len(np.unique(y)),
+                n_times=X.shape[2]
+            )
             evaluation = CrossSubjectEvaluation(
-                datasets=[dataset()],
-                paradigm=paradigm(resample=resample),
+                datasets=[dataset],
+                paradigm=paradigm,
                 hdf5_path=self.data_path,
                 overwrite=True,
                 n_jobs=jobs,
@@ -53,16 +67,17 @@ class Evaluation:
                 n_splits=splits,
                 codecarbon_config=dict(
                     save_to_file=True,
-                    output_dir=codecarbon_path,
+                    output_dir=emissions_path,
                     log_level="critical",
                     tracking_mode="process",
                     country_iso_code="USA",
                     region="washington",
                 ),
             )
-            p = pipeline()
-            result = evaluation.process(p.pipeline(), p.params())
-            result.to_csv(path.join(results_path, f"{pipeline.__name__}.csv"), index=False)
+
+            # Execute evaluation
+            result = evaluation.process(pipeline.pipeline(), pipeline.params())
+            result.to_csv(path.join(scores_path, f"{PipelineCls.__name__}.csv"), index=False)
 
     def _params(self):
         yield from self._physionetmi()
