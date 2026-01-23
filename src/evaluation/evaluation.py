@@ -19,6 +19,12 @@ from moabb.datasets import (
     Schirrmeister2017,
     Shin2017A,
     BNCI2014_001,
+    BNCI2014_004,
+    Beetl2021_A,
+    Beetl2021_B,
+    Dreyer2023,
+    Stieger2021,
+    Weibo2014,
 )
 from src.paradigm.paradigm import MultiScoreLeftRightImagery
 from src.pipelines.raw_signal.csplda import CSPLDA
@@ -40,7 +46,7 @@ class Evaluation:
         # Make directories
         metrics_path = path.join(self.data_path, "metrics")
         makedirs(metrics_path, exist_ok=True)
-        
+
         for PipelineCls, ParadigmCls, resample, DatasetCls, jobs, epochs, splits in self._params():
             # Make subdirectories
             emissions_path = path.join(metrics_path, DatasetCls.__name__, "emissions")
@@ -51,12 +57,8 @@ class Evaluation:
             # Configure evaluation
             dataset = DatasetCls()
             paradigm = ParadigmCls(resample=resample)
-            X, y, metadata = paradigm.get_data(dataset, subjects=[1])
-            pipeline = PipelineCls(
-                n_chans=X.shape[1],
-                n_outputs=len(np.unique(y)),
-                n_times=X.shape[2]
-            )
+            X, y, _ = paradigm.get_data(dataset, subjects=[1])
+            pipeline = PipelineCls(n_chans=X.shape[1], n_outputs=len(np.unique(y)), n_times=X.shape[2])
             evaluation = CrossSubjectEvaluation(
                 datasets=[dataset],
                 paradigm=paradigm,
@@ -86,6 +88,12 @@ class Evaluation:
         yield from self._schirrmeister2017()
         yield from self._shin2017a()
         yield from self._bnci2014_001()
+        yield from self._bnci2014_004()
+        yield from self._beetl2021_a()
+        yield from self._beetl2021_b()
+        yield from self._dreyer2023()
+        yield from self._stieger2021()
+        yield from self._weibo2014()
 
     def _physionetmi(self):
         yield (CSPLDA, MultiScoreLeftRightImagery, 160, PhysionetMI, 36, False, 10)
@@ -134,6 +142,54 @@ class Evaluation:
         yield (TSSVM, MultiScoreLeftRightImagery, 250, BNCI2014_001, 36, False, 9)
         yield (SCNN, MultiScoreLeftRightImagery, 250, BNCI2014_001, 1, True, 9)
         yield (DCNN, MultiScoreLeftRightImagery, 250, BNCI2014_001, 1, True, 9)
+
+    def _bnci2014_004(self):
+        yield (CSPLDA, MultiScoreLeftRightImagery, 250, BNCI2014_004, 36, False, 9)
+        yield (CSPSVM, MultiScoreLeftRightImagery, 250, BNCI2014_004, 36, False, 9)
+        yield (TSLR, MultiScoreLeftRightImagery, 250, BNCI2014_004, 36, False, 9)
+        yield (TSSVM, MultiScoreLeftRightImagery, 250, BNCI2014_004, 36, False, 9)
+        yield (SCNN, MultiScoreLeftRightImagery, 250, BNCI2014_004, 1, True, 9)
+        yield (DCNN, MultiScoreLeftRightImagery, 250, BNCI2014_004, 1, True, 9)
+
+    def _beetl2021_a(self):
+        yield (CSPLDA, MultiScoreLeftRightImagery, 500, Beetl2021_A, 36, False, 4)
+        yield (CSPSVM, MultiScoreLeftRightImagery, 500, Beetl2021_A, 36, False, 4)
+        yield (TSLR, MultiScoreLeftRightImagery, 500, Beetl2021_A, 36, False, 4)
+        yield (TSSVM, MultiScoreLeftRightImagery, 500, Beetl2021_A, 36, False, 4)
+        yield (SCNN, MultiScoreLeftRightImagery, 500, Beetl2021_A, 1, True, 4)
+        yield (DCNN, MultiScoreLeftRightImagery, 500, Beetl2021_A, 1, True, 4)
+
+    def _beetl2021_b(self):
+        yield (CSPLDA, MultiScoreLeftRightImagery, 200, Beetl2021_B, 36, False, 2)
+        yield (CSPSVM, MultiScoreLeftRightImagery, 200, Beetl2021_B, 36, False, 2)
+        yield (TSLR, MultiScoreLeftRightImagery, 200, Beetl2021_B, 36, False, 2)
+        yield (TSSVM, MultiScoreLeftRightImagery, 200, Beetl2021_B, 36, False, 2)
+        yield (SCNN, MultiScoreLeftRightImagery, 200, Beetl2021_B, 1, True, 2)
+        yield (DCNN, MultiScoreLeftRightImagery, 200, Beetl2021_B, 1, True, 2)
+
+    def _dreyer2023(self):
+        yield (CSPLDA, MultiScoreLeftRightImagery, 512, Dreyer2023, 36, False, 10)
+        yield (CSPSVM, MultiScoreLeftRightImagery, 512, Dreyer2023, 36, False, 10)
+        yield (TSLR, MultiScoreLeftRightImagery, 512, Dreyer2023, 36, False, 10)
+        yield (TSSVM, MultiScoreLeftRightImagery, 512, Dreyer2023, 36, False, 10)
+        yield (SCNN, MultiScoreLeftRightImagery, 512, Dreyer2023, 1, True, 10)
+        yield (DCNN, MultiScoreLeftRightImagery, 512, Dreyer2023, 1, True, 10)
+
+    def _stieger2021(self):
+        yield (CSPLDA, MultiScoreLeftRightImagery, 1000, Stieger2021, 36, False, 10)
+        yield (CSPSVM, MultiScoreLeftRightImagery, 1000, Stieger2021, 36, False, 10)
+        yield (TSLR, MultiScoreLeftRightImagery, 1000, Stieger2021, 36, False, 10)
+        yield (TSSVM, MultiScoreLeftRightImagery, 1000, Stieger2021, 36, False, 10)
+        yield (SCNN, MultiScoreLeftRightImagery, 1000, Stieger2021, 1, True, 10)
+        yield (DCNN, MultiScoreLeftRightImagery, 1000, Stieger2021, 1, True, 10)
+
+    def _weibo2014(self):
+        yield (CSPLDA, MultiScoreLeftRightImagery, 200, Weibo2014, 36, False, 5)
+        yield (CSPSVM, MultiScoreLeftRightImagery, 200, Weibo2014, 36, False, 5)
+        yield (TSLR, MultiScoreLeftRightImagery, 200, Weibo2014, 36, False, 5)
+        yield (TSSVM, MultiScoreLeftRightImagery, 200, Weibo2014, 36, False, 5)
+        yield (SCNN, MultiScoreLeftRightImagery, 200, Weibo2014, 1, True, 5)
+        yield (DCNN, MultiScoreLeftRightImagery, 200, Weibo2014, 1, True, 5)
 
 
 Evaluation()()
