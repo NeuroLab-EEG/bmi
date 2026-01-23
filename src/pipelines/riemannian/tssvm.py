@@ -7,8 +7,6 @@ References
 .. [2] https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC
 """
 
-from os import getenv
-from dotenv import load_dotenv
 from pyriemann.estimation import Covariances
 from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
@@ -17,11 +15,6 @@ from src.pipelines.pipeline import Pipeline
 
 
 class TSSVM(Pipeline):
-    def __init__(self):
-        # Load environment variables
-        load_dotenv()
-        self.random_state = int(getenv("RANDOM_STATE"))
-
     def pipeline(self):
         return {
             "TSSVM": make_pipeline(
