@@ -17,10 +17,8 @@ from braindecode.util import set_random_seeds
 from braindecode.classifier import EEGClassifier
 from skorch.callbacks import EarlyStopping, LRScheduler
 from skorch.dataset import ValidSplit
-from moabb.pipelines.features import Convert_Epoch_Array, StandardScaler_Epoch
 from sklearn.pipeline import make_pipeline
 from src.pipelines.pipeline import Pipeline
-from src.pipelines.deep_learning.utilities import ToFloat32
 
 
 class SCNN(Pipeline):
@@ -28,9 +26,6 @@ class SCNN(Pipeline):
         set_random_seeds(seed=self.random_state, cuda=torch.cuda.is_available())
         return {
             "SCNN": make_pipeline(
-                Convert_Epoch_Array(),
-                StandardScaler_Epoch(),
-                ToFloat32(),
                 EEGClassifier(
                     ShallowFBCSPNet(
                         n_chans=self.n_chans,
