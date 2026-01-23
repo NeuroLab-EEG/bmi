@@ -14,7 +14,7 @@ python -m venv .venv
 source .venv/bin/activate
 
 # Install packages
-pip install tensorflow[and-cuda]
+pip install moabb codecarbon torch
 
 # Deactivate
 deactivate
@@ -47,4 +47,7 @@ nohup python -m path.to.command > output.log 2>&1 &
 
 # Find long running job
 ps aux | grep "python -m path.to.command"
+
+# Kill processes by username and full command
+pkill -u username -f "substring"
 ```
