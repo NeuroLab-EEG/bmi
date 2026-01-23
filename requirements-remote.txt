@@ -34,7 +34,7 @@ flake8==7.3.0
 Flake8-pyproject==1.2.4
 fonttools==4.61.1
 frozenlist==1.8.0
-fsspec==2025.12.0
+fsspec==2026.1.0
 geomstats==2.8.0
 gpytorch==1.14.3
 graphviz==0.21
@@ -90,7 +90,7 @@ nvidia-nvshmem-cu12==3.4.5
 nvidia-nvtx-cu12==12.8.90
 opt_einsum==3.4.0
 optree==0.18.0
-packaging==25.0
+packaging==26.0
 pandas==3.0.0
 pathspec==1.0.3
 pillow==12.1.0
@@ -111,7 +111,7 @@ pydantic==2.12.5
 pydantic_core==2.41.5
 pyflakes==3.4.0
 Pygments==2.19.2
-pyparsing==3.3.1
+pyparsing==3.3.2
 pyriemann==0.10
 pyro-api==0.1.2
 pyro-ppl==1.9.1
