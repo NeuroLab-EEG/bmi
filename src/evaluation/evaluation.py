@@ -46,7 +46,7 @@ class Evaluation:
         # Make directories
         metrics_path = path.join(self.data_path, "metrics")
         makedirs(metrics_path, exist_ok=True)
-        
+
         for PipelineCls, ParadigmCls, resample, DatasetCls, jobs, epochs, splits in self._params():
             # Make subdirectories
             emissions_path = path.join(metrics_path, DatasetCls.__name__, "emissions")
@@ -57,12 +57,8 @@ class Evaluation:
             # Configure evaluation
             dataset = DatasetCls()
             paradigm = ParadigmCls(resample=resample)
-            X, y, metadata = paradigm.get_data(dataset, subjects=[1])
-            pipeline = PipelineCls(
-                n_chans=X.shape[1],
-                n_outputs=len(np.unique(y)),
-                n_times=X.shape[2]
-            )
+            X, y, _ = paradigm.get_data(dataset, subjects=[1])
+            pipeline = PipelineCls(n_chans=X.shape[1], n_outputs=len(np.unique(y)), n_times=X.shape[2])
             evaluation = CrossSubjectEvaluation(
                 datasets=[dataset],
                 paradigm=paradigm,

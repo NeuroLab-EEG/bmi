@@ -11,7 +11,6 @@ References
 """
 
 import torch
-import numpy as np
 from braindecode.models import Deep4Net
 from braindecode.util import set_random_seeds
 from braindecode.classifier import EEGClassifier
@@ -65,8 +64,8 @@ class DCNN(Pipeline):
                             factor=0.5,
                             mode="min",
                             min_lr=1e-6,
-                        )
-                    ]
+                        ),
+                    ],
                 ),
             )
         }
