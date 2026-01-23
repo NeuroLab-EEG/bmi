@@ -31,7 +31,7 @@ from src.pipelines.deep_learning.dcnn import DCNN
 
 class Evaluation:
     def __init__(self):
-        # Configure evaluation
+        # Configure environment
         load_dotenv()
         self.data_path = getenv("DATA_PATH")
         set_download_dir(self.data_path)
