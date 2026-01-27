@@ -42,7 +42,7 @@ class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
             logit = pm.math.dot(X, w) + b
             pm.Bernoulli("y", logit_p=logit, observed=y_binary)
 
-            # Sample posterior using HMC
+            # Sample posterior using MCMC
             self.idata_ = pm.sample(
                 draws=self.draws,
                 tune=self.tune,
