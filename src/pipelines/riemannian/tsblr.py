@@ -28,6 +28,7 @@ class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
         self.random_state = random_state
 
     def fit(self, X, y):
+        X, y = self._validate_data(X, y)
         self.classes_ = np.unique(y)
         y_binary = (y == self.classes_[1]).astype(int)
 
@@ -53,6 +54,8 @@ class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
         return self
 
     def predict_proba(self, X):
+        X = self._validate_data(X, reset=False)
+
         # Extract posterior parameters
         posterior = self.idata_.posterior
         b = posterior["b"].values.flatten()
@@ -70,7 +73,13 @@ class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
 
 class TSBLR(Pipeline):
     def pipeline(self):
-        pass
+        return {
+            "TSBLR": make_pipeline(
+                Covariances(estimator="oas"),
+                TangentSpace(metric="riemann"),
+                BayesianLogisticRegression(),
+            )
+        }
 
     def params(self):
-        pass
+        return {}
