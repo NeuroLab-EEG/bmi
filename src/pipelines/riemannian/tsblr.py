@@ -29,17 +29,18 @@ class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
 
     def fit(self, X, y):
         X, y = self._validate_data(X, y)
+        self.n_features_ = X.shape[1]
         self.classes_ = np.unique(y)
         y_binary = (y == self.classes_[1]).astype(int)
 
         with pm.Model() as _:
-            # Define prior parameters
+            # Define priors
             b = pm.Normal("b", mu=0, sigma=10.0)
-            w = pm.Normal("w", mu=0, sigma=10.0, shape=X.shape[1])
+            w = pm.Normal("w", mu=0, sigma=10.0, shape=self.n_features_)
 
             # Define likelihood
             logit = pm.math.dot(X, w) + b
-            _ = pm.Bernoulli("y", logit_p=logit, observed=y_binary)
+            pm.Bernoulli("y", logit_p=logit, observed=y_binary)
 
             # Sample posterior using HMC
             self.idata_ = pm.sample(
@@ -58,7 +59,7 @@ class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
         # Extract posterior parameters
         posterior = self.idata_.posterior
         b = posterior["b"].values.flatten()
-        w = posterior["w"].values.reshape(-1, X.shape[1])
+        w = posterior["w"].values.reshape(-1, self.n_features_)
 
         # Compute posterior predictive distribution
         logit = b[:, np.newaxis] + w @ X.T
