@@ -41,7 +41,9 @@ class Montage:
             # Define directory
             root = path.join(path.expanduser(self.data_path), subdir)
             subject = 4 if DatasetCls is Beetl2021_B else 1
-            bids_paths = find_matching_paths(root=root, subjects=f"{subject}", datatypes="eeg", extensions=".edf")
+            bids_paths = find_matching_paths(
+                root=root, subjects=f"{subject}", datatypes="eeg", extensions=".edf"
+            )
             # print(row, col, DatasetCls.__name__)
             bids_path = bids_paths[0]
 
@@ -56,7 +58,7 @@ class Montage:
             except ValueError:
                 raw.plot_sensors(show_names=True, sphere=(0, 0, 0, 0.095), show=False, axes=ax)
             ax.set_title(DatasetCls.__name__, fontsize=32)
-        
+
         self.fig.tight_layout()
         self.fig.suptitle("Channels Montages", fontsize=36)
         self.fig.savefig("montage")

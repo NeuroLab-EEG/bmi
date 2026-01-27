@@ -78,7 +78,9 @@ class BayesianLDA(BaseEstimator, ClassifierMixin):
         cov = posterior["cov"].values.reshape(-1, self.n_features_, self.n_features_)
 
         # Compute posterior predictive distribution
-        p_1_given_x = np.array([self._compute_class_logproba(X, pi[i], mu_0[i], mu_1[i], cov[i]) for i in range(len(pi))])
+        p_1_given_x = np.array(
+            [self._compute_class_logproba(X, pi[i], mu_0[i], mu_1[i], cov[i]) for i in range(len(pi))]
+        )
         proba_class_1 = p_1_given_x.mean(axis=0)
         return np.column_stack([1 - proba_class_1, proba_class_1])
 
