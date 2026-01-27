@@ -21,11 +21,10 @@ from src.pipelines.pipeline import Pipeline
 
 
 class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
-    def __init__(self, draws=2000, tune=1000, chains=4, prior_sigma=10.0, random_state=None):
+    def __init__(self, draws=2000, tune=1000, chains=4, random_state=None):
         self.draws = draws
         self.tune = tune
         self.chains = chains
-        self.prior_sigma = prior_sigma
         self.random_state = random_state
 
     def fit(self, X, y):
@@ -35,8 +34,8 @@ class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
 
         with pm.Model() as _:
             # Define prior parameters
-            b = pm.Normal("b", mu=0, sigma=self.prior_sigma)
-            w = pm.Normal("w", mu=0, sigma=self.prior_sigma, shape=X.shape[1])
+            b = pm.Normal("b", mu=0, sigma=10.0)
+            w = pm.Normal("w", mu=0, sigma=10.0, shape=X.shape[1])
 
             # Define likelihood
             logit = pm.math.dot(X, w) + b
