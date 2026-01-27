@@ -7,6 +7,7 @@ References
 .. [2] https://www.pymc.io/projects/docs/en/stable/learn/core_notebooks/GLM_linear.html#glm-linear
 .. [3] https://python.arviz.org/en/stable/getting_started/XarrayforArviZ.html#xarray-for-arviz
 .. [4] https://doi.org/10.1007/978-0-387-84858-7_4
+.. [5] https://www.pymc.io/projects/docs/en/stable/api/generated/pymc.sample.html#pymc.sample
 """
 
 import numpy as np
@@ -20,8 +21,8 @@ from src.pipelines.pipeline import Pipeline
 
 
 class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
-    def __init__(self, n_samples=2000, tune=1000, chains=4, prior_sigma=5.0, random_state=None):
-        self.n_samples = n_samples
+    def __init__(self, draws=2000, tune=1000, chains=4, prior_sigma=10.0, random_state=None):
+        self.draws = draws
         self.tune = tune
         self.chains = chains
         self.prior_sigma = prior_sigma
@@ -43,12 +44,11 @@ class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
 
             # Sample posterior using HMC
             self.idata_ = pm.sample(
-                draws=self.n_samples,
+                draws=self.draws,
                 tune=self.tune,
                 chains=self.chains,
                 random_seed=self.random_state,
-                return_inferencedata=True,
-                progressbar=False,
+                quiet=True,
             )
 
         return self
