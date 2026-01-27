@@ -5,7 +5,8 @@ References
 ----------
 .. [1] https://github.com/NeuroTechX/moabb/blob/develop/pipelines/TSLR.yml
 .. [2] https://www.pymc.io/projects/docs/en/stable/learn/core_notebooks/GLM_linear.html#glm-linear
-.. [3] https://doi.org/10.1007/978-0-387-84858-7_4
+.. [3] https://python.arviz.org/en/stable/getting_started/XarrayforArviZ.html#xarray-for-arviz
+.. [4] https://doi.org/10.1007/978-0-387-84858-7_4
 """
 
 import numpy as np
