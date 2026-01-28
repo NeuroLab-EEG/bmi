@@ -56,7 +56,7 @@ class BayesianLDA(BaseEstimator, ClassifierMixin):
             mu = pm.math.switch(y_binary[:, np.newaxis], mu_1, mu_0)
             pm.MvNormal("X", mu=mu, chol=chol, observed=X, shape=X.shape)
 
-            # Sample posterior using HMC
+            # Sample posterior using MCMC
             self.idata_ = pm.sample(
                 draws=self.draws,
                 tune=self.tune,
