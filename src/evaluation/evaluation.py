@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 from moabb.utils import set_download_dir
 from moabb.evaluations import CrossSubjectEvaluation
 from moabb.datasets import (
+    Stieger2021,
     PhysionetMI,
     Lee2019_MI,
     Cho2017,
@@ -48,7 +49,7 @@ class Evaluation:
         metrics_path = path.join(self.data_path, "metrics")
         makedirs(metrics_path, exist_ok=True)
 
-        for PipelineCls, ParadigmCls, resample, DatasetCls, n_jobs, n_splits in self._params():
+        for PipelineCls, DatasetCls, n_jobs, n_splits in self._params():
             # Make subdirectories
             emissions_path = path.join(metrics_path, DatasetCls.__name__, "emissions")
             scores_path = path.join(metrics_path, DatasetCls.__name__, "scores")
@@ -57,7 +58,7 @@ class Evaluation:
 
             # Configure evaluation
             dataset = DatasetCls()
-            paradigm = ParadigmCls(resample=resample)
+            paradigm = MultiScoreLeftRightImagery(resample=128)
             subject = 4 if DatasetCls is Beetl2021_B else 1
             X, y, _ = paradigm.get_data(dataset, subjects=[subject])
             pipeline = PipelineCls(n_features=X.shape[1], n_classes=len(np.unique(y)), n_times=X.shape[2])
@@ -72,7 +73,6 @@ class Evaluation:
                     save_to_file=True,
                     output_dir=emissions_path,
                     log_level="critical",
-                    tracking_mode="process",
                     country_iso_code="USA",
                     region="washington",
                 ),
@@ -83,6 +83,7 @@ class Evaluation:
             result.to_csv(path.join(scores_path, f"{PipelineCls.__name__}.csv"), index=False)
 
     def _params(self):
+        yield from self._stieger2021()
         yield from self._physionetmi()
         yield from self._lee2019_mi()
         yield from self._cho2017()
@@ -97,109 +98,117 @@ class Evaluation:
         yield from self._zhou2016()
         yield from self._grossewentrup2009()
 
+    def _stieger2021(self):
+        yield (CSPLDA, Stieger2021, 36, 10)
+        yield (CSPSVM, Stieger2021, 36, 10)
+        yield (TSLR, Stieger2021, 36, 10)
+        yield (TSSVM, Stieger2021, 36, 10)
+        yield (SCNN, Stieger2021, 1, 10)
+        yield (DCNN, Stieger2021, 1, 10)
+
     def _physionetmi(self):
-        yield (CSPLDA, MultiScoreLeftRightImagery, 160, PhysionetMI, 36, 10)
-        yield (CSPSVM, MultiScoreLeftRightImagery, 160, PhysionetMI, 36, 10)
-        yield (TSLR, MultiScoreLeftRightImagery, 160, PhysionetMI, 36, 10)
-        yield (TSSVM, MultiScoreLeftRightImagery, 160, PhysionetMI, 36, 10)
-        yield (SCNN, MultiScoreLeftRightImagery, 160, PhysionetMI, 1, 10)
-        yield (DCNN, MultiScoreLeftRightImagery, 160, PhysionetMI, 1, 10)
+        yield (CSPLDA, PhysionetMI, 36, 10)
+        yield (CSPSVM, PhysionetMI, 36, 10)
+        yield (TSLR, PhysionetMI, 36, 10)
+        yield (TSSVM, PhysionetMI, 36, 10)
+        yield (SCNN, PhysionetMI, 1, 10)
+        yield (DCNN, PhysionetMI, 1, 10)
 
     def _lee2019_mi(self):
-        yield (CSPLDA, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 36, 10)
-        yield (CSPSVM, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 36, 10)
-        yield (TSLR, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 36, 10)
-        yield (TSSVM, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 36, 10)
-        yield (SCNN, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 1, 10)
-        yield (DCNN, MultiScoreLeftRightImagery, 1000, Lee2019_MI, 1, 10)
+        yield (CSPLDA, Lee2019_MI, 36, 10)
+        yield (CSPSVM, Lee2019_MI, 36, 10)
+        yield (TSLR, Lee2019_MI, 36, 10)
+        yield (TSSVM, Lee2019_MI, 36, 10)
+        yield (SCNN, Lee2019_MI, 1, 10)
+        yield (DCNN, Lee2019_MI, 1, 10)
 
     def _cho2017(self):
-        yield (CSPLDA, MultiScoreLeftRightImagery, 512, Cho2017, 36, 10)
-        yield (CSPSVM, MultiScoreLeftRightImagery, 512, Cho2017, 36, 10)
-        yield (TSLR, MultiScoreLeftRightImagery, 512, Cho2017, 36, 10)
-        yield (TSSVM, MultiScoreLeftRightImagery, 512, Cho2017, 36, 10)
-        yield (SCNN, MultiScoreLeftRightImagery, 512, Cho2017, 1, 10)
-        yield (DCNN, MultiScoreLeftRightImagery, 512, Cho2017, 1, 10)
+        yield (CSPLDA, Cho2017, 36, 10)
+        yield (CSPSVM, Cho2017, 36, 10)
+        yield (TSLR, Cho2017, 36, 10)
+        yield (TSSVM, Cho2017, 36, 10)
+        yield (SCNN, Cho2017, 1, 10)
+        yield (DCNN, Cho2017, 1, 10)
 
     def _schirrmeister2017(self):
-        yield (CSPLDA, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 36, 5)
-        yield (CSPSVM, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 36, 5)
-        yield (TSLR, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 36, 5)
-        yield (TSSVM, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 36, 5)
-        yield (SCNN, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 1, 5)
-        yield (DCNN, MultiScoreLeftRightImagery, 500, Schirrmeister2017, 1, 5)
+        yield (CSPLDA, Schirrmeister2017, 36, 5)
+        yield (CSPSVM, Schirrmeister2017, 36, 5)
+        yield (TSLR, Schirrmeister2017, 36, 5)
+        yield (TSSVM, Schirrmeister2017, 36, 5)
+        yield (SCNN, Schirrmeister2017, 1, 5)
+        yield (DCNN, Schirrmeister2017, 1, 5)
 
     def _shin2017a(self):
-        yield (CSPLDA, MultiScoreLeftRightImagery, 200, Shin2017A, 36, 5)
-        yield (CSPSVM, MultiScoreLeftRightImagery, 200, Shin2017A, 36, 5)
-        yield (TSLR, MultiScoreLeftRightImagery, 200, Shin2017A, 36, 5)
-        yield (TSSVM, MultiScoreLeftRightImagery, 200, Shin2017A, 36, 5)
-        yield (SCNN, MultiScoreLeftRightImagery, 200, Shin2017A, 1, 5)
-        yield (DCNN, MultiScoreLeftRightImagery, 200, Shin2017A, 1, 5)
+        yield (CSPLDA, Shin2017A, 36, 5)
+        yield (CSPSVM, Shin2017A, 36, 5)
+        yield (TSLR, Shin2017A, 36, 5)
+        yield (TSSVM, Shin2017A, 36, 5)
+        yield (SCNN, Shin2017A, 1, 5)
+        yield (DCNN, Shin2017A, 1, 5)
 
     def _bnci2014_001(self):
-        yield (CSPLDA, MultiScoreLeftRightImagery, 250, BNCI2014_001, 36, 9)
-        yield (CSPSVM, MultiScoreLeftRightImagery, 250, BNCI2014_001, 36, 9)
-        yield (TSLR, MultiScoreLeftRightImagery, 250, BNCI2014_001, 36, 9)
-        yield (TSSVM, MultiScoreLeftRightImagery, 250, BNCI2014_001, 36, 9)
-        yield (SCNN, MultiScoreLeftRightImagery, 250, BNCI2014_001, 1, 9)
-        yield (DCNN, MultiScoreLeftRightImagery, 250, BNCI2014_001, 1, 9)
+        yield (CSPLDA, BNCI2014_001, 36, 9)
+        yield (CSPSVM, BNCI2014_001, 36, 9)
+        yield (TSLR, BNCI2014_001, 36, 9)
+        yield (TSSVM, BNCI2014_001, 36, 9)
+        yield (SCNN, BNCI2014_001, 1, 9)
+        yield (DCNN, BNCI2014_001, 1, 9)
 
     def _bnci2014_004(self):
-        yield (CSPLDA, MultiScoreLeftRightImagery, 250, BNCI2014_004, 36, 9)
-        yield (CSPSVM, MultiScoreLeftRightImagery, 250, BNCI2014_004, 36, 9)
-        yield (TSLR, MultiScoreLeftRightImagery, 250, BNCI2014_004, 36, 9)
-        yield (TSSVM, MultiScoreLeftRightImagery, 250, BNCI2014_004, 36, 9)
-        yield (SCNN, MultiScoreLeftRightImagery, 250, BNCI2014_004, 1, 9)
-        yield (DCNN, MultiScoreLeftRightImagery, 250, BNCI2014_004, 1, 9)
+        yield (CSPLDA, BNCI2014_004, 36, 9)
+        yield (CSPSVM, BNCI2014_004, 36, 9)
+        yield (TSLR, BNCI2014_004, 36, 9)
+        yield (TSSVM, BNCI2014_004, 36, 9)
+        yield (SCNN, BNCI2014_004, 1, 9)
+        yield (DCNN, BNCI2014_004, 1, 9)
 
     def _beetl2021_a(self):
-        yield (CSPLDA, MultiScoreLeftRightImagery, 500, Beetl2021_A, 36, 3)
-        yield (CSPSVM, MultiScoreLeftRightImagery, 500, Beetl2021_A, 36, 3)
-        yield (TSLR, MultiScoreLeftRightImagery, 500, Beetl2021_A, 36, 3)
-        yield (TSSVM, MultiScoreLeftRightImagery, 500, Beetl2021_A, 36, 3)
-        yield (SCNN, MultiScoreLeftRightImagery, 500, Beetl2021_A, 1, 3)
-        yield (DCNN, MultiScoreLeftRightImagery, 500, Beetl2021_A, 1, 3)
+        yield (CSPLDA, Beetl2021_A, 36, 3)
+        yield (CSPSVM, Beetl2021_A, 36, 3)
+        yield (TSLR, Beetl2021_A, 36, 3)
+        yield (TSSVM, Beetl2021_A, 36, 3)
+        yield (SCNN, Beetl2021_A, 1, 3)
+        yield (DCNN, Beetl2021_A, 1, 3)
 
     def _beetl2021_b(self):
-        yield (CSPLDA, MultiScoreLeftRightImagery, 200, Beetl2021_B, 36, 2)
-        yield (CSPSVM, MultiScoreLeftRightImagery, 200, Beetl2021_B, 36, 2)
-        yield (TSLR, MultiScoreLeftRightImagery, 200, Beetl2021_B, 36, 2)
-        yield (TSSVM, MultiScoreLeftRightImagery, 200, Beetl2021_B, 36, 2)
-        yield (SCNN, MultiScoreLeftRightImagery, 200, Beetl2021_B, 1, 2)
-        yield (DCNN, MultiScoreLeftRightImagery, 200, Beetl2021_B, 1, 2)
+        yield (CSPLDA, Beetl2021_B, 36, 2)
+        yield (CSPSVM, Beetl2021_B, 36, 2)
+        yield (TSLR, Beetl2021_B, 36, 2)
+        yield (TSSVM, Beetl2021_B, 36, 2)
+        yield (SCNN, Beetl2021_B, 1, 2)
+        yield (DCNN, Beetl2021_B, 1, 2)
 
     def _dreyer2023(self):
-        yield (CSPLDA, MultiScoreLeftRightImagery, 512, Dreyer2023, 36, 10)
-        yield (CSPSVM, MultiScoreLeftRightImagery, 512, Dreyer2023, 36, 10)
-        yield (TSLR, MultiScoreLeftRightImagery, 512, Dreyer2023, 36, 10)
-        yield (TSSVM, MultiScoreLeftRightImagery, 512, Dreyer2023, 36, 10)
-        yield (SCNN, MultiScoreLeftRightImagery, 512, Dreyer2023, 1, 10)
-        yield (DCNN, MultiScoreLeftRightImagery, 512, Dreyer2023, 1, 10)
+        yield (CSPLDA, Dreyer2023, 36, 10)
+        yield (CSPSVM, Dreyer2023, 36, 10)
+        yield (TSLR, Dreyer2023, 36, 10)
+        yield (TSSVM, Dreyer2023, 36, 10)
+        yield (SCNN, Dreyer2023, 1, 10)
+        yield (DCNN, Dreyer2023, 1, 10)
 
     def _weibo2014(self):
-        yield (CSPLDA, MultiScoreLeftRightImagery, 200, Weibo2014, 36, 5)
-        yield (CSPSVM, MultiScoreLeftRightImagery, 200, Weibo2014, 36, 5)
-        yield (TSLR, MultiScoreLeftRightImagery, 200, Weibo2014, 36, 5)
-        yield (TSSVM, MultiScoreLeftRightImagery, 200, Weibo2014, 36, 5)
-        yield (SCNN, MultiScoreLeftRightImagery, 200, Weibo2014, 1, 5)
-        yield (DCNN, MultiScoreLeftRightImagery, 200, Weibo2014, 1, 5)
+        yield (CSPLDA, Weibo2014, 36, 5)
+        yield (CSPSVM, Weibo2014, 36, 5)
+        yield (TSLR, Weibo2014, 36, 5)
+        yield (TSSVM, Weibo2014, 36, 5)
+        yield (SCNN, Weibo2014, 1, 5)
+        yield (DCNN, Weibo2014, 1, 5)
 
     def _zhou2016(self):
-        yield (CSPLDA, MultiScoreLeftRightImagery, 250, Zhou2016, 36, 4)
-        yield (CSPSVM, MultiScoreLeftRightImagery, 250, Zhou2016, 36, 4)
-        yield (TSLR, MultiScoreLeftRightImagery, 250, Zhou2016, 36, 4)
-        yield (TSSVM, MultiScoreLeftRightImagery, 250, Zhou2016, 36, 4)
-        yield (SCNN, MultiScoreLeftRightImagery, 250, Zhou2016, 1, 4)
-        yield (DCNN, MultiScoreLeftRightImagery, 250, Zhou2016, 1, 4)
+        yield (CSPLDA, Zhou2016, 36, 4)
+        yield (CSPSVM, Zhou2016, 36, 4)
+        yield (TSLR, Zhou2016, 36, 4)
+        yield (TSSVM, Zhou2016, 36, 4)
+        yield (SCNN, Zhou2016, 1, 4)
+        yield (DCNN, Zhou2016, 1, 4)
 
     def _grossewentrup2009(self):
-        yield (CSPLDA, MultiScoreLeftRightImagery, 500, GrosseWentrup2009, 36, 5)
-        yield (CSPSVM, MultiScoreLeftRightImagery, 500, GrosseWentrup2009, 36, 5)
-        yield (TSLR, MultiScoreLeftRightImagery, 500, GrosseWentrup2009, 36, 5)
-        yield (TSSVM, MultiScoreLeftRightImagery, 500, GrosseWentrup2009, 36, 5)
-        yield (SCNN, MultiScoreLeftRightImagery, 500, GrosseWentrup2009, 1, 5)
-        yield (DCNN, MultiScoreLeftRightImagery, 500, GrosseWentrup2009, 1, 5)
+        yield (CSPLDA, GrosseWentrup2009, 36, 5)
+        yield (CSPSVM, GrosseWentrup2009, 36, 5)
+        yield (TSLR, GrosseWentrup2009, 36, 5)
+        yield (TSSVM, GrosseWentrup2009, 36, 5)
+        yield (SCNN, GrosseWentrup2009, 1, 5)
+        yield (DCNN, GrosseWentrup2009, 1, 5)
 
 
 Evaluation()()
