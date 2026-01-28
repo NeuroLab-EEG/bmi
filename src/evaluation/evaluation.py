@@ -201,4 +201,5 @@ class Evaluation:
         yield (SCNN, MultiScoreLeftRightImagery, 500, GrosseWentrup2009, 1, 5)
         yield (DCNN, MultiScoreLeftRightImagery, 500, GrosseWentrup2009, 1, 5)
 
+
 Evaluation()()
