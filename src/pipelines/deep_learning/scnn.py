@@ -27,8 +27,8 @@ class SCNN(Pipeline):
             "SCNN": make_pipeline(
                 EEGClassifier(
                     ShallowFBCSPNet(
-                        n_chans=self.n_chans,
-                        n_outputs=self.n_outputs,
+                        n_chans=self.n_features,
+                        n_outputs=self.n_classes,
                         n_times=self.n_times,
                     ),
                     criterion=torch.nn.CrossEntropyLoss,

@@ -23,8 +23,9 @@ from moabb.datasets import (
     Beetl2021_A,
     Beetl2021_B,
     Dreyer2023,
-    Stieger2021,
     Weibo2014,
+    Zhou2016,
+    GrosseWentrup2009,
 )
 
 
@@ -51,8 +52,9 @@ class Download:
         yield Beetl2021_A
         yield Beetl2021_B
         yield Dreyer2023
-        yield Stieger2021
         yield Weibo2014
+        yield Zhou2016
+        yield GrosseWentrup2009
 
 
 Download()()
