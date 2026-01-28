@@ -37,9 +37,9 @@ class Download:
         set_download_dir(self.data_path)
 
     def __call__(self):
-        for dataset in self._datasets():
-            d = dataset(accept=True) if dataset is Shin2017A else dataset()
-            d.get_data(cache_config=dict(path=self.data_path, save_raw=True))
+        for DatasetCls in self._datasets():
+            dataset = DatasetCls(accept=True) if DatasetCls is Shin2017A else DatasetCls()
+            dataset.get_data(cache_config=dict(path=self.data_path, save_raw=True))
 
     def _datasets(self):
         yield PhysionetMI

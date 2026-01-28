@@ -34,7 +34,6 @@ pip list --not-required
 Create `.env` file in root of git repository.
 
 ```bash
-# .env
 DATA_PATH=/path/to/data
 RANDOM_STATE=1
 ```
