@@ -33,7 +33,7 @@ class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
         self.classes_ = np.unique(y)
         y_binary = (y == self.classes_[1]).astype(int)
 
-        with pm.Model() as _:
+        with pm.Model():
             # Define priors
             b = pm.Normal("b", mu=0, sigma=10.0)
             w = pm.Normal("w", mu=0, sigma=10.0, shape=self.n_features_)
@@ -48,7 +48,7 @@ class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
                 tune=self.tune,
                 chains=self.chains,
                 random_seed=self.random_state,
-                quiet=True,
+                progressbar=False,
             )
 
         return self

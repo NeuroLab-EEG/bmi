@@ -33,7 +33,7 @@ class BayesianLDA(BaseEstimator, ClassifierMixin):
         self.classes_ = np.unique(y)
         y_binary = (y == self.classes_[1]).astype(int)
 
-        with pm.Model() as _:
+        with pm.Model():
             # Model class prior and likelihood
             pi = pm.Beta("pi", alpha=1.0, beta=1.0)
             pm.Bernoulli("y", p=pi, observed=y_binary)
@@ -62,7 +62,7 @@ class BayesianLDA(BaseEstimator, ClassifierMixin):
                 tune=self.tune,
                 chains=self.chains,
                 random_seed=self.random_state,
-                quiet=True,
+                progressbar=False,
             )
 
         return self
