@@ -64,7 +64,7 @@ mdurl==0.1.2
 memory-profiler==0.61.0
 mne==1.11.0
 mne-bids==0.18.0
--e git+ssh://git@github.com/davisethan/moabb.git@53cdd43ba02e8c7f8e084dcf83d4745c89005bb7#egg=moabb
+-e git+ssh://git@github.com/davisethan/moabb.git@7874cafa00c1abf9c25317a50bbecf5a45ce7650#egg=moabb
 mpmath==1.3.0
 multidict==6.7.0
 mypy_extensions==1.1.0
