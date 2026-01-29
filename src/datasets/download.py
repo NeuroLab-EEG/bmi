@@ -13,7 +13,6 @@ from os import getenv
 from dotenv import load_dotenv
 from moabb.utils import set_download_dir
 from moabb.datasets import (
-    Stieger2021,
     PhysionetMI,
     Lee2019_MI,
     Cho2017,
@@ -43,7 +42,6 @@ class Download:
             dataset.get_data(cache_config=dict(path=self.data_path, save_raw=True))
 
     def _datasets(self):
-        yield Stieger2021
         yield PhysionetMI
         yield Lee2019_MI
         yield Cho2017

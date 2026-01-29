@@ -13,7 +13,6 @@ from dotenv import load_dotenv
 from moabb.utils import set_download_dir
 from moabb.evaluations import CrossSubjectEvaluation
 from moabb.datasets import (
-    Stieger2021,
     PhysionetMI,
     Lee2019_MI,
     Cho2017,
@@ -84,7 +83,6 @@ class Evaluation:
 
     def _params(self):
         yield from self._bnci2014_001()
-        yield from self._stieger2021()
         yield from self._physionetmi()
         yield from self._lee2019_mi()
         yield from self._cho2017()
@@ -97,14 +95,6 @@ class Evaluation:
         yield from self._weibo2014()
         yield from self._zhou2016()
         yield from self._grossewentrup2009()
-
-    def _stieger2021(self):
-        yield (CSPLDA, Stieger2021, 36, 10)
-        yield (CSPSVM, Stieger2021, 36, 10)
-        yield (TSLR, Stieger2021, 36, 10)
-        yield (TSSVM, Stieger2021, 36, 10)
-        yield (SCNN, Stieger2021, 1, 10)
-        yield (DCNN, Stieger2021, 1, 10)
 
     def _physionetmi(self):
         yield (CSPLDA, PhysionetMI, 36, 10)
