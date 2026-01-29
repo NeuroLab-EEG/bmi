@@ -83,13 +83,13 @@ class Evaluation:
             result.to_csv(path.join(scores_path, f"{PipelineCls.__name__}.csv"), index=False)
 
     def _params(self):
+        yield from self._bnci2014_001()
         yield from self._stieger2021()
         yield from self._physionetmi()
         yield from self._lee2019_mi()
         yield from self._cho2017()
         yield from self._schirrmeister2017()
         yield from self._shin2017a()
-        yield from self._bnci2014_001()
         yield from self._bnci2014_004()
         yield from self._beetl2021_a()
         yield from self._beetl2021_b()
