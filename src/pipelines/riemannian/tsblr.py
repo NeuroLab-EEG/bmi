@@ -33,13 +33,16 @@ class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
         self.classes_ = np.unique(y)
         y_binary = (y == self.classes_[1]).astype(int)
 
-        with pm.Model():
+        with pm.Model() as self.model_:
+            X = pm.MutableData("X", X)
+
             # Define priors
             b = pm.Normal("b", mu=0, sigma=10.0)
             w = pm.Normal("w", mu=0, sigma=10.0, shape=self.n_features_)
 
             # Define likelihood
             logit = pm.math.dot(X, w) + b
+            pm.Deterministic("p", pm.math.sigmoid(logit))
             pm.Bernoulli("y", logit_p=logit, observed=y_binary)
 
             # Sample posterior using MCMC
@@ -56,14 +59,15 @@ class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
     def predict_proba(self, X):
         X = self._validate_data(X, reset=False)
 
-        # Extract posterior parameters
-        posterior = self.idata_.posterior
-        b = posterior["b"].values.flatten()
-        w = posterior["w"].values.reshape(-1, self.n_features_)
+        with self.model_:
+            pm.set_data({"X": X})
+            ppc = pm.sample_posterior_predictive(
+                self.idata_,
+                var_names=["p"],
+                progressbar=False
+            )
 
-        # Compute posterior predictive distribution
-        logit = b[:, np.newaxis] + w @ X.T
-        proba = expit(logit).mean(axis=0)
+        proba = ppc.posterior_predictive["p"].values.mean(axis=(0, 1))
         return np.column_stack([1 - proba, proba])
 
     def predict(self, X):
