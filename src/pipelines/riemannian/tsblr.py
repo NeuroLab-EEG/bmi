@@ -16,7 +16,6 @@ from pyriemann.estimation import Covariances
 from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
 from sklearn.base import BaseEstimator, ClassifierMixin
-from scipy.special import expit
 from src.pipelines.pipeline import Pipeline
 
 
@@ -61,11 +60,7 @@ class BayesianLogisticRegression(BaseEstimator, ClassifierMixin):
 
         with self.model_:
             pm.set_data({"X": X})
-            ppc = pm.sample_posterior_predictive(
-                self.idata_,
-                var_names=["p"],
-                progressbar=False
-            )
+            ppc = pm.sample_posterior_predictive(self.idata_, var_names=["p"], progressbar=False)
 
         proba = ppc.posterior_predictive["p"].values.mean(axis=(0, 1))
         return np.column_stack([1 - proba, proba])
