@@ -39,13 +39,13 @@ class BayesianLogisticRegression(ModelBuilder, ClassifierMixin, BaseEstimator):
             # Define priors
             b = pm.Normal(
                 "b",
-                mu=self.model_config["b_mu_prior"],
-                sigma=self.model_config["b_sigma_prior"],
+                mu=self.model_config["b_mu"],
+                sigma=self.model_config["b_sigma"],
             )
             w = pm.Normal(
                 "w",
-                mu=self.model_config["w_mu_prior"],
-                sigma=self.model_config["w_sigma_prior"],
+                mu=self.model_config["w_mu"],
+                sigma=self.model_config["w_sigma"],
                 shape=n_features,
             )
 
@@ -71,10 +71,10 @@ class BayesianLogisticRegression(ModelBuilder, ClassifierMixin, BaseEstimator):
     @staticmethod
     def get_default_model_config():
         return {
-            "b_mu_prior": 0,
-            "b_sigma_prior": 10.0,
-            "w_mu_prior": 0,
-            "w_sigma_prior": 10.0,
+            "b_mu": 0,
+            "b_sigma": 10.0,
+            "w_mu": 0,
+            "w_sigma": 10.0,
         }
 
     @staticmethod
