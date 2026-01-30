@@ -17,7 +17,7 @@ from braindecode.classifier import EEGClassifier
 from skorch.callbacks import EarlyStopping, LRScheduler
 from skorch.dataset import ValidSplit
 from sklearn.pipeline import make_pipeline
-from src.pipelines.pipeline import Pipeline
+from src.pipelines import Pipeline
 
 
 class DCNN(Pipeline):
