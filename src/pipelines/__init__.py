@@ -1,3 +1,4 @@
+from .pipeline import Pipeline
 from .raw_signal.csplda import CSPLDA
 from .raw_signal.cspsvm import CSPSVM
 from .riemannian.tslr import TSLR
@@ -7,6 +8,7 @@ from .deep_learning.dcnn import DCNN
 from .riemannian.tsblr import TSBLR
 
 __all__ = [
+    "Pipeline",
     "CSPLDA",
     "CSPSVM",
     "TSLR",
