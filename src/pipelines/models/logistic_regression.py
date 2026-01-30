@@ -64,7 +64,7 @@ class BayesianLogisticRegression(ModelBuilder, ClassifierMixin, BaseEstimator):
         posterior_samples = super().predict_proba(X)
         proba = posterior_samples.mean(dim=["chain", "draw"]).values
         return np.column_stack([1 - proba, proba])
-    
+
     def predict(self, X):
         proba = self.predict_proba(X)
         return self.classes_[np.argmax(proba, axis=1)]
@@ -95,7 +95,7 @@ class BayesianLogisticRegression(ModelBuilder, ClassifierMixin, BaseEstimator):
     @property
     def _serializable_model_config(self):
         return self.model_config
-    
+
     def _data_setter(self, X, y=None):
         with self.model:
             pm.set_data({"x_data": X})
@@ -103,7 +103,7 @@ class BayesianLogisticRegression(ModelBuilder, ClassifierMixin, BaseEstimator):
                 pm.set_data({"y_data": y})
             else:
                 pm.set_data({"y_data": np.zeros(X.shape[0], dtype=np.int32)})
-    
+
     def _generate_and_preprocess_model_data(self, X, y):
         self.X = X
         self.y = y

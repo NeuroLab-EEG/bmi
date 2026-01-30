@@ -28,9 +28,7 @@ from moabb.datasets import (
     GrosseWentrup2009,
 )
 from src.paradigm import MultiScoreLeftRightImagery
-from src.pipelines import (
-    CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, TSBLR
-)
+from src.pipelines import CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, TSBLR
 
 
 class Evaluation:
