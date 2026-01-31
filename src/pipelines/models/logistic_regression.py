@@ -57,7 +57,7 @@ class BayesianLogisticRegression(ModelBuilder, ClassifierMixin, BaseEstimator):
         X = pd.DataFrame(X, columns=[f"x{i}" for i in range(X.shape[1])])
         y = pd.Series(y, name=self.output_var)
         self.classes_ = np.unique(y)
-        super().fit(X, y=y, progressbar=False, random_seed=self.random_state)
+        super().fit(X, y=y, random_seed=self.random_state)
 
     def predict_proba(self, X):
         posterior_samples = super().predict_proba(X)
@@ -84,6 +84,7 @@ class BayesianLogisticRegression(ModelBuilder, ClassifierMixin, BaseEstimator):
             "tune": 1000,
             "chains": 4,
             "target_accept": 0.95,
+            "progressbar": False,
         }
 
     @property
