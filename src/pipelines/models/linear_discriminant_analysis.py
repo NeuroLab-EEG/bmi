@@ -42,8 +42,18 @@ class BayesianLinearDiscriminantAnalasis(ModelBuilder, ClassifierMixin, BaseEsti
             pi = pm.Beta("pi", alpha=self.model_config["pi_alpha"], beta=self.model_config["pi_beta"])
 
             # Define mean priors
-            mu_0 = pm.Normal("mu_0", mu=self.model_config["mu_0_mu"], sigma=self.model_config["mu_0_sigma"], shape=n_features)
-            mu_1 = pm.Normal("mu_1", mu=self.model_config["mu_1_mu"], sigma=self.model_config["mu_1_sigma"], shape=n_features)
+            mu_0 = pm.Normal(
+                "mu_0",
+                mu=self.model_config["mu_0_mu"],
+                sigma=self.model_config["mu_0_sigma"],
+                shape=n_features,
+            )
+            mu_1 = pm.Normal(
+                "mu_1",
+                mu=self.model_config["mu_1_mu"],
+                sigma=self.model_config["mu_1_sigma"],
+                shape=n_features,
+            )
 
             # Define covariance prior
             chol, _, _ = pm.LKJCholeskyCov(
@@ -75,7 +85,7 @@ class BayesianLinearDiscriminantAnalasis(ModelBuilder, ClassifierMixin, BaseEsti
     def predict(self, X):
         proba = self.predict_proba(X)
         return self.classes_[np.argmax(proba, axis=1)]
-    
+
     @staticmethod
     def get_default_model_config():
         return {
@@ -98,7 +108,7 @@ class BayesianLinearDiscriminantAnalasis(ModelBuilder, ClassifierMixin, BaseEsti
             "target_accept": 0.95,
             "progressbar": False,
         }
-    
+
     @property
     def output_var(self):
         return "y"
@@ -106,7 +116,7 @@ class BayesianLinearDiscriminantAnalasis(ModelBuilder, ClassifierMixin, BaseEsti
     @property
     def _serializable_model_config(self):
         return self.model_config
-    
+
     def _data_setter(self, X, y=None):
         with self.model:
             pm.set_data({"x_data": X})
