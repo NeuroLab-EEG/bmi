@@ -28,7 +28,7 @@ from moabb.datasets import (
     GrosseWentrup2009,
 )
 from src.paradigm import MultiScoreLeftRightImagery
-from src.pipelines import CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, TSBLR
+from src.pipelines import CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, CSPBLDA, TSBLR
 
 
 class Evaluation:
@@ -78,18 +78,18 @@ class Evaluation:
 
     def _params(self):
         yield from self._bnci2014_001()
-        yield from self._physionetmi()
-        yield from self._lee2019_mi()
-        yield from self._cho2017()
-        yield from self._schirrmeister2017()
-        yield from self._shin2017a()
-        yield from self._bnci2014_004()
-        yield from self._beetl2021_a()
-        yield from self._beetl2021_b()
-        yield from self._dreyer2023()
-        yield from self._weibo2014()
-        yield from self._zhou2016()
-        yield from self._grossewentrup2009()
+        # yield from self._physionetmi()
+        # yield from self._lee2019_mi()
+        # yield from self._cho2017()
+        # yield from self._schirrmeister2017()
+        # yield from self._shin2017a()
+        # yield from self._bnci2014_004()
+        # yield from self._beetl2021_a()
+        # yield from self._beetl2021_b()
+        # yield from self._dreyer2023()
+        # yield from self._weibo2014()
+        # yield from self._zhou2016()
+        # yield from self._grossewentrup2009()
 
     def _physionetmi(self):
         yield (CSPLDA, PhysionetMI, 36, 10)
@@ -98,6 +98,7 @@ class Evaluation:
         yield (TSSVM, PhysionetMI, 36, 10)
         yield (SCNN, PhysionetMI, 1, 10)
         yield (DCNN, PhysionetMI, 1, 10)
+        yield (CSPBLDA, PhysionetMI, 1, 10)
         yield (TSBLR, PhysionetMI, 1, 10)
 
     def _lee2019_mi(self):
@@ -107,6 +108,7 @@ class Evaluation:
         yield (TSSVM, Lee2019_MI, 36, 10)
         yield (SCNN, Lee2019_MI, 1, 10)
         yield (DCNN, Lee2019_MI, 1, 10)
+        yield (CSPBLDA, Lee2019_MI, 1, 10)
         yield (TSBLR, Lee2019_MI, 1, 10)
 
     def _cho2017(self):
@@ -116,6 +118,7 @@ class Evaluation:
         yield (TSSVM, Cho2017, 36, 10)
         yield (SCNN, Cho2017, 1, 10)
         yield (DCNN, Cho2017, 1, 10)
+        yield (CSPBLDA, Cho2017, 1, 10)
         yield (TSBLR, Cho2017, 1, 10)
 
     def _schirrmeister2017(self):
@@ -125,6 +128,7 @@ class Evaluation:
         yield (TSSVM, Schirrmeister2017, 36, 5)
         yield (SCNN, Schirrmeister2017, 1, 5)
         yield (DCNN, Schirrmeister2017, 1, 5)
+        yield (CSPBLDA, Schirrmeister2017, 1, 5)
         yield (TSBLR, Schirrmeister2017, 1, 5)
 
     def _shin2017a(self):
@@ -134,16 +138,18 @@ class Evaluation:
         yield (TSSVM, Shin2017A, 36, 5)
         yield (SCNN, Shin2017A, 1, 5)
         yield (DCNN, Shin2017A, 1, 5)
+        yield (CSPBLDA, Shin2017A, 1, 5)
         yield (TSBLR, Shin2017A, 1, 5)
 
     def _bnci2014_001(self):
-        yield (CSPLDA, BNCI2014_001, 36, 9)
-        yield (CSPSVM, BNCI2014_001, 36, 9)
-        yield (TSLR, BNCI2014_001, 36, 9)
-        yield (TSSVM, BNCI2014_001, 36, 9)
-        yield (SCNN, BNCI2014_001, 1, 9)
-        yield (DCNN, BNCI2014_001, 1, 9)
-        yield (TSBLR, BNCI2014_001, 1, 9)
+        # yield (CSPLDA, BNCI2014_001, 36, 9)
+        # yield (CSPSVM, BNCI2014_001, 36, 9)
+        # yield (TSLR, BNCI2014_001, 36, 9)
+        # yield (TSSVM, BNCI2014_001, 36, 9)
+        # yield (SCNN, BNCI2014_001, 1, 9)
+        # yield (DCNN, BNCI2014_001, 1, 9)
+        yield (CSPBLDA, BNCI2014_001, 1, 9)
+        # yield (TSBLR, BNCI2014_001, 1, 9)
 
     def _bnci2014_004(self):
         yield (CSPLDA, BNCI2014_004, 36, 9)
@@ -152,6 +158,7 @@ class Evaluation:
         yield (TSSVM, BNCI2014_004, 36, 9)
         yield (SCNN, BNCI2014_004, 1, 9)
         yield (DCNN, BNCI2014_004, 1, 9)
+        yield (CSPBLDA, BNCI2014_004, 1, 9)
         yield (TSBLR, BNCI2014_004, 1, 9)
 
     def _beetl2021_a(self):
@@ -161,6 +168,7 @@ class Evaluation:
         yield (TSSVM, Beetl2021_A, 36, 3)
         yield (SCNN, Beetl2021_A, 1, 3)
         yield (DCNN, Beetl2021_A, 1, 3)
+        yield (CSPBLDA, Beetl2021_A, 1, 3)
         yield (TSBLR, Beetl2021_A, 1, 3)
 
     def _beetl2021_b(self):
@@ -170,6 +178,7 @@ class Evaluation:
         yield (TSSVM, Beetl2021_B, 36, 2)
         yield (SCNN, Beetl2021_B, 1, 2)
         yield (DCNN, Beetl2021_B, 1, 2)
+        yield (CSPBLDA, Beetl2021_B, 1, 2)
         yield (TSBLR, Beetl2021_B, 1, 2)
 
     def _dreyer2023(self):
@@ -179,6 +188,7 @@ class Evaluation:
         yield (TSSVM, Dreyer2023, 36, 10)
         yield (SCNN, Dreyer2023, 1, 10)
         yield (DCNN, Dreyer2023, 1, 10)
+        yield (CSPBLDA, Dreyer2023, 1, 10)
         yield (TSBLR, Dreyer2023, 1, 10)
 
     def _weibo2014(self):
@@ -188,6 +198,7 @@ class Evaluation:
         yield (TSSVM, Weibo2014, 36, 5)
         yield (SCNN, Weibo2014, 1, 5)
         yield (DCNN, Weibo2014, 1, 5)
+        yield (CSPBLDA, Weibo2014, 1, 5)
         yield (TSBLR, Weibo2014, 1, 5)
 
     def _zhou2016(self):
@@ -197,6 +208,7 @@ class Evaluation:
         yield (TSSVM, Zhou2016, 36, 4)
         yield (SCNN, Zhou2016, 1, 4)
         yield (DCNN, Zhou2016, 1, 4)
+        yield (CSPBLDA, Zhou2016, 1, 4)
         yield (TSBLR, Zhou2016, 1, 4)
 
     def _grossewentrup2009(self):
@@ -206,6 +218,7 @@ class Evaluation:
         yield (TSSVM, GrosseWentrup2009, 36, 5)
         yield (SCNN, GrosseWentrup2009, 1, 5)
         yield (DCNN, GrosseWentrup2009, 1, 5)
+        yield (CSPBLDA, GrosseWentrup2009, 1, 5)
         yield (TSBLR, GrosseWentrup2009, 1, 5)
 
 
