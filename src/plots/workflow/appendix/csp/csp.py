@@ -67,6 +67,11 @@ class CSP:
         self.Q_transformed = np.diag(eigvals)
         self.V_transformed = eigvecs
 
+    def __call__(self):
+        self.plot_both_covariances_subplots()
+        self.plot_covariances_sum_subplots()
+        self.plot_covariances_transformed_subplots()
+
     def _plot_covariance(
         self,
         ax,
@@ -287,7 +292,4 @@ class CSP:
         plt.savefig("scms_transformed_subplots")
 
 
-csp = CSP()
-csp.plot_both_covariances_subplots()
-csp.plot_covariances_sum_subplots()
-csp.plot_covariances_transformed_subplots()
+csp = CSP()()
