@@ -51,7 +51,9 @@ class CSP:
         self.cov_summed = self.cov1 + self.cov2
         eigvals_summed, self.eigvecs_summed = np.linalg.eigh(self.cov_summed)
         self.eigvals_summed = np.diag(eigvals_summed)
-        self.cov_summed_whitening = self.eigvecs_summed @ np.diag(1.0 / np.sqrt(np.diag(self.eigvals_summed))) @ self.eigvecs_summed.T
+        self.cov_summed_whitening = (
+            self.eigvecs_summed @ np.diag(1.0 / np.sqrt(np.diag(self.eigvals_summed))) @ self.eigvecs_summed.T
+        )
         self.cov_summed_whitened = self.cov_summed_whitening @ self.cov_summed @ self.cov_summed_whitening.T
         self.eigvals_summed_whitened = np.diag(np.linalg.eigvals(self.cov_summed_whitened))
 
