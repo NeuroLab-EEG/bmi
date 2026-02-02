@@ -20,11 +20,8 @@ from moabb.datasets import (
     Shin2017A,
     BNCI2014_001,
     BNCI2014_004,
-    Beetl2021_A,
-    Beetl2021_B,
     Dreyer2023,
     Weibo2014,
-    Zhou2016,
     GrosseWentrup2009,
 )
 
@@ -49,11 +46,8 @@ class Download:
         yield Shin2017A
         yield BNCI2014_001
         yield BNCI2014_004
-        yield Beetl2021_A
-        yield Beetl2021_B
         yield Dreyer2023
         yield Weibo2014
-        yield Zhou2016
         yield GrosseWentrup2009
 
 
