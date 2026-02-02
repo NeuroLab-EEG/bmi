@@ -6,6 +6,7 @@ from .riemannian.tssvm import TSSVM
 from .deep_learning.scnn import SCNN
 from .deep_learning.dcnn import DCNN
 from .raw_signal.cspblda import CSPBLDA
+from .raw_signal.cspgp import CSPGP
 from .riemannian.tsblr import TSBLR
 
 __all__ = [
@@ -17,5 +18,6 @@ __all__ = [
     "SCNN",
     "DCNN",
     "CSPBLDA",
+    "CSPGP",
     "TSBLR",
 ]
