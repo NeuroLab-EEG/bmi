@@ -104,7 +104,7 @@ class CSP:
             scale=1,
             width=0.01,
             color=edgecolor,
-            zorder=3,
+            zorder=2,
         )
         plt.quiver(
             x0,
@@ -116,7 +116,7 @@ class CSP:
             scale=1,
             width=0.01,
             color=edgecolor,
-            zorder=3,
+            zorder=2,
         )
 
     def _center_axes(self, ax, padding=1.05):
