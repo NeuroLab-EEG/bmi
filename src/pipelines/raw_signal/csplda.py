@@ -10,7 +10,7 @@ from pyriemann.estimation import Covariances
 from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
-from src.pipelines.pipeline import Pipeline
+from src.pipelines import Pipeline
 
 
 class CSPLDA(Pipeline):

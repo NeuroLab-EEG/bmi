@@ -10,7 +10,7 @@ from pyriemann.estimation import Covariances
 from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
-from src.pipelines.pipeline import Pipeline
+from src.pipelines import Pipeline
 
 
 class TSLR(Pipeline):

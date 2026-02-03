@@ -29,7 +29,7 @@ class CSP:
                 [np.sin(np.pi / 6), np.sin(2 * np.pi / 3)],
             ]
         )
-        self.P = np.array([[9.0, 0.0], [0.0, 1.5]])
+        self.P = np.array([[9.0, 0.0], [0.0, 3.0]])
         self.C = self.U @ self.P @ self.U.T
         self.CM = self.U @ np.diag(1.0 / np.sqrt(np.diag(self.P))) @ self.U.T
         self.C_whitened = self.CM @ self.C @ self.CM.T
@@ -42,7 +42,7 @@ class CSP:
                 [np.sin(np.pi / 3), np.sin(5 * np.pi / 6)],
             ]
         )
-        self.Q = np.array([[10.0, 0.0], [0.0, 0.75]])
+        self.Q = np.array([[10.0, 0.0], [0.0, 2.5]])
         self.D = self.V @ self.Q @ self.V.T
         self.DM = self.V @ np.diag(1.0 / np.sqrt(np.diag(self.Q))) @ self.V.T
         self.D_whitened = self.DM @ self.D @ self.DM.T
@@ -67,6 +67,11 @@ class CSP:
         self.Q_transformed = np.diag(eigvals)
         self.V_transformed = eigvecs
 
+    def __call__(self):
+        self.plot_both_covariances_subplots()
+        self.plot_covariances_sum_subplots()
+        self.plot_covariances_transformed_subplots()
+
     def _plot_covariance(
         self,
         ax,
@@ -83,8 +88,8 @@ class CSP:
 
         # Build ellipse
         n_std = 2.3 if points else 1.0
-        width = 2 * n_std * np.sqrt(D[0, 0])
-        height = 2 * n_std * np.sqrt(D[1, 1])
+        width = 2 * n_std * D[0, 0]
+        height = 2 * n_std * D[1, 1]
         theta = np.degrees(np.arctan(Q[1, 0] / Q[0, 0]))
         ellipse = Ellipse(
             self.mean,
@@ -108,8 +113,8 @@ class CSP:
 
         # Plot quivers
         x0, y0 = self.mean
-        u1, v1 = Q[:, 0] * np.sqrt(D[0, 0]) * n_std
-        u2, v2 = Q[:, 1] * np.sqrt(D[1, 1]) * n_std
+        u1, v1 = Q[:, 0] * D[0, 0] * n_std
+        u2, v2 = Q[:, 1] * D[1, 1] * n_std
         plt.quiver(
             x0,
             y0,
@@ -135,13 +140,14 @@ class CSP:
             zorder=3,
         )
 
-    def _center_axes(self, ax):
+    def _center_axes(self, ax, padding=1.05):
         ax.set_aspect("equal", adjustable="box")
         cx, cy = self.mean
         lim = max(
             np.max(np.abs(np.array(ax.get_xlim()) - cx)),
             np.max(np.abs(np.array(ax.get_ylim()) - cy)),
         )
+        lim *= padding
         ax.set_xlim(cx - lim, cx + lim)
         ax.set_ylim(cy - lim, cy + lim)
         ax.set_anchor("C")
@@ -286,7 +292,4 @@ class CSP:
         plt.savefig("scms_transformed_subplots")
 
 
-csp = CSP()
-csp.plot_both_covariances_subplots()
-csp.plot_covariances_sum_subplots()
-csp.plot_covariances_transformed_subplots()
+csp = CSP()()
