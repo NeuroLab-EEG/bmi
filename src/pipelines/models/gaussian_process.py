@@ -38,7 +38,9 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
             y_data = pm.Data("y_data", y)
 
             # Define covariance priors
-            ell = pm.InverseGamma("ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"], shape=n_features)
+            ell = pm.InverseGamma(
+                "ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"], shape=n_features
+            )
             eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
             cov = eta**2 * pm.gp.cov.ExpQuad(input_dim=n_features, ls=ell)
 
@@ -89,7 +91,7 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
     def predict(self, X):
         proba = self.predict_proba(X)
         return self.classes_[np.argmax(proba, axis=1)]
-    
+
     @staticmethod
     def get_default_model_config():
         return {
@@ -106,7 +108,7 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
             "progressbar": False,
             "draws": 2000,
         }
-    
+
     @property
     def output_var(self):
         return "p"

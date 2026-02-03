@@ -24,6 +24,6 @@ class TSGP(Pipeline):
                 GaussianProcess(),
             )
         }
-    
+
     def params(self):
         return {}
