@@ -20,11 +20,8 @@ from moabb.datasets import (
     Shin2017A,
     BNCI2014_001,
     BNCI2014_004,
-    Beetl2021_A,
-    Beetl2021_B,
     Dreyer2023,
     Weibo2014,
-    Zhou2016,
     GrosseWentrup2009,
 )
 from src.paradigm.paradigm import MultiScoreLeftRightImagery
@@ -58,8 +55,7 @@ class Evaluation:
             # Configure evaluation
             dataset = DatasetCls()
             paradigm = MultiScoreLeftRightImagery(resample=128)
-            subject = 4 if DatasetCls is Beetl2021_B else 1
-            X, y, _ = paradigm.get_data(dataset, subjects=[subject])
+            X, y, _ = paradigm.get_data(dataset, subjects=[1])
             pipeline = PipelineCls(n_features=X.shape[1], n_classes=len(np.unique(y)), n_times=X.shape[2])
             evaluation = CrossSubjectEvaluation(
                 datasets=[dataset],
@@ -89,11 +85,8 @@ class Evaluation:
         yield from self._schirrmeister2017()
         yield from self._shin2017a()
         yield from self._bnci2014_004()
-        yield from self._beetl2021_a()
-        yield from self._beetl2021_b()
         yield from self._dreyer2023()
         yield from self._weibo2014()
-        yield from self._zhou2016()
         yield from self._grossewentrup2009()
 
     def _physionetmi(self):
@@ -152,22 +145,6 @@ class Evaluation:
         yield (SCNN, BNCI2014_004, 1, 9)
         yield (DCNN, BNCI2014_004, 1, 9)
 
-    def _beetl2021_a(self):
-        yield (CSPLDA, Beetl2021_A, 36, 3)
-        yield (CSPSVM, Beetl2021_A, 36, 3)
-        yield (TSLR, Beetl2021_A, 36, 3)
-        yield (TSSVM, Beetl2021_A, 36, 3)
-        yield (SCNN, Beetl2021_A, 1, 3)
-        yield (DCNN, Beetl2021_A, 1, 3)
-
-    def _beetl2021_b(self):
-        yield (CSPLDA, Beetl2021_B, 36, 2)
-        yield (CSPSVM, Beetl2021_B, 36, 2)
-        yield (TSLR, Beetl2021_B, 36, 2)
-        yield (TSSVM, Beetl2021_B, 36, 2)
-        yield (SCNN, Beetl2021_B, 1, 2)
-        yield (DCNN, Beetl2021_B, 1, 2)
-
     def _dreyer2023(self):
         yield (CSPLDA, Dreyer2023, 36, 10)
         yield (CSPSVM, Dreyer2023, 36, 10)
@@ -183,14 +160,6 @@ class Evaluation:
         yield (TSSVM, Weibo2014, 36, 5)
         yield (SCNN, Weibo2014, 1, 5)
         yield (DCNN, Weibo2014, 1, 5)
-
-    def _zhou2016(self):
-        yield (CSPLDA, Zhou2016, 36, 4)
-        yield (CSPSVM, Zhou2016, 36, 4)
-        yield (TSLR, Zhou2016, 36, 4)
-        yield (TSSVM, Zhou2016, 36, 4)
-        yield (SCNN, Zhou2016, 1, 4)
-        yield (DCNN, Zhou2016, 1, 4)
 
     def _grossewentrup2009(self):
         yield (CSPLDA, GrosseWentrup2009, 36, 5)
