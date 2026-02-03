@@ -101,8 +101,8 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
     @staticmethod
     def get_default_sampler_config():
         return {
-            "n_particles": 500,
-            "n": 100000,
+            "n_particles": 300,
+            "n": 50000,
             "progressbar": False,
             "draws": 2000,
         }

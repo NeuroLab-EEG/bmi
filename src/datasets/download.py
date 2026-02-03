@@ -49,6 +49,3 @@ class Download:
         yield Dreyer2023
         yield Weibo2014
         yield GrosseWentrup2009
-
-
-Download()()

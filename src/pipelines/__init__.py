@@ -8,6 +8,7 @@ from .deep_learning.dcnn import DCNN
 from .raw_signal.cspblda import CSPBLDA
 from .raw_signal.cspgp import CSPGP
 from .riemannian.tsblr import TSBLR
+from .riemannian.tsgp import TSGP
 
 __all__ = [
     "Pipeline",
@@ -20,4 +21,5 @@ __all__ = [
     "CSPBLDA",
     "CSPGP",
     "TSBLR",
+    "TSGP",
 ]

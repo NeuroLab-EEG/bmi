@@ -25,7 +25,7 @@ from moabb.datasets import (
     GrosseWentrup2009,
 )
 from src.paradigm import MultiScoreLeftRightImagery
-from src.pipelines import CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, CSPBLDA, CSPGP, TSBLR
+from src.pipelines import CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, CSPBLDA, CSPGP, TSBLR, TSGP
 
 
 class Evaluation:
@@ -94,6 +94,7 @@ class Evaluation:
         yield (CSPBLDA, PhysionetMI, 1, 10)
         yield (CSPGP, PhysionetMI, 1, 10)
         yield (TSBLR, PhysionetMI, 1, 10)
+        yield (TSGP, PhysionetMI, 1, 10)
 
     def _lee2019_mi(self):
         yield (CSPLDA, Lee2019_MI, 36, 10)
@@ -105,6 +106,7 @@ class Evaluation:
         yield (CSPBLDA, Lee2019_MI, 1, 10)
         yield (CSPGP, Lee2019_MI, 1, 10)
         yield (TSBLR, Lee2019_MI, 1, 10)
+        yield (TSGP, Lee2019_MI, 1, 10)
 
     def _cho2017(self):
         yield (CSPLDA, Cho2017, 36, 10)
@@ -116,6 +118,7 @@ class Evaluation:
         yield (CSPBLDA, Cho2017, 1, 10)
         yield (CSPGP, Cho2017, 1, 10)
         yield (TSBLR, Cho2017, 1, 10)
+        yield (TSGP, Cho2017, 1, 10)
 
     def _schirrmeister2017(self):
         yield (CSPLDA, Schirrmeister2017, 36, 5)
@@ -127,6 +130,7 @@ class Evaluation:
         yield (CSPBLDA, Schirrmeister2017, 1, 5)
         yield (CSPGP, Schirrmeister2017, 1, 5)
         yield (TSBLR, Schirrmeister2017, 1, 5)
+        yield (TSGP, Schirrmeister2017, 1, 5)
 
     def _shin2017a(self):
         yield (CSPLDA, Shin2017A, 36, 5)
@@ -138,6 +142,7 @@ class Evaluation:
         yield (CSPBLDA, Shin2017A, 1, 5)
         yield (CSPGP, Shin2017A, 1, 5)
         yield (TSBLR, Shin2017A, 1, 5)
+        yield (TSGP, Shin2017A, 1, 5)
 
     def _bnci2014_001(self):
         yield (CSPLDA, BNCI2014_001, 36, 9)
@@ -149,6 +154,7 @@ class Evaluation:
         yield (CSPBLDA, BNCI2014_001, 1, 9)
         yield (CSPGP, BNCI2014_001, 1, 9)
         yield (TSBLR, BNCI2014_001, 1, 9)
+        yield (TSGP, BNCI2014_001, 1, 9)
 
     def _bnci2014_004(self):
         yield (CSPLDA, BNCI2014_004, 36, 9)
@@ -160,6 +166,7 @@ class Evaluation:
         yield (CSPBLDA, BNCI2014_004, 1, 9)
         yield (CSPGP, BNCI2014_004, 1, 9)
         yield (TSBLR, BNCI2014_004, 1, 9)
+        yield (TSGP, BNCI2014_004, 1, 9)
 
     def _dreyer2023(self):
         yield (CSPLDA, Dreyer2023, 36, 10)
@@ -171,6 +178,7 @@ class Evaluation:
         yield (CSPBLDA, Dreyer2023, 1, 10)
         yield (CSPGP, Dreyer2023, 1, 10)
         yield (TSBLR, Dreyer2023, 1, 10)
+        yield (TSGP, Dreyer2023, 1, 10)
 
     def _weibo2014(self):
         yield (CSPLDA, Weibo2014, 36, 5)
@@ -182,6 +190,7 @@ class Evaluation:
         yield (CSPBLDA, Weibo2014, 1, 5)
         yield (CSPGP, Weibo2014, 1, 5)
         yield (TSBLR, Weibo2014, 1, 5)
+        yield (TSGP, Weibo2014, 1, 5)
 
     def _grossewentrup2009(self):
         yield (CSPLDA, GrosseWentrup2009, 36, 5)
@@ -193,6 +202,4 @@ class Evaluation:
         yield (CSPBLDA, GrosseWentrup2009, 1, 5)
         yield (CSPGP, GrosseWentrup2009, 1, 5)
         yield (TSBLR, GrosseWentrup2009, 1, 5)
-
-
-Evaluation()()
+        yield (TSGP, GrosseWentrup2009, 1, 5)
