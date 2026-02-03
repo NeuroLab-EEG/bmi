@@ -1,14 +1,7 @@
 from .pipeline import Pipeline
-from .raw_signal.csplda import CSPLDA
-from .raw_signal.cspsvm import CSPSVM
-from .riemannian.tslr import TSLR
-from .riemannian.tssvm import TSSVM
-from .deep_learning.scnn import SCNN
-from .deep_learning.dcnn import DCNN
-from .raw_signal.cspblda import CSPBLDA
-from .raw_signal.cspgp import CSPGP
-from .riemannian.tsblr import TSBLR
-from .riemannian.tsgp import TSGP
+from .raw_signal import CSPLDA, CSPSVM, CSPBLDA, CSPGP
+from .riemannian import TSLR, TSSVM, TSBLR, TSGP
+from .deep_learning import SCNN, DCNN
 
 __all__ = [
     "Pipeline",
