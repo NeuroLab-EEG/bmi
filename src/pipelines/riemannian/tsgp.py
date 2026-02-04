@@ -10,6 +10,7 @@ from pyriemann.estimation import Covariances
 from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 from src.pipelines.pipeline import Pipeline
 from src.pipelines.models import GaussianProcess
 
@@ -21,6 +22,7 @@ class TSGP(Pipeline):
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
+                PCA(n_components=0.95),
                 GaussianProcess(),
             )
         }

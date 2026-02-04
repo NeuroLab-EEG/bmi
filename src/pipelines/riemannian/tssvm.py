@@ -10,6 +10,8 @@ References
 from pyriemann.estimation import Covariances
 from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 from sklearn.svm import SVC
 from src.pipelines import Pipeline
 
@@ -20,6 +22,8 @@ class TSSVM(Pipeline):
             "TSSVM": make_pipeline(
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
+                StandardScaler(),
+                PCA(n_components=0.95),
                 SVC(kernel="linear", probability=True, random_state=self.random_state),
             )
         }
