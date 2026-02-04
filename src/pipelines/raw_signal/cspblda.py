@@ -9,6 +9,8 @@ References
 from pyriemann.estimation import Covariances
 from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 from src.pipelines import Pipeline
 from src.pipelines.models import BayesianLinearDiscriminantAnalasis as BayesianLDA
 
@@ -19,6 +21,8 @@ class CSPBLDA(Pipeline):
             "CSPBLDA": make_pipeline(
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
+                StandardScaler(),
+                PCA(n_components=0.95),
                 BayesianLDA(),
             )
         }
