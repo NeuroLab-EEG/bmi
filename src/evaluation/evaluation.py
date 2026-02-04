@@ -84,6 +84,18 @@ class Evaluation:
         yield from self._weibo2014()
         yield from self._grossewentrup2009()
 
+    def _bnci2014_001(self):
+        yield (CSPLDA, BNCI2014_001, 36, 9)
+        yield (CSPSVM, BNCI2014_001, 36, 9)
+        yield (TSLR, BNCI2014_001, 36, 9)
+        yield (TSSVM, BNCI2014_001, 36, 9)
+        yield (SCNN, BNCI2014_001, 1, 9)
+        yield (DCNN, BNCI2014_001, 1, 9)
+        yield (CSPBLDA, BNCI2014_001, 1, 9)
+        yield (CSPGP, BNCI2014_001, 1, 9)
+        yield (TSBLR, BNCI2014_001, 1, 9)
+        yield (TSGP, BNCI2014_001, 1, 9)
+
     def _physionetmi(self):
         yield (CSPLDA, PhysionetMI, 36, 10)
         yield (CSPSVM, PhysionetMI, 36, 10)
@@ -143,18 +155,6 @@ class Evaluation:
         yield (CSPGP, Shin2017A, 1, 5)
         yield (TSBLR, Shin2017A, 1, 5)
         yield (TSGP, Shin2017A, 1, 5)
-
-    def _bnci2014_001(self):
-        yield (CSPLDA, BNCI2014_001, 36, 9)
-        yield (CSPSVM, BNCI2014_001, 36, 9)
-        yield (TSLR, BNCI2014_001, 36, 9)
-        yield (TSSVM, BNCI2014_001, 36, 9)
-        yield (SCNN, BNCI2014_001, 1, 9)
-        yield (DCNN, BNCI2014_001, 1, 9)
-        yield (CSPBLDA, BNCI2014_001, 1, 9)
-        yield (CSPGP, BNCI2014_001, 1, 9)
-        yield (TSBLR, BNCI2014_001, 1, 9)
-        yield (TSGP, BNCI2014_001, 1, 9)
 
     def _bnci2014_004(self):
         yield (CSPLDA, BNCI2014_004, 36, 9)
