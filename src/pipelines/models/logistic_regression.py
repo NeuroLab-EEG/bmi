@@ -84,7 +84,9 @@ class BayesianLogisticRegression(ModelBuilder, ClassifierMixin, BaseEstimator):
             "tune": 1000,
             "chains": 4,
             "target_accept": 0.95,
+            "random_seed": None,
             "progressbar": False,
+            "nuts_sampler": "numpyro",
         }
 
     @property

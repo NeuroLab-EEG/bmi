@@ -58,34 +58,9 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
         self.classes_ = np.unique(y)
         super().fit(X, y=y, random_seed=self.random_state)
 
-    def sample_model(self, **kwargs):
-        with self.model:
-            sampler_args = {**self.sampler_config, **kwargs}
-
-            approx = pm.SVGD(
-                n_particles=sampler_args["n_particles"],
-                random_seed=sampler_args["random_seed"],
-            )
-            approx.fit(
-                n=sampler_args["n"],
-                progressbar=sampler_args["progressbar"],
-            )
-
-            idata = approx.sample(draws=sampler_args["draws"])
-            idata.extend(pm.sample_prior_predictive(), join="right")
-            idata.extend(pm.sample_posterior_predictive(idata, var_names=[self.output_var]), join="right")
-
-        idata = self.set_idata_attrs(idata)
-        return idata
-
     def predict_proba(self, X):
-        posterior_samples = super().predict_proba(
-            X,
-            extend_idata=False,
-            combined=True,
-            var_names=[self.output_var],
-        )
-        proba = posterior_samples.mean(dim="sample").values
+        posterior_samples = super().predict_proba(X)
+        proba = posterior_samples.mean(dim=["chain", "draw"]).values
         return np.column_stack([1 - proba, proba])
 
     def predict(self, X):
@@ -103,15 +78,18 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
     @staticmethod
     def get_default_sampler_config():
         return {
-            "n_particles": 300,
-            "n": 50000,
-            "progressbar": False,
             "draws": 2000,
+            "tune": 1000,
+            "chains": 4,
+            "target_accept": 0.95,
+            "random_seed": None,
+            "progressbar": False,
+            "nuts_sampler": "numpyro",
         }
 
     @property
     def output_var(self):
-        return "p"
+        return "y"
 
     @property
     def _serializable_model_config(self):
