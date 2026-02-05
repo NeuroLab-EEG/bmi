@@ -78,7 +78,7 @@ class Evaluation:
             }
 
             # Execute pipelines evaluation
-            result = evaluation.process(pipeline.build())
+            result = evaluation.process(pipelines)
             result.to_csv(path.join(scores_path, "scores.csv"), index=False)
 
     def _datasets(self):
