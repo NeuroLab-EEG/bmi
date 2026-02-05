@@ -52,6 +52,7 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
         self.random_state = int(getenv("RANDOM_STATE"))
 
     def build_model(self, X, y):
+        self._generate_and_preprocess_model_data(X, y)
         n_features = X.shape[1]
         n_inducing = self.model_config.get("n_inducing")
 
