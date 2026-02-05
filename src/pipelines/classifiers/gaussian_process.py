@@ -1,5 +1,5 @@
 """
-Make Gaussian process model.
+Make Gaussian process classifier.
 
 References
 ----------
