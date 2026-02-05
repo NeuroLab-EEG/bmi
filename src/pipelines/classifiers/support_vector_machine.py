@@ -8,19 +8,19 @@ References
 """
 
 import cupy as cp
-from cuml.svm import SVC
+from cuml.svm import SVC as CuMLSVC
 from sklearn.base import BaseEstimator, ClassifierMixin
 
 
 class SVC(ClassifierMixin, BaseEstimator):
-    def __init__(self, **svc_params):
-        self.svc_params = svc_params
+    def __init__(self, **params):
+        self.params = params
         self.model_ = None
 
     def fit(self, X, y):
         X_gpu = cp.asarray(X)
         y_gpu = cp.asarray(y)
-        self.model_ = SVC(**self.svc_params)
+        self.model_ = CuMLSVC(**self.params)
         self.model_.fit(X_gpu, y_gpu)
         classes = self.model_.classes_
         self.classes_ = classes.get() if hasattr(classes, "get") else classes
@@ -39,8 +39,8 @@ class SVC(ClassifierMixin, BaseEstimator):
         return result
 
     def get_params(self, deep=True):
-        return self.svc_params
+        return self.params
 
     def set_params(self, **params):
-        self.svc_params.update(params)
+        self.params.update(params)
         return self

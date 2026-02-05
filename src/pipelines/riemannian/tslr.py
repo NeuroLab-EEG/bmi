@@ -11,12 +11,12 @@ from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from sklearn.linear_model import LogisticRegression
 from src.pipelines import Pipeline
+from src.pipelines.classifiers import LogisticRegression
 
 
 class TSLR(Pipeline):
-    def pipeline(self):
+    def build(self):
         return {
             "TSLR": make_pipeline(
                 Covariances(estimator="oas"),
@@ -26,6 +26,3 @@ class TSLR(Pipeline):
                 LogisticRegression(C=1.0, max_iter=1000),
             )
         }
-
-    def params(self):
-        return {}

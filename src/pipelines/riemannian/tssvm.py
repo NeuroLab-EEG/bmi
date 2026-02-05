@@ -12,21 +12,18 @@ from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from sklearn.svm import SVC
 from src.pipelines import Pipeline
+from src.pipelines.classifiers import SVC
 
 
 class TSSVM(Pipeline):
-    def pipeline(self):
+    def build(self):
         return {
             "TSSVM": make_pipeline(
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
                 PCA(n_components=0.95),
-                SVC(kernel="linear", probability=True, random_state=self.random_state),
+                SVC(C=1.0, kernel="rbf", probability=True, random_state=self.random_state),
             )
         }
-
-    def params(self):
-        return {"TSSVM": {"svc__C": [0.5, 1, 1.5], "svc__kernel": ["rbf", "linear"]}}

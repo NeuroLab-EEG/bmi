@@ -12,11 +12,11 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from src.pipelines.pipeline import Pipeline
-from src.pipelines.models import GaussianProcess
+from src.pipelines.classifiers import GaussianProcess
 
 
 class TSGP(Pipeline):
-    def pipeline(self):
+    def build(self):
         return {
             "TSGP": make_pipeline(
                 Covariances(estimator="oas"),
@@ -26,6 +26,3 @@ class TSGP(Pipeline):
                 GaussianProcess(random_state=self.random_state),
             )
         }
-
-    def params(self):
-        return {}
