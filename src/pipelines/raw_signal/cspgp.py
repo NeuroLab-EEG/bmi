@@ -16,7 +16,7 @@ from src.pipelines.classifiers import GaussianProcess
 
 
 class CSPGP(Pipeline):
-    def pipeline(self):
+    def build(self):
         return {
             "CSPGP": make_pipeline(
                 Covariances(estimator="oas"),
