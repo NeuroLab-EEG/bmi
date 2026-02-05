@@ -109,6 +109,7 @@ class BayesianLinearDiscriminantAnalasis(ModelBuilder, ClassifierMixin, BaseEsti
             "random_seed": None,
             "progressbar": False,
             "nuts_sampler": "numpyro",
+            "nuts_sampler_kwargs": {"chain_method": "parallel"},
         }
 
     @property

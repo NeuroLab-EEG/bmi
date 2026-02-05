@@ -87,6 +87,7 @@ class BayesianLogisticRegression(ModelBuilder, ClassifierMixin, BaseEstimator):
             "random_seed": None,
             "progressbar": False,
             "nuts_sampler": "numpyro",
+            "nuts_sampler_kwargs": {"chain_method": "parallel"},
         }
 
     @property

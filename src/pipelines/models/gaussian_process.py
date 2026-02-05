@@ -5,7 +5,7 @@ References
 ----------
 .. [1] https://doi.org/10.7551/mitpress/3206.001.0001
 .. [2] https://doi.org/10.48550/arXiv.1312.0906
-.. [3] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Latent.html
+.. [3] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Latent.html#example-2-classification
 .. [4] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Heteroskedastic.html#sparse-heteroskedastic-gp
 .. [5] https://www.pymc.io/projects/examples/en/latest/howto/model_builder.html
 .. [6] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
@@ -113,6 +113,7 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
             "random_seed": None,
             "progressbar": False,
             "nuts_sampler": "numpyro",
+            "nuts_sampler_kwargs": {"chain_method": "parallel"},
         }
 
     @property
