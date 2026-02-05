@@ -4,18 +4,40 @@ Make Gaussian process model.
 References
 ----------
 .. [1] https://doi.org/10.7551/mitpress/3206.001.0001
-.. [2] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Latent.html#example-2-classification
-.. [3] https://www.pymc.io/projects/examples/en/latest/variational_inference/variational_api_quickstart.html
-.. [4] https://www.pymc.io/projects/docs/en/stable/api/generated/pymc.SVGD.html
+.. [2] https://doi.org/10.48550/arXiv.1312.0906
+.. [3] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Latent.html
+.. [4] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Heteroskedastic.html#sparse-heteroskedastic-gp
+.. [5] https://www.pymc.io/projects/examples/en/latest/howto/model_builder.html
+.. [6] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
 """
 
 import pandas as pd
 import numpy as np
 import pymc as pm
+import pytensor.tensor as pt
 from os import getenv
 from dotenv import load_dotenv
 from pymc_extras.model_builder import ModelBuilder
 from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.cluster import KMeans
+
+
+class SparseLatent:
+    def __init__(self, cov_func):
+        self.cov = cov_func
+
+    def prior(self, name, X, Xu):
+        Kuu = self.cov(Xu)
+        L = pt.linalg.cholesky(pm.gp.util.stabilize(Kuu))
+        
+        v = pm.Normal(f"v_{name}", mu=0.0, sigma=1.0, shape=Xu.shape[0])
+        u = pt.dot(L, v)
+        
+        Kfu = self.cov(X, Xu)
+        L_inv_u = pt.linalg.solve_triangular(L, u, lower=True)
+        Kuiu = pt.linalg.solve_triangular(L.T, L_inv_u, lower=False)
+        
+        return pt.dot(Kfu, Kuiu)
 
 
 class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
@@ -30,27 +52,30 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
         self.random_state = int(getenv("RANDOM_STATE"))
 
     def build_model(self, X, y):
-        self._generate_and_preprocess_model_data(X, y)
         n_features = X.shape[1]
-
+        n_inducing = self.model_config.get("n_inducing")
+        
+        # Get inducing points
+        kmeans = KMeans(n_clusters=min(n_inducing, X.shape[0]))
+        Xu = kmeans.fit(X).cluster_centers_
+        
         with pm.Model() as self.model:
             x_data = pm.Data("x_data", X)
             y_data = pm.Data("y_data", y)
-
+            xu_data = pm.Data("xu_data", Xu)
+            
             # Define covariance priors
-            ell = pm.InverseGamma(
-                "ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"], shape=n_features
-            )
+            ell = pm.InverseGamma("ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"], shape=n_features)
             eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
             cov = eta**2 * pm.gp.cov.ExpQuad(input_dim=n_features, ls=ell)
-
+            
             # Define latent function priors
-            gp = pm.gp.Latent(cov_func=cov)
-            f = gp.prior("f", X=x_data)
-
+            gp = SparseLatent(cov_func=cov)
+            f = gp.prior("f", X=x_data, Xu=xu_data)
+            
             # Define likelihood
-            p = pm.Deterministic("p", pm.math.invlogit(f))
-            pm.Bernoulli("y", p=p, observed=y_data)
+            p = pm.math.invlogit(f)
+            pm.Bernoulli("y", p=p, observed=y_data, shape=x_data.shape[0])
 
     def fit(self, X, y):
         X = pd.DataFrame(X, columns=[f"x{i}" for i in range(X.shape[1])])
@@ -73,6 +98,7 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
             "ell_mu": 1.0,
             "ell_sigma": 0.5,
             "eta_sigma": 1.0,
+            "n_inducing": 50,
         }
 
     @staticmethod
