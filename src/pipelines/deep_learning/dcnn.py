@@ -17,7 +17,6 @@ from braindecode.classifier import EEGClassifier
 from skorch.callbacks import EarlyStopping, LRScheduler
 from skorch.dataset import ValidSplit
 from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
 from src.pipelines import Pipeline
 
 
@@ -26,7 +25,6 @@ class DCNN(Pipeline):
         set_random_seeds(seed=self.random_state, cuda=torch.cuda.is_available())
         return {
             "DCNN": make_pipeline(
-                StandardScaler(),
                 EEGClassifier(
                     Deep4Net(
                         n_chans=self.n_features,
