@@ -29,14 +29,14 @@ class SparseLatent:
     def prior(self, name, X, Xu):
         Kuu = self.cov(Xu)
         L = pt.linalg.cholesky(pm.gp.util.stabilize(Kuu))
-        
+
         v = pm.Normal(f"v_{name}", mu=0.0, sigma=1.0, shape=Xu.shape[0])
         u = pt.dot(L, v)
-        
+
         Kfu = self.cov(X, Xu)
         L_inv_u = pt.linalg.solve_triangular(L, u, lower=True)
         Kuiu = pt.linalg.solve_triangular(L.T, L_inv_u, lower=False)
-        
+
         return pt.dot(Kfu, Kuiu)
 
 
@@ -54,25 +54,27 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
     def build_model(self, X, y):
         n_features = X.shape[1]
         n_inducing = self.model_config.get("n_inducing")
-        
+
         # Get inducing points
         kmeans = KMeans(n_clusters=min(n_inducing, X.shape[0]))
         Xu = kmeans.fit(X).cluster_centers_
-        
+
         with pm.Model() as self.model:
             x_data = pm.Data("x_data", X)
             y_data = pm.Data("y_data", y)
             xu_data = pm.Data("xu_data", Xu)
-            
+
             # Define covariance priors
-            ell = pm.InverseGamma("ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"], shape=n_features)
+            ell = pm.InverseGamma(
+                "ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"], shape=n_features
+            )
             eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
             cov = eta**2 * pm.gp.cov.ExpQuad(input_dim=n_features, ls=ell)
-            
+
             # Define latent function priors
             gp = SparseLatent(cov_func=cov)
             f = gp.prior("f", X=x_data, Xu=xu_data)
-            
+
             # Define likelihood
             p = pm.math.invlogit(f)
             pm.Bernoulli("y", p=p, observed=y_data, shape=x_data.shape[0])
