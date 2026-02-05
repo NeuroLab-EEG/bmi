@@ -11,8 +11,6 @@ References
 import pandas as pd
 import numpy as np
 import pymc as pm
-from os import getenv
-from dotenv import load_dotenv
 from pymc_extras.model_builder import ModelBuilder
 from sklearn.base import BaseEstimator, ClassifierMixin
 
@@ -21,12 +19,9 @@ class BayesianLogisticRegression(ModelBuilder, ClassifierMixin, BaseEstimator):
     _model_type = "BayesianLogisticRegression"
     version = "0.1"
 
-    def __init__(self, model_config=None, sampler_config=None):
+    def __init__(self, model_config=None, sampler_config=None, random_state=None):
         super().__init__(model_config, sampler_config)
-
-        # Load environment variables
-        load_dotenv()
-        self.random_state = int(getenv("RANDOM_STATE"))
+        self.random_state = random_state
 
     def build_model(self, X, y):
         self._generate_and_preprocess_model_data(X, y)

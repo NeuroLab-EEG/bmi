@@ -23,7 +23,7 @@ class TSGP(Pipeline):
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
                 PCA(n_components=0.95),
-                GaussianProcess(),
+                GaussianProcess(random_state=self.random_state),
             )
         }
 

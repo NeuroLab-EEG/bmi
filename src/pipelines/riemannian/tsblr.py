@@ -23,7 +23,7 @@ class TSBLR(Pipeline):
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
                 PCA(n_components=0.95),
-                BayesianLogisticRegression(),
+                BayesianLogisticRegression(random_state=self.random_state),
             )
         }
 

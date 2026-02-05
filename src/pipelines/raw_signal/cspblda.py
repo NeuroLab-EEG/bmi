@@ -23,7 +23,7 @@ class CSPBLDA(Pipeline):
                 CSP(nfilter=6),
                 StandardScaler(),
                 PCA(n_components=0.95),
-                BayesianLDA(),
+                BayesianLDA(random_state=self.random_state),
             )
         }
 

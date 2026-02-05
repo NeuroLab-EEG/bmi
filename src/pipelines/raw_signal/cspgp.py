@@ -23,7 +23,7 @@ class CSPGP(Pipeline):
                 CSP(nfilter=6),
                 StandardScaler(),
                 PCA(n_components=0.95),
-                GaussianProcess(),
+                GaussianProcess(random_state=self.random_state),
             )
         }
 
