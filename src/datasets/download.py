@@ -23,6 +23,7 @@ from moabb.datasets import (
     Dreyer2023,
     Weibo2014,
     GrosseWentrup2009,
+    Stieger2021,
 )
 
 
@@ -33,7 +34,7 @@ class Download:
         self.data_path = getenv("DATA_PATH")
         set_download_dir(self.data_path)
 
-    def __call__(self):
+    def run(self):
         for DatasetCls in self._datasets():
             dataset = DatasetCls(accept=True) if DatasetCls is Shin2017A else DatasetCls()
             dataset.get_data(cache_config=dict(path=self.data_path, save_raw=True))
@@ -49,3 +50,4 @@ class Download:
         yield Dreyer2023
         yield Weibo2014
         yield GrosseWentrup2009
+        yield Stieger2021
