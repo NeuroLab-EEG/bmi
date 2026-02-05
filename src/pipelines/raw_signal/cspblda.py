@@ -12,11 +12,11 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from src.pipelines import Pipeline
-from src.pipelines.models import BayesianLinearDiscriminantAnalasis as BayesianLDA
+from src.pipelines.classifiers import BayesianLinearDiscriminantAnalasis as BayesianLDA
 
 
 class CSPBLDA(Pipeline):
-    def pipeline(self):
+    def build(self):
         return {
             "CSPBLDA": make_pipeline(
                 Covariances(estimator="oas"),
@@ -26,6 +26,3 @@ class CSPBLDA(Pipeline):
                 BayesianLDA(random_state=self.random_state),
             )
         }
-
-    def params(self):
-        return {}
