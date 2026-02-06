@@ -42,8 +42,9 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
     _model_type = "GaussianProcess"
     version = "0.1"
 
-    def __init__(self, model_config=None, sampler_config=None, random_state=None):
+    def __init__(self, model_config=None, sampler_config=None, progressbar=None, random_state=None):
         super().__init__(model_config, sampler_config)
+        self.progressbar = progressbar
         self.random_state = random_state
 
     def build_model(self, X, y):
@@ -79,7 +80,7 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
         X = pd.DataFrame(X, columns=[f"x{i}" for i in range(X.shape[1])])
         y = pd.Series(y, name=self.output_var)
         self.classes_ = np.unique(y)
-        super().fit(X, y=y, random_seed=self.random_state)
+        super().fit(X, y=y, progressbar=self.progressbar, random_seed=self.random_state)
 
     def predict_proba(self, X):
         posterior_samples = super().predict_proba(X)
@@ -107,7 +108,7 @@ class GaussianProcess(ModelBuilder, ClassifierMixin, BaseEstimator):
             "chains": 4,
             "target_accept": 0.95,
             "random_seed": None,
-            "progressbar": False,
+            "progressbar": None,
             "nuts_sampler": "numpyro",
             "nuts_sampler_kwargs": {"chain_method": "parallel"},
         }
