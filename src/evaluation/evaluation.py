@@ -33,7 +33,7 @@ class Evaluation:
     def __init__(self):
         # Configure environment
         load_dotenv()
-        self.random_state = getenv("RANDOM_STATE")
+        self.random_state = int(getenv("RANDOM_STATE"))
         self.data_path = getenv("DATA_PATH")
         set_download_dir(self.data_path)
 
@@ -69,12 +69,17 @@ class Evaluation:
 
             # Configure pipelines
             X, y, _ = paradigm.get_data(dataset, subjects=[1])
-            piplines = {
+            pipelines = {
                 k: v
-                for PipelineCls in self._pipelines
+                for PipelineCls in self._pipelines()
                 for k, v in PipelineCls(
-                    n_features=X.shape[1], n_classes=len(np.unique(y)), n_times=X.shape[2]
-                ).build()
+                    random_state=self.random_state,
+                    n_features=X.shape[1],
+                    n_classes=len(np.unique(y)),
+                    n_times=X.shape[2],
+                )
+                .build()
+                .items()
             }
 
             # Execute pipelines evaluation
