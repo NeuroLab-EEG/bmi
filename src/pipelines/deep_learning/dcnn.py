@@ -21,7 +21,7 @@ from src.pipelines import Pipeline
 
 
 class DCNN(Pipeline):
-    def pipeline(self):
+    def build(self):
         set_random_seeds(seed=self.random_state, cuda=torch.cuda.is_available())
         return {
             "DCNN": make_pipeline(
@@ -64,6 +64,3 @@ class DCNN(Pipeline):
                 ),
             )
         }
-
-    def params(self):
-        return {}
