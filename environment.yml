@@ -1,22 +1,40 @@
 name: bmi
 channels:
   - conda-forge
+  - nvidia
   - defaults
 dependencies:
   - _libgcc_mutex=0.1=conda_forge
-  - _openmp_mutex=4.5=2_gnu
+  - _openmp_mutex=4.5=7_kmp_llvm
+  - blas=1.0=mkl
   - bzip2=1.0.8=hda65f42_8
   - ca-certificates=2026.1.4=hbd8a1cb_0
-  - cuda-nvrtc=12.9.86=hecca717_1
+  - cpython=3.12.12=py312hd8ed1ab_2
+  - cuda-cudart=12.4.127=0
+  - cuda-cupti=12.4.127=0
+  - cuda-libraries=12.4.1=0
+  - cuda-nvrtc=12.4.127=0
+  - cuda-nvtx=12.4.127=0
+  - cuda-opencl=12.9.19=0
+  - cuda-runtime=12.4.1=0
   - cuda-version=12.9=h4f385c5_3
   - cudnn=9.10.1.4=hbcb9cd8_1
+  - filelock=3.20.3=pyhd8ed1ab_0
+  - gmp=6.3.0=hac33072_2
+  - gmpy2=2.2.1=py312hcaba1f9_2
   - icu=78.2=h33c6efd_0
+  - jinja2=3.1.6=pyhcf101f3_1
   - ld_impl_linux-64=2.45=default_hbd61a6d_105
-  - libblas=3.11.0=5_h4a7cf45_openblas
-  - libcblas=3.11.0=5_h0358290_openblas
-  - libcublas=12.9.1.4=h676940d_1
+  - libblas=3.9.0=20_linux64_mkl
+  - libcblas=3.9.0=20_linux64_mkl
+  - libcublas=12.4.5.8=0
   - libcudnn=9.10.1.4=hf7e9902_1
   - libcudnn-dev=9.10.1.4=h58dd1b1_1
+  - libcufft=11.2.1.3=0
+  - libcufile=1.14.1.1=4
+  - libcurand=10.3.10.19=0
+  - libcusolver=11.6.1.9=0
+  - libcusparse=12.3.1.170=0
   - libexpat=2.7.3=hecca717_0
   - libffi=3.5.2=h3435931_0
   - libgcc=15.2.0=he0feb66_16
@@ -24,24 +42,48 @@ dependencies:
   - libgfortran=15.2.0=h69a702a_16
   - libgfortran5=15.2.0=h68bc16d_16
   - libgomp=15.2.0=he0feb66_16
-  - liblapack=3.11.0=5_h47877c9_openblas
+  - libhwloc=2.12.2=default_hafda6a7_1000
+  - libiconv=1.18=h3b78370_2
+  - liblapack=3.9.0=20_linux64_mkl
   - liblzma=5.8.2=hb03c661_0
+  - libnpp=12.2.5.30=0
   - libnsl=2.0.1=hb9d3cd8_1
+  - libnvfatbin=12.9.82=0
+  - libnvjitlink=12.4.127=0
+  - libnvjpeg=12.3.1.117=0
   - libopenblas=0.3.30=pthreads_h94d23a6_4
   - libsqlite=3.51.2=hf4e2dac_0
   - libstdcxx=15.2.0=h934c35e_16
+  - libstdcxx-ng=15.2.0=hdf11a46_16
   - libuuid=2.41.3=h5347b49_0
   - libxcrypt=4.4.36=hd590300_1
+  - libxml2=2.15.1=he237659_1
+  - libxml2-16=2.15.1=hca6bf5a_1
   - libzlib=1.3.1=hb9d3cd8_2
+  - llvm-openmp=15.0.7=h0cdce71_0
+  - markupsafe=3.0.3=py312h8a5da7c_0
+  - mkl=2023.2.0=ha770c72_50498
+  - mpc=1.3.1=h24ddda3_1
+  - mpfr=4.2.1=h90cbb55_3
+  - mpmath=1.3.0=pyhd8ed1ab_1
   - ncurses=6.5=h2d0b736_3
+  - networkx=3.6.1=pyhcf101f3_0
+  - numpy=2.2.6=py312h72c5963_0
+  - ocl-icd=2.3.3=hb9d3cd8_0
+  - opencl-headers=2025.06.13=h5888daf_0
   - openssl=3.6.1=h35e630c_1
   - packaging=26.0=pyhcf101f3_0
   - pip=26.0=pyh8b19718_0
   - python=3.12.12=hd63d673_2_cpython
+  - python_abi=3.12=8_cp312
+  - pyyaml=6.0.3=py312h8a5da7c_1
   - readline=8.3=h853b02a_0
   - setuptools=80.10.2=pyh332efcf_0
+  - tbb=2021.13.0=hb700be7_5
   - tk=8.6.13=noxft_h366c992_103
+  - typing_extensions=4.15.0=pyhcf101f3_0
   - wheel=0.46.3=pyhd8ed1ab_0
+  - yaml=0.2.5=h280c20c_3
   - zstd=1.5.7=hb78ec9c_6
   - pip:
       - aiohappyeyeballs==2.6.1
@@ -108,7 +150,6 @@ dependencies:
       - fastjsonschema==2.21.2
       - fastrlock==0.8.3
       - fief-client==0.20.0
-      - filelock==3.20.3
       - fonttools==4.61.1
       - fqdn==1.5.1
       - frozenlist==1.8.0
@@ -133,7 +174,6 @@ dependencies:
       - jax-cuda12-plugin==0.9.0.1
       - jaxlib==0.9.0.1
       - jedi==0.19.2
-      - jinja2==3.1.6
       - joblib==1.5.3
       - jsonpointer==3.0.0
       - jsonschema==4.26.0
@@ -167,7 +207,6 @@ dependencies:
       - logical-unification==0.4.7
       - markdown==3.10.1
       - markdown-it-py==4.0.0
-      - markupsafe==3.0.3
       - matplotlib==3.10.8
       - matplotlib-inline==0.2.1
       - mdit-py-plugins==0.5.0
@@ -179,18 +218,15 @@ dependencies:
       - mne==1.11.0
       - mne-bids==0.18.0
       - moabb==1.4.3
-      - mpmath==1.3.0
       - msgpack==1.1.2
       - multidict==6.7.1
       - multipledispatch==1.0.0
       - nbclient==0.10.4
       - nbconvert==7.17.0
       - nbformat==5.10.4
-      - networkx==3.6.1
       - numba==0.61.2
       - numba-cuda==0.19.2
       - numcodecs==0.16.5
-      - numpy==2.2.6
       - numpyro==0.20.0
       - nutpie==0.16.5
       - nvidia-cublas-cu12==12.4.5.8
@@ -260,7 +296,6 @@ dependencies:
       - python-json-logger==4.0.0
       - pytz==2025.2
       - pyviz-comms==3.0.6
-      - pyyaml==6.0.3
       - pyzmq==27.1.0
       - questionary==2.1.1
       - raft-dask-cu12==25.12.0
@@ -300,17 +335,15 @@ dependencies:
       - tifffile==2026.1.28
       - tinycss2==1.4.0
       - toolz==1.1.0
-      - torch==2.6.0+cu124
-      - torchaudio==2.6.0+cu124
+      - torch==2.5.1+cu124
+      - torchaudio==2.5.1+cu124
       - torchinfo==1.8.0
-      - torchvision==0.21.0+cu124
       - tornado==6.5.4
       - tqdm==4.67.3
       - traitlets==5.14.3
       - treelite==4.6.1
-      - triton==3.2.0
+      - triton==3.1.0
       - typer==0.21.1
-      - typing-extensions==4.15.0
       - typing-inspection==0.4.2
       - tzdata==2025.3
       - uc-micro-py==1.0.3
