@@ -1,26 +1,25 @@
 """
-Make CUDA accelerated logistic regression classifier.
+Make CUDA accelerated scikit-learn classifier.
 
 References
 ----------
-.. [1] https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html
-.. [2] https://docs.rapids.ai/api/cuml/stable/api/#logistic-regression
+.. [1] https://docs.rapids.ai/api/cuml/stable/
 """
 
 import cupy as cp
-from cuml import LogisticRegression as CuMLLogisticRegression
 from sklearn.base import BaseEstimator, ClassifierMixin
 
 
-class LogisticRegression(ClassifierMixin, BaseEstimator):
-    def __init__(self, **params):
+class CuMLBase(ClassifierMixin, BaseEstimator):
+    def __init__(self, classifier, **params):
+        self.classifier = classifier
         self.params = params
         self.model_ = None
 
     def fit(self, X, y):
         X_gpu = cp.asarray(X)
         y_gpu = cp.asarray(y)
-        self.model_ = CuMLLogisticRegression(**self.params)
+        self.model_ = self.classifier(**self.params)
         self.model_.fit(X_gpu, y_gpu)
         classes = self.model_.classes_
         self.classes_ = classes.get() if hasattr(classes, "get") else classes
