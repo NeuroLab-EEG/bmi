@@ -44,10 +44,8 @@ class Evaluation:
 
         for DatasetCls, n_splits in self._datasets():
             # Make subdirectories
-            emissions_path = path.join(metrics_path, DatasetCls.__name__, "emissions")
-            scores_path = path.join(metrics_path, DatasetCls.__name__)
-            makedirs(emissions_path, exist_ok=True)
-            makedirs(scores_path, exist_ok=True)
+            dataset_path = path.join(metrics_path, DatasetCls.__name__)
+            makedirs(dataset_path, exist_ok=True)
 
             # Configure evaluation
             dataset = DatasetCls()
@@ -60,7 +58,7 @@ class Evaluation:
                 n_splits=n_splits,
                 codecarbon_config=dict(
                     save_to_file=True,
-                    output_dir=emissions_path,
+                    output_dir=dataset_path,
                     log_level="critical",
                     country_iso_code="USA",
                     region="washington",
@@ -84,7 +82,7 @@ class Evaluation:
 
             # Execute pipelines evaluation
             result = evaluation.process(pipelines)
-            result.to_csv(path.join(scores_path, "scores.csv"), index=False)
+            result.to_csv(path.join(dataset_path, "scores.csv"), index=False)
 
     def _datasets(self):
         yield (BNCI2014_001, 9)
