@@ -11,11 +11,11 @@ from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from src.pipelines import Pipeline
+from src.pipelines import PipelineBase
 from src.pipelines.classifiers import BayesianLinearDiscriminantAnalasis as BayesianLDA
 
 
-class CSPBLDA(Pipeline):
+class CSPBLDA(PipelineBase):
     def build(self):
         return {
             "CSPBLDA": make_pipeline(

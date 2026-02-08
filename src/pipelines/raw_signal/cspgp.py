@@ -11,11 +11,11 @@ from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from src.pipelines.pipeline import Pipeline
+from src.pipelines import PipelineBase
 from src.pipelines.classifiers import GaussianProcess
 
 
-class CSPGP(Pipeline):
+class CSPGP(PipelineBase):
     def build(self):
         return {
             "CSPGP": make_pipeline(

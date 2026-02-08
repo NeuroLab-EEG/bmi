@@ -11,11 +11,11 @@ from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from src.pipelines import Pipeline
+from src.pipelines import PipelineBase
 from src.pipelines.classifiers import LogisticRegression
 
 
-class TSLR(Pipeline):
+class TSLR(PipelineBase):
     def build(self):
         return {
             "TSLR": make_pipeline(

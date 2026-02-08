@@ -17,10 +17,10 @@ from braindecode.classifier import EEGClassifier
 from skorch.callbacks import EarlyStopping, LRScheduler
 from skorch.dataset import ValidSplit
 from sklearn.pipeline import make_pipeline
-from src.pipelines import Pipeline
+from src.pipelines import PipelineBase
 
 
-class DCNN(Pipeline):
+class DCNN(PipelineBase):
     def build(self):
         set_random_seeds(seed=self.random_state, cuda=torch.cuda.is_available())
         return {

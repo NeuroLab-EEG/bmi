@@ -12,10 +12,10 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
-from src.pipelines import Pipeline
+from src.pipelines import PipelineBase
 
 
-class CSPLDA(Pipeline):
+class CSPLDA(PipelineBase):
     def build(self):
         return {
             "CSPLDA": make_pipeline(

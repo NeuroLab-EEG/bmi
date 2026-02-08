@@ -5,7 +5,7 @@ Base class for all machine learning pipelines.
 from abc import ABC, abstractmethod
 
 
-class Pipeline(ABC):
+class PipelineBase(ABC):
     def __init__(self, random_state=None, n_features=None, n_classes=None, n_times=None):
         self.random_state = random_state
         self.n_features = n_features

@@ -11,11 +11,11 @@ from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from src.pipelines import Pipeline
+from src.pipelines import PipelineBase
 from src.pipelines.classifiers import SVC
 
 
-class CSPSVM(Pipeline):
+class CSPSVM(PipelineBase):
     def build(self):
         return {
             "CSPSVM": make_pipeline(
