@@ -10,7 +10,6 @@ from pyriemann.estimation import Covariances
 from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
 from src.pipelines import PipelineBase
 from src.pipelines.classifiers import GaussianProcess
 
@@ -22,7 +21,6 @@ class CSPGP(PipelineBase):
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),
-                PCA(n_components=0.95),
-                GaussianProcess(progressbar=False, random_state=self.random_state),
+                GaussianProcess(kernel="rbf", progressbar=True, random_state=self.random_state),
             )
         }

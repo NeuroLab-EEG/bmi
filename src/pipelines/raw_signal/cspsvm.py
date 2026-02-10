@@ -4,13 +4,13 @@ Make pipeline for CSP+SVM.
 References
 ----------
 .. [1] https://github.com/NeuroTechX/moabb/blob/develop/pipelines/CSP_SVM_grid.yml
+.. [2] https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
 """
 
 from pyriemann.estimation import Covariances
 from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
 from src.pipelines import PipelineBase
 from src.pipelines.classifiers import SVC
 
@@ -22,7 +22,6 @@ class CSPSVM(PipelineBase):
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),
-                PCA(n_components=0.95),
                 SVC(C=1.0, kernel="rbf", probability=True, random_state=self.random_state),
             )
         }
