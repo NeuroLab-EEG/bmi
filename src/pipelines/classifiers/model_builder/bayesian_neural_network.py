@@ -10,8 +10,6 @@ References
 """
 
 import torch
-import pandas as pd
-import numpy as np
 import pymc as pm
 from sklearn.preprocessing import StandardScaler
 from src.pipelines.classifiers.model_builder import ModelBuilderBase

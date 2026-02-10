@@ -55,3 +55,19 @@ ps aux | grep "python -m path.to.command"
 # Kill processes by username and full command
 pkill -u username -f "substring"
 ```
+
+## File format & linting
+
+```bash
+# Format files
+ruff format /path/to/software
+
+# Fail if files not formatted
+ruff format --check /path/to/software
+
+# Lint files
+ruff check --fix /path/to/software
+
+# Fail if files not linted
+ruff check /path/to/software
+```
