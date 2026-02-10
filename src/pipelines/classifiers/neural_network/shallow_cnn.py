@@ -7,7 +7,7 @@ References
 """
 
 from braindecode.models import ShallowFBCSPNet
-from src.pipeline.classifiers.neural_network import NeuralNetworkBase
+from src.pipelines.classifiers.neural_network import NeuralNetworkBase
 
 
 class ShallowCNN(NeuralNetworkBase):
@@ -20,3 +20,7 @@ class ShallowCNN(NeuralNetworkBase):
             ),
             random_state=random_state,
         )
+        self.n_features = n_features
+        self.n_classes = n_classes
+        self.n_times = n_times
+        self.random_state = random_state

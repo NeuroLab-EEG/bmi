@@ -26,7 +26,7 @@ from moabb.datasets import (
     Stieger2021,
 )
 from src.paradigm import MultiScoreLeftRightImagery
-from src.pipelines import CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, CSPBLDA, CSPGP, TSBLR, TSGP
+from src.pipelines import CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, CSPBLDA, CSPGP, TSBLR, TSGP, BSCNN, BDCNN
 
 
 class Evaluation:
@@ -99,12 +99,14 @@ class Evaluation:
 
     def _pipelines(self):
         yield CSPLDA
-        yield CSPSVM
-        yield TSLR
-        yield TSSVM
-        yield SCNN
-        yield DCNN
         yield CSPBLDA
+        yield CSPSVM
         yield CSPGP
+        yield TSLR
         yield TSBLR
+        yield TSSVM
         yield TSGP
+        yield SCNN
+        yield BSCNN
+        yield DCNN
+        yield BDCNN

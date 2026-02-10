@@ -1,11 +1,19 @@
 """
 Build Bayesian neural network classifier.
+
+References
+----------
+.. [1] http://probml.github.io/book2
+.. [2] https://www.pymc.io/projects/examples/en/latest/variational_inference/bayesian_neural_network_advi.html
+.. [3] https://www.pymc.io/projects/examples/en/latest/howto/model_builder.html
+.. [4] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
 """
 
 import torch
 import pandas as pd
 import numpy as np
 import pymc as pm
+from sklearn.preprocessing import StandardScaler
 from src.pipelines.classifiers.model_builder import ModelBuilderBase
 
 
@@ -13,6 +21,7 @@ class BayesianNeuralNetwork(ModelBuilderBase):
     def __init__(self, network, **kwargs):
         super().__init__(**kwargs)
         self.network = network
+        self.scaler = StandardScaler()
 
     def build_model(self, X, y):
         with pm.Model() as self.model:
@@ -22,13 +31,13 @@ class BayesianNeuralNetwork(ModelBuilderBase):
             # Define priors
             w = pm.Normal(
                 "w",
-                mu=self.weight.flatten(),
+                mu=self.model_config["w_mu"],
                 sigma=self.model_config["w_sigma"],
                 shape=X.shape[1],
             )
             b = pm.Normal(
                 "b",
-                mu=self.bias.item(),
+                mu=self.model_config["b_mu"],
                 sigma=self.model_config["b_sigma"],
             )
 
@@ -39,37 +48,35 @@ class BayesianNeuralNetwork(ModelBuilderBase):
     def fit(self, X, y):
         # Train neural network
         self.network.fit(X, y)
+        modules = list(self.network.model_.module_.children())
 
         # Extract features from backbone
-        self.backbone = self.network.module_[:-1]
+        self.backbone = torch.nn.Sequential(*modules[:-1])
         self.backbone.eval()
         X_features = self._extract_features(X)
-
-        # Get parameters from linear classification
-        self.weight = self.network.module_[-1].conv_classifier.weight.detach().cpu().numpy()
-        self.bias = self.network.module_[-1].conv_classifier.bias.detach().cpu().numpy()
+        X_features_scaled = self.scaler.fit_transform(X_features)
 
         # Sample posterior of classification parameters
-        self.classes_ = np.unique(y)
-        X_features_df = pd.DataFrame(X_features, columns=[f"x{i}" for i in range(X_features.shape[1])])
-        y_series = pd.Series(y, name=self.output_var)
-        return super().fit(
-            X_features_df, y=y_series, progressbar=self.progressbar, random_seed=self.random_state
-        )
+        return super().fit(X_features_scaled, y)
 
     def _extract_features(self, X):
-        X_tensor = torch.from_numpy(X).float().cuda()
+        X_tensor = torch.from_numpy(X).float()
+        device = next(self.backbone.parameters()).device
+        X_tensor = X_tensor.to(device)
         with torch.no_grad():
-            features = self.backbone(X_tensor).flatten(start_dim=1).cpu().numpy()
-        return features
+            X_features = self.backbone(X_tensor).flatten(start_dim=1).cpu().numpy()
+        return X_features
 
     def predict_proba(self, X):
         X_features = self._extract_features(X)
-        return super().predict_proba(X_features)
+        X_features_scaled = self.scaler.transform(X_features)
+        return super().predict_proba(X_features_scaled)
 
     @staticmethod
     def get_default_model_config():
         return {
-            "w_sigma": 0.5,
-            "b_sigma": 0.5,
+            "w_mu": 0,
+            "w_sigma": 1.0,
+            "b_mu": 0,
+            "b_sigma": 3.0,
         }

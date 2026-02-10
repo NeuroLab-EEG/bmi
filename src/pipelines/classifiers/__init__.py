@@ -1,12 +1,19 @@
 from .cuml import LogisticRegression, SVC
-from .bayesian_logistic_regression import BayesianLogisticRegression
-from .bayesian_linear_discriminant_analysis import BayesianLinearDiscriminantAnalasis
-from .gaussian_process import GaussianProcess
+from .neural_network import ShallowCNN, DeepCNN
+from .model_builder import (
+    BayesianLogisticRegression,
+    BayesianLinearDiscriminantAnalysis,
+    GaussianProcess,
+    BayesianNeuralNetwork,
+)
 
 __all__ = [
     "LogisticRegression",
     "SVC",
+    "ShallowCNN",
+    "DeepCNN",
     "BayesianLogisticRegression",
-    "BayesianLinearDiscriminantAnalasis",
+    "BayesianLinearDiscriminantAnalysis",
     "GaussianProcess",
+    "BayesianNeuralNetwork",
 ]
