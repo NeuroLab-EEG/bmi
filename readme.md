@@ -1,32 +1,37 @@
 # Bayesian Motor Imagery (BMI)
 
-## Python version management
-
-Follow [pyenv](https://github.com/pyenv/pyenv) installation instructions for recent release of Python.
-
-## Python virtual environment
+## Conda setup
 
 ```bash
-# Create new virtual environment
-python -m venv .venv
+# Create environment
+conda create -n bmi python=3.12
 
-# Activate the environment
-source .venv/bin/activate
+# Delete environment
+conda env remove -n bmi
 
-# Install packages
-pip install moabb codecarbon torch
+# Activate environment
+conda activate bmi
 
-# Deactivate
-deactivate
+# Deactivate environment
+conda deactivate
 
-# Save dependencies for reproducibility
-pip freeze > requirements.txt
+# Save environment
+conda env export > environment.yml
 
-# Recreate an environment elsewhere
-pip install -r requirements.txt
+# Recreate environment
+conda env create -f environment.yml
+```
 
-# List packages that are not dependencies of other packages
-pip list --not-required
+### GPU stack
+
+```bash
+# Create activation script
+mkdir -p $CONDA_PREFIX/etc/conda/activate.d
+echo 'export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH' > $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+
+# Create deactivation script
+mkdir -p $CONDA_PREFIX/etc/conda/deactivate.d
+echo 'unset LD_LIBRARY_PATH' > $CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh
 ```
 
 ## Environment variables
@@ -34,7 +39,6 @@ pip list --not-required
 Create `.env` file in root of git repository.
 
 ```bash
-# .env
 DATA_PATH=/path/to/data
 RANDOM_STATE=1
 ```
@@ -42,12 +46,28 @@ RANDOM_STATE=1
 ## Background commands
 
 ```bash
-# Start job
+# Start process
 nohup python -m path.to.command > output.log 2>&1 &
 
-# Find long running job
+# Find process
 ps aux | grep "python -m path.to.command"
 
 # Kill processes by username and full command
 pkill -u username -f "substring"
+```
+
+## File format & linting
+
+```bash
+# Format files
+ruff format /path/to/software
+
+# Fail if files not formatted
+ruff format --check /path/to/software
+
+# Lint files
+ruff check --fix /path/to/software
+
+# Fail if files not linted
+ruff check /path/to/software
 ```

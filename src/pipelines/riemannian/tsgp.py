@@ -1,10 +1,9 @@
 """
-Make pipeline for TS+SVM.
+Make pipeline for TS+GP.
 
 References
 ----------
 .. [1] https://github.com/NeuroTechX/moabb/blob/develop/pipelines/TSSVM_grid.yml
-.. [2] https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
 """
 
 from pyriemann.estimation import Covariances
@@ -12,16 +11,16 @@ from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from src.pipelines import PipelineBase
-from src.pipelines.classifiers import SVC
+from src.pipelines.classifiers import GaussianProcess
 
 
-class TSSVM(PipelineBase):
+class TSGP(PipelineBase):
     def build(self):
         return {
-            "TSSVM": make_pipeline(
+            "TSGP": make_pipeline(
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
-                SVC(C=1.0, kernel="linear", probability=True, random_state=self.random_state),
+                GaussianProcess(kernel="linear", random_state=self.random_state),
             )
         }

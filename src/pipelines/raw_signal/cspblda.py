@@ -1,5 +1,5 @@
 """
-Make pipeline for CSP+LDA.
+Make pipeline for CSP + Bayesian LDA.
 
 References
 ----------
@@ -9,18 +9,18 @@ References
 from pyriemann.estimation import Covariances
 from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from sklearn.preprocessing import StandardScaler
 from src.pipelines import PipelineBase
+from src.pipelines.classifiers import BayesianLinearDiscriminantAnalysis as BayesianLDA
 
 
-class CSPLDA(PipelineBase):
+class CSPBLDA(PipelineBase):
     def build(self):
         return {
-            "CSPLDA": make_pipeline(
+            "CSPBLDA": make_pipeline(
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),
-                LDA(solver="svd"),
+                BayesianLDA(random_state=self.random_state),
             )
         }

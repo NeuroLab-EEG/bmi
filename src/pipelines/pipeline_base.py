@@ -1,0 +1,17 @@
+"""
+Base class for all machine learning pipelines.
+"""
+
+from abc import ABC, abstractmethod
+
+
+class PipelineBase(ABC):
+    def __init__(self, random_state=None, n_features=None, n_classes=None, n_times=None):
+        self.random_state = random_state
+        self.n_features = n_features
+        self.n_classes = n_classes
+        self.n_times = n_times
+
+    @abstractmethod
+    def build(self):
+        pass
