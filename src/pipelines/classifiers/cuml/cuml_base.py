@@ -11,15 +11,14 @@ from sklearn.base import BaseEstimator, ClassifierMixin
 
 
 class CuMLBase(ClassifierMixin, BaseEstimator):
-    def __init__(self, classifier, **params):
+    def __init__(self, classifier):
         self.classifier = classifier
-        self.params = params
         self.model_ = None
 
     def fit(self, X, y):
         X_gpu = cp.asarray(X)
         y_gpu = cp.asarray(y)
-        self.model_ = self.classifier(**self.params)
+        self.model_ = self.classifier
         self.model_.fit(X_gpu, y_gpu)
         classes = self.model_.classes_
         self.classes_ = classes.get() if hasattr(classes, "get") else classes
@@ -36,10 +35,3 @@ class CuMLBase(ClassifierMixin, BaseEstimator):
         proba = self.model_.predict_proba(X_gpu)
         result = proba.get() if hasattr(proba, "get") else proba
         return result
-
-    def get_params(self, deep=True):
-        return self.params
-
-    def set_params(self, **params):
-        self.params.update(params)
-        return self

@@ -13,4 +13,4 @@ from src.pipelines.classifiers.cuml import CuMLBase
 
 class LogisticRegression(CuMLBase):
     def __init__(self, **kwargs):
-        super().__init__(CuMLLogisticRegression, **kwargs)
+        super().__init__(CuMLLogisticRegression(**kwargs))

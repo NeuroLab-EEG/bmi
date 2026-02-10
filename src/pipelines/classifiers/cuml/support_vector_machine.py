@@ -13,4 +13,4 @@ from src.pipelines.classifiers.cuml import CuMLBase
 
 class SVC(CuMLBase):
     def __init__(self, **kwargs):
-        super().__init__(CuMLSVC, **kwargs)
+        super().__init__(CuMLSVC(**kwargs))
