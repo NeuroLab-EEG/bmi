@@ -21,6 +21,6 @@ class CSPBLDA(PipelineBase):
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),
-                BayesianLDA(progressbar=True, random_state=self.random_state),
+                BayesianLDA(random_state=self.random_state),
             )
         }

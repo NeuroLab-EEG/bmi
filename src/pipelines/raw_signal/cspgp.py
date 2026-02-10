@@ -21,6 +21,6 @@ class CSPGP(PipelineBase):
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),
-                GaussianProcess(kernel="rbf", progressbar=True, random_state=self.random_state),
+                GaussianProcess(kernel="rbf", random_state=self.random_state),
             )
         }

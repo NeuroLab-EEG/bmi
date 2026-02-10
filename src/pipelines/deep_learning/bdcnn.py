@@ -16,7 +16,6 @@ class BDCNN(PipelineBase):
         return {
             "BDCNN": make_pipeline(
                 BayesianNeuralNetwork(
-                    progressbar=True,
                     random_state=self.random_state,
                     network=DeepCNN(
                         n_features=self.n_features,
