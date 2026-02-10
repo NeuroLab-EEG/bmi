@@ -22,6 +22,18 @@ conda env export > environment.yml
 conda env create -f environment.yml
 ```
 
+### GPU stack
+
+```bash
+# Create activation script
+mkdir -p $CONDA_PREFIX/etc/conda/activate.d
+echo 'export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH' > $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+
+# Create deactivation script
+mkdir -p $CONDA_PREFIX/etc/conda/deactivate.d
+echo 'unset LD_LIBRARY_PATH' > $CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh
+```
+
 ## Environment variables
 
 Create `.env` file in root of git repository.
