@@ -4,8 +4,7 @@ Generate plots demonstrating CSP.
 References
 ----------
 .. [1] https://numpy.org/doc/stable/reference/random/index.html
-.. [2] https://numpy.org/doc/stable/reference/random/generated/numpy.random.Generator.multivariate_normal.html
-.. [3] https://matplotlib.org/stable/gallery/units/ellipse_with_units.html
+.. [2] https://matplotlib.org/stable/gallery/units/ellipse_with_units.html
 """
 
 import numpy as np
@@ -16,81 +15,65 @@ from matplotlib.patches import Ellipse
 
 class CSP:
     def __init__(self):
-        # Assign random seed
+        # Define random seed
         self.rng = np.random.default_rng(1)
 
         # Define mean
         self.mean = np.zeros(2)
 
-        # Define first covariance matrix
-        self.U = np.array(
+        # Define first sample covariance matrix
+        self.eigvecs1 = np.array(
             [
                 [np.cos(np.pi / 6), np.cos(2 * np.pi / 3)],
                 [np.sin(np.pi / 6), np.sin(2 * np.pi / 3)],
             ]
         )
-        self.P = np.array([[9.0, 0.0], [0.0, 3.0]])
-        self.C = self.U @ self.P @ self.U.T
-        self.CM = self.U @ np.diag(1.0 / np.sqrt(np.diag(self.P))) @ self.U.T
-        self.C_whitened = self.CM @ self.C @ self.CM.T
-        self.P_whitened = np.diag(np.linalg.eigvals(self.C_whitened))
+        self.eigvals1 = np.diag([9.0, 3.0])
+        self.cov1 = self.eigvecs1 @ self.eigvals1 @ self.eigvecs1.T
+        self.cov1_whitening = self.eigvecs1 @ np.diag(1.0 / np.sqrt(np.diag(self.eigvals1))) @ self.eigvecs1.T
+        self.cov1_whitened = self.cov1_whitening @ self.cov1 @ self.cov1_whitening.T
+        self.eigvals1_whitened = np.diag(np.linalg.eigvals(self.cov1_whitened))
 
-        # Define second covariance matrix
-        self.V = np.array(
+        # Define second sample covariance matrix
+        self.eigvecs2 = np.array(
             [
                 [np.cos(np.pi / 3), np.cos(5 * np.pi / 6)],
                 [np.sin(np.pi / 3), np.sin(5 * np.pi / 6)],
             ]
         )
-        self.Q = np.array([[10.0, 0.0], [0.0, 2.5]])
-        self.D = self.V @ self.Q @ self.V.T
-        self.DM = self.V @ np.diag(1.0 / np.sqrt(np.diag(self.Q))) @ self.V.T
-        self.D_whitened = self.DM @ self.D @ self.DM.T
-        self.Q_whitened = np.diag(np.linalg.eigvals(self.D_whitened))
+        self.eigvals2 = np.diag([10.0, 2.5])
+        self.cov2 = self.eigvecs2 @ self.eigvals2 @ self.eigvecs2.T
+        self.cov2_whitening = self.eigvecs2 @ np.diag(1.0 / np.sqrt(np.diag(self.eigvals2))) @ self.eigvecs2.T
+        self.cov2_whitened = self.cov2_whitening @ self.cov2 @ self.cov2_whitening.T
+        self.eigvals2_whitened = np.diag(np.linalg.eigvals(self.cov2_whitened))
 
-        # Define covariances sum
-        self.E = self.C + self.D
-        R, W = np.linalg.eigh(self.E)
-        self.R = np.diag(R)
-        self.W = W
-        self.EM = self.W @ np.diag(1.0 / np.sqrt(np.diag(self.R))) @ self.W.T
-        self.E_whitened = self.EM @ self.E @ self.EM.T
-        self.R_whitened = np.diag(np.linalg.eigvals(self.E_whitened))
+        # Define SCMS summed
+        self.cov_summed = self.cov1 + self.cov2
+        eigvals_summed, self.eigvecs_summed = np.linalg.eigh(self.cov_summed)
+        self.eigvals_summed = np.diag(eigvals_summed)
+        self.cov_summed_whitening = (
+            self.eigvecs_summed @ np.diag(1.0 / np.sqrt(np.diag(self.eigvals_summed))) @ self.eigvecs_summed.T
+        )
+        self.cov_summed_whitened = self.cov_summed_whitening @ self.cov_summed @ self.cov_summed_whitening.T
+        self.eigvals_summed_whitened = np.diag(np.linalg.eigvals(self.cov_summed_whitened))
 
-        # Define covariances transformed
-        self.C_transformed = self.EM @ self.C @ self.EM.T
-        eigvals, eigvecs = np.linalg.eigh(self.C_transformed)
-        self.P_transformed = np.diag(eigvals)
-        self.U_transformed = eigvecs
-        self.D_transformed = self.EM @ self.D @ self.EM.T
-        eigvals, eigvecs = np.linalg.eigh(self.D_transformed)
-        self.Q_transformed = np.diag(eigvals)
-        self.V_transformed = eigvecs
+        # Define SCMs transformed
+        self.cov1_transformed = self.cov_summed_whitening @ self.cov1 @ self.cov_summed_whitening.T
+        eigvals1_transformed, self.eigvecs1_transformed = np.linalg.eigh(self.cov1_transformed)
+        self.eigvals1_transformed = np.diag(eigvals1_transformed)
+        self.cov2_transformed = self.cov_summed_whitening @ self.cov2 @ self.cov_summed_whitening.T
+        eigvals2_transformed, self.eigvecs2_transformed = np.linalg.eigh(self.cov2_transformed)
+        self.eigvals2_transformed = np.diag(eigvals2_transformed)
 
     def __call__(self):
-        self.plot_both_covariances_subplots()
-        self.plot_covariances_sum_subplots()
-        self.plot_covariances_transformed_subplots()
+        self.plot_scms()
+        self.plot_scms_summed()
+        self.plot_scms_transformed()
 
-    def _plot_covariance(
-        self,
-        ax,
-        covariance,
-        eigvals,
-        eigvecs,
-        color,
-        edgecolor,
-        alpha=1.0,
-        points=False,
-    ):
-        # Initialize constants
-        A, D, Q = covariance, eigvals, eigvecs
-
-        # Build ellipse
-        n_std = 2.3 if points else 1.0
-        width = 2 * n_std * D[0, 0]
-        height = 2 * n_std * D[1, 1]
-        theta = np.degrees(np.arctan(Q[1, 0] / Q[0, 0]))
+    def _plot_scm(self, ax, eigvals, eigvecs, edgecolor):
+        # Build SCM ellipse
+        width, height = 2 * np.diag(eigvals)
+        theta = np.degrees(np.arctan(eigvecs[1, 0] / eigvecs[0, 0]))
         ellipse = Ellipse(
             self.mean,
             width=width,
@@ -98,23 +81,19 @@ class CSP:
             angle=theta,
             edgecolor=edgecolor,
             facecolor=to_rgba(edgecolor, alpha=0.2),
-            zorder=1,
+            zorder=2,
         )
 
-        # Plot data points and ellipse
+        # Plot SCM ellipse
         ax.add_patch(ellipse)
-        if points:
-            data = self.rng.multivariate_normal(self.mean, A, size=800)
-            x, y = data.T
-            plt.scatter(x, y, s=3, color=color, alpha=alpha, zorder=2)
         ax.autoscale_view()
         ax.grid(True)
         self._center_axes(ax)
 
-        # Plot quivers
+        # Plot eignenvectors with eigenvalues as magnitudes
         x0, y0 = self.mean
-        u1, v1 = Q[:, 0] * D[0, 0] * n_std
-        u2, v2 = Q[:, 1] * D[1, 1] * n_std
+        u1, v1 = eigvecs[:, 0] * eigvals[0, 0]
+        u2, v2 = eigvecs[:, 1] * eigvals[1, 1]
         plt.quiver(
             x0,
             y0,
@@ -125,7 +104,7 @@ class CSP:
             scale=1,
             width=0.01,
             color=edgecolor,
-            zorder=3,
+            zorder=2,
         )
         plt.quiver(
             x0,
@@ -137,7 +116,7 @@ class CSP:
             scale=1,
             width=0.01,
             color=edgecolor,
-            zorder=3,
+            zorder=2,
         )
 
     def _center_axes(self, ax, padding=1.05):
@@ -152,144 +131,46 @@ class CSP:
         ax.set_ylim(cy - lim, cy + lim)
         ax.set_anchor("C")
 
-    def plot_first_covariance_ellipse(self):
-        fig = plt.figure(figsize=(4, 4))
-        ax = fig.add_subplot(111, aspect="equal")
-        self._plot_covariance(ax, self.C, self.P, self.U, "blue", "red")
-        ax.set_title("First Covariance Matrix")
-        plt.savefig("covariance_ellipse")
-
-    def plot_first_covariance_whitened(self):
-        fig = plt.figure(figsize=(4, 4))
-        ax = fig.add_subplot(111, aspect="equal")
-        self._plot_covariance(ax, self.C_whitened, self.P_whitened, self.U, "blue", "red")
-        ax.set_title("First Covariance Matrix Whitened")
-        plt.savefig("covariance_whitened")
-
-    def plot_second_covariance_ellipse(self):
-        fig = plt.figure(figsize=(4, 4))
-        ax = fig.add_subplot(111, aspect="equal")
-        self._plot_covariance(ax, self.D, self.Q, self.V, "green", "purple")
-        ax.set_title("Second Covariance Matrix")
-        plt.savefig("covariance_ellipse_second")
-
-    def plot_second_covariance_whitened(self):
-        fig = plt.figure(figsize=(4, 4))
-        ax = fig.add_subplot(111, aspect="equal")
-        self._plot_covariance(ax, self.D_whitened, self.Q_whitened, self.V, "green", "purple")
-        ax.set_title("Second Covariance Matrix Whitened")
-        plt.savefig("covariance_whitened_second")
-
-    def plot_both_covariances(self):
-        fig = plt.figure(figsize=(4, 4))
-        ax = fig.add_subplot(111, aspect="equal")
-        self._plot_covariance(ax, self.C, self.P, self.U, "blue", "red", alpha=0.5)
-        self._plot_covariance(ax, self.D, self.Q, self.V, "green", "purple", alpha=0.5)
-        ax.set_title("Both Covariance Matrices")
-        plt.savefig("both_covariances")
-
-    def plot_both_covariances_whitened(self):
-        fig = plt.figure(figsize=(4, 4))
-        ax = fig.add_subplot(111, aspect="equal")
-        self._plot_covariance(ax, self.C_whitened, self.P_whitened, self.U, "blue", "red", alpha=0.5)
-        self._plot_covariance(ax, self.D_whitened, self.Q_whitened, self.V, "green", "purple", alpha=0.5)
-        ax.set_title("Both Covariances Matrices Whitened")
-        plt.savefig("both_covariances_whitened")
-
-    def plot_covariances_sum(self):
-        fig = plt.figure(figsize=(4, 4))
-        ax = fig.add_subplot(111, aspect="equal")
-        self._plot_covariance(ax, self.E, self.R, self.W, "brown", "black")
-        ax.set_title("Covariance Matrices Summed")
-        plt.savefig("covariances_sum")
-
-    def plot_covariances_sum_whitened(self):
-        fig = plt.figure(figsize=(4, 4))
-        ax = fig.add_subplot(111, aspect="equal")
-        self._plot_covariance(ax, self.E_whitened, self.R_whitened, self.W, "brown", "black")
-        ax.set_title("Covariance Matrices Summed & Whitened")
-        plt.savefig("covariances_sum_whitened")
-
-    def plot_covariances_transformed(self):
-        fig = plt.figure(figsize=(4, 4))
-        ax = fig.add_subplot(111, aspect="equal")
-        self._plot_covariance(
-            ax,
-            self.C_transformed,
-            self.P_transformed,
-            self.U_transformed,
-            "blue",
-            "red",
-            alpha=0.5,
-        )
-        self._plot_covariance(
-            ax,
-            self.D_transformed,
-            self.Q_transformed,
-            self.V_transformed,
-            "green",
-            "purple",
-            alpha=0.5,
-        )
-        ax.set_title("Covariance Matrices Transformed")
-        plt.savefig("covariances_transformed")
-
-    def plot_both_covariances_subplots(self):
+    def plot_scms(self):
         fig = plt.figure(figsize=(8, 4))
 
         ax1 = fig.add_subplot(121, aspect="equal")
-        self._plot_covariance(ax1, self.C, self.P, self.U, "blue", "red")
+        self._plot_scm(ax1, self.eigvals1, self.eigvecs1, "red")
         ax1.set_title("First Averaged SCM")
 
         ax2 = fig.add_subplot(122, aspect="equal")
-        self._plot_covariance(ax2, self.D, self.Q, self.V, "green", "purple")
+        self._plot_scm(ax2, self.eigvals2, self.eigvecs2, "purple")
         ax2.set_title("Second Averaged SCM")
 
-        plt.savefig("scms_subplots")
+        plt.savefig("scms")
 
-    def plot_covariances_sum_subplots(self):
+    def plot_scms_summed(self):
         fig = plt.figure(figsize=(8, 4))
 
         ax1 = fig.add_subplot(121, aspect="equal")
-        self._plot_covariance(ax1, self.C, self.P, self.U, "blue", "red", alpha=0.5)
-        self._plot_covariance(ax1, self.D, self.Q, self.V, "green", "purple", alpha=0.5)
+        self._plot_scm(ax1, self.eigvals1, self.eigvecs1, "red")
+        self._plot_scm(ax1, self.eigvals2, self.eigvecs2, "purple")
         ax1.set_title("Both SCMs")
 
         ax2 = fig.add_subplot(122, aspect="equal")
-        self._plot_covariance(ax2, self.E, self.R, self.W, "brown", "black")
+        self._plot_scm(ax2, self.eigvals_summed, self.eigvecs_summed, "black")
         ax2.set_title("Summed SCMs")
 
-        plt.savefig("scms_sum_subplots")
+        plt.savefig("scms-summed")
 
-    def plot_covariances_transformed_subplots(self):
+    def plot_scms_transformed(self):
         fig = plt.figure(figsize=(8, 4))
 
         ax1 = fig.add_subplot(121, aspect="equal")
-        self._plot_covariance(ax1, self.E_whitened, self.R_whitened, self.W, "brown", "black")
+        self._plot_scm(ax1, self.eigvals_summed_whitened, self.eigvecs_summed, "black")
         ax1.set_title("SCMs Summed & Whitened")
 
         ax2 = fig.add_subplot(122, aspect="equal")
-        self._plot_covariance(
-            ax2,
-            self.C_transformed,
-            self.P_transformed,
-            self.U_transformed,
-            "blue",
-            "red",
-            alpha=0.5,
-        )
-        self._plot_covariance(
-            ax2,
-            self.D_transformed,
-            self.Q_transformed,
-            self.V_transformed,
-            "green",
-            "purple",
-            alpha=0.5,
-        )
+        self._plot_scm(ax2, self.eigvals1_transformed, self.eigvecs1_transformed, "red")
+        self._plot_scm(ax2, self.eigvals2_transformed, self.eigvecs2_transformed, "purple")
         ax2.set_title("SCMs Transformed")
 
-        plt.savefig("scms_transformed_subplots")
+        plt.savefig("scms-transformed")
 
 
 csp = CSP()()
