@@ -16,22 +16,21 @@ from dotenv import load_dotenv
 from pyriemann.estimation import Covariances
 from moabb.utils import set_download_dir
 from moabb.datasets import BNCI2014_001
-from src.paradigm.paradigm import LogLossLeftRightImagery
+from src.paradigm.paradigm import MultiScoreLeftRightImagery
 
 
 class Pipeline:
     def __init__(self):
         self.rng = np.random.default_rng(1)
-
         plt.rcParams["font.family"] = "sans-serif"
         plt.rcParams["font.sans-serif"] = ["DejaVu Sans"]
-        fig, axs = plt.subplots(nrows=1, ncols=3, figsize=(12, 4), subplot_kw={"projection": "3d"})
+        fig, self.axs = plt.subplots(nrows=1, ncols=3, figsize=(12, 4), subplot_kw={"projection": "3d"})
         fig.subplots_adjust(left=0.05, wspace=0.5)
 
-        self.subplot_raw_signals(axs[0])
-        self.subplot_covariance_matrices(axs[1])
-        self.subplot_spd_manifold(axs[2])
-
+    def run(self):
+        self.subplot_raw_signals(self.axs[0])
+        self.subplot_covariance_matrices(self.axs[1])
+        self.subplot_spd_manifold(self.axs[2])
         plt.tight_layout()
         plt.savefig("pipeline")
 
@@ -45,7 +44,7 @@ class Pipeline:
 
         # Initialize data
         dataset = BNCI2014_001()
-        paradigm = LogLossLeftRightImagery()
+        paradigm = MultiScoreLeftRightImagery()
         X, y, meta = paradigm.get_data(dataset=dataset, subjects=[1])
 
         # Configure subplot
@@ -155,6 +154,3 @@ class Pipeline:
         ax.set_ylabel("X2")
         ax.set_zlabel("X3")
         ax.set_title("SPD Manifold")
-
-
-Pipeline()

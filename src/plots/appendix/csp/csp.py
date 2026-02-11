@@ -65,7 +65,7 @@ class CSP:
         eigvals2_transformed, self.eigvecs2_transformed = np.linalg.eigh(self.cov2_transformed)
         self.eigvals2_transformed = np.diag(eigvals2_transformed)
 
-    def __call__(self):
+    def run(self):
         self.plot_scms()
         self.plot_scms_summed()
         self.plot_scms_transformed()
@@ -171,6 +171,3 @@ class CSP:
         ax2.set_title("SCMs Transformed")
 
         plt.savefig("scms-transformed")
-
-
-csp = CSP()()
