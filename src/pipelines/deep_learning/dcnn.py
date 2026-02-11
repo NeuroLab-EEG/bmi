@@ -13,8 +13,9 @@ from src.pipelines.classifiers import DeepCNN
 
 class DCNN(PipelineBase):
     def build(self):
+        classname = self.__class__.__name__
         return {
-            "DCNN": make_pipeline(
+            classname: make_pipeline(
                 DeepCNN(
                     n_features=self.n_features,
                     n_classes=self.n_classes,

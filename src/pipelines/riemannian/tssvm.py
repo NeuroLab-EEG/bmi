@@ -17,8 +17,9 @@ from src.pipelines.classifiers import SVC
 
 class TSSVM(PipelineBase):
     def build(self):
+        classname = self.__class__.__name__
         return {
-            "TSSVM": make_pipeline(
+            classname: make_pipeline(
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
                 StandardScaler(),

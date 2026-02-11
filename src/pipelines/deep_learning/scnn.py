@@ -13,8 +13,9 @@ from src.pipelines.classifiers import ShallowCNN
 
 class SCNN(PipelineBase):
     def build(self):
+        classname = self.__class__.__name__
         return {
-            "SCNN": make_pipeline(
+            classname: make_pipeline(
                 ShallowCNN(
                     n_features=self.n_features,
                     n_classes=self.n_classes,

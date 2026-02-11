@@ -14,10 +14,11 @@ from src.pipelines.classifiers import ShallowCNN, BayesianNeuralNetwork
 
 class BSCNN(PipelineBase):
     def build(self):
-        data_path = path.join(self.data_path, self.__class__.__name__)
+        classname = self.__class__.__name__
+        data_path = path.join(self.data_path, classname)
         makedirs(data_path, exist_ok=True)
         return {
-            "BSCNN": make_pipeline(
+            classname: make_pipeline(
                 BayesianNeuralNetwork(
                     data_path=data_path,
                     random_state=self.random_state,

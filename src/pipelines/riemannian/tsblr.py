@@ -17,10 +17,11 @@ from src.pipelines.classifiers import BayesianLogisticRegression
 
 class TSBLR(PipelineBase):
     def build(self):
-        data_path = path.join(self.data_path, self.__class__.__name__)
+        classname = self.__class__.__name__
+        data_path = path.join(self.data_path, classname)
         makedirs(data_path, exist_ok=True)
         return {
-            "TSBLR": make_pipeline(
+            classname: make_pipeline(
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
                 StandardScaler(),

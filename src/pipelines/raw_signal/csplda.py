@@ -16,8 +16,9 @@ from src.pipelines import PipelineBase
 
 class CSPLDA(PipelineBase):
     def build(self):
+        classname = self.__class__.__name__
         return {
-            "CSPLDA": make_pipeline(
+            classname: make_pipeline(
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),

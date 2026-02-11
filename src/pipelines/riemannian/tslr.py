@@ -16,8 +16,9 @@ from src.pipelines.classifiers import LogisticRegression
 
 class TSLR(PipelineBase):
     def build(self):
+        classname = self.__class__.__name__
         return {
-            "TSLR": make_pipeline(
+            classname: make_pipeline(
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
