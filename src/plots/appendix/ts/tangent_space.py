@@ -9,15 +9,14 @@ import matplotlib.pyplot as plt
 class TangentSpace:
     def __init__(self):
         self.rng = np.random.default_rng(1)
-
-        fig, axs = plt.subplots(nrows=1, ncols=3, figsize=(8, 4))
+        fig, self.axs = plt.subplots(nrows=1, ncols=3, figsize=(8, 4))
         fig.subplots_adjust(wspace=0.5)
 
-        self.subplot_logarithmic_map(axs[0])
+    def run(self):
+        self.subplot_logarithmic_map(self.axs[0])
         self._generate_tangent_space_points()
-        self.subplot_tangent_space(axs[1])
-        self.subplot_decision_boundary(axs[2])
-
+        self.subplot_tangent_space(self.axs[1])
+        self.subplot_decision_boundary(self.axs[2])
         plt.tight_layout()
         plt.savefig("tangent_space")
 
@@ -88,6 +87,3 @@ class TangentSpace:
 
         # Label plot
         ax.set_title("Decision Boundary")
-
-
-TangentSpace()

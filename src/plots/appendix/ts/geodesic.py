@@ -18,17 +18,14 @@ from geomstats.geometry.hypersphere import Hypersphere
 class Geodesic:
     def __init__(self):
         gs.random.seed(1)
-
-        # Create figure and subplots
         fig = plt.figure(figsize=(8, 6), constrained_layout=True)
         gridspec = fig.add_gridspec(1, 2, wspace=0.1)
-        ax1 = fig.add_subplot(gridspec[0, 0])
-        ax2 = fig.add_subplot(gridspec[0, 1], projection="3d")
+        self.ax1 = fig.add_subplot(gridspec[0, 0])
+        self.ax2 = fig.add_subplot(gridspec[0, 1], projection="3d")
 
-        # Generate subplots
-        self.subplot_tanget_space(ax1)
-        self.subplot_manifold(ax2)
-
+    def run(self):
+        self.subplot_tanget_space(self.ax1)
+        self.subplot_manifold(self.ax2)
         plt.savefig("geodesic", bbox_inches="tight")
 
     def subplot_manifold(self, ax):
@@ -43,8 +40,8 @@ class Geodesic:
         points_on_geodesic = geodesic(gs.linspace(0.0, 1.0, 10))
 
         # Plot points and geodesic
-        ax = visualization.plot(point_a, ax=ax, space="S2", s=100, label="Point x")
-        ax = visualization.plot(point_b, ax=ax, space="S2", s=100, label="Point y")
+        ax = visualization.plot(point_a, ax=ax, space="S2", s=100, color="tab:blue", label="Point x")
+        ax = visualization.plot(point_b, ax=ax, space="S2", s=100, color="tab:orange", label="Point y")
         ax = visualization.plot(points_on_geodesic, ax=ax, space="S2", color="black", label="Geodesic")
 
         # Plot tangent vector
@@ -98,6 +95,3 @@ class Geodesic:
         ax.set_xlabel("J1")
         ax.set_ylabel("J2", rotation=0)
         ax.set_title("Tangent Space")
-
-
-Geodesic()
