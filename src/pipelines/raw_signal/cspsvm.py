@@ -17,8 +17,9 @@ from src.pipelines.classifiers import SVC
 
 class CSPSVM(PipelineBase):
     def build(self):
+        classname = self.__class__.__name__
         return {
-            "CSPSVM": make_pipeline(
+            classname: make_pipeline(
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),

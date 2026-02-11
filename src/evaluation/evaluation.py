@@ -44,8 +44,12 @@ class Evaluation:
 
         for DatasetCls, n_splits in self._datasets():
             # Make subdirectories
-            dataset_path = path.join(metrics_path, DatasetCls.__name__)
-            makedirs(dataset_path, exist_ok=True)
+            emissions_path = path.join(metrics_path, DatasetCls.__name__, "emissions")
+            traces_path = path.join(metrics_path, DatasetCls.__name__, "traces")
+            scores_path = path.join(metrics_path, DatasetCls.__name__)
+            makedirs(emissions_path, exist_ok=True)
+            makedirs(traces_path, exist_ok=True)
+            makedirs(scores_path, exist_ok=True)
 
             # Configure evaluation
             dataset = DatasetCls()
@@ -58,7 +62,7 @@ class Evaluation:
                 n_splits=n_splits,
                 codecarbon_config=dict(
                     save_to_file=True,
-                    output_dir=dataset_path,
+                    output_dir=emissions_path,
                     log_level="critical",
                     country_iso_code="USA",
                     region="washington",
@@ -71,6 +75,7 @@ class Evaluation:
                 k: v
                 for PipelineCls in self._pipelines()
                 for k, v in PipelineCls(
+                    data_path=traces_path,
                     random_state=self.random_state,
                     n_features=X.shape[1],
                     n_classes=len(np.unique(y)),
@@ -82,11 +87,11 @@ class Evaluation:
 
             # Execute pipelines evaluation
             result = evaluation.process(pipelines)
-            result.to_csv(path.join(dataset_path, "scores.csv"), index=False)
+            result.to_csv(path.join(scores_path, "scores.csv"), index=False)
 
     def _datasets(self):
-        yield (BNCI2014_001, 9)
         yield (PhysionetMI, 10)
+        yield (BNCI2014_001, 9)
         yield (Lee2019_MI, 10)
         yield (Cho2017, 10)
         yield (Schirrmeister2017, 5)
