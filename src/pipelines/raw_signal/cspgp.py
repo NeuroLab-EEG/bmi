@@ -6,6 +6,7 @@ References
 .. [1] https://github.com/NeuroTechX/moabb/blob/develop/pipelines/CSP_SVM_grid.yml
 """
 
+from os import path, makedirs
 from pyriemann.estimation import Covariances
 from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
@@ -16,11 +17,13 @@ from src.pipelines.classifiers import GaussianProcess
 
 class CSPGP(PipelineBase):
     def build(self):
+        data_path = path.join(self.data_path, self.__class__.__name__)
+        makedirs(data_path, exist_ok=True)
         return {
             "CSPGP": make_pipeline(
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),
-                GaussianProcess(kernel="rbf", random_state=self.random_state),
+                GaussianProcess(kernel="rbf", data_path=data_path, random_state=self.random_state),
             )
         }
