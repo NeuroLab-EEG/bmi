@@ -30,7 +30,7 @@ class ModelBuilderBase(ModelBuilder, ClassifierMixin, BaseEstimator):
         X_df = pd.DataFrame(X, columns=[f"x{i}" for i in range(X.shape[1])])
         y_series = pd.Series(y, name=self.output_var)
         trace = super().fit(X_df, y=y_series, progressbar=self.progressbar, random_seed=self.random_state)
-        trace.to_netcdf(path.join(self.data_path, f"trace-{datetime.now().strftime('%Y%m%d-%H%M%S')}.nc"))
+        trace.to_netcdf(path.join(self.data_path, f"trace-{datetime.now().strftime("%Y%m%d-%H%M%S")}.nc"))
         return trace
 
     def predict_proba(self, X):
