@@ -89,18 +89,28 @@ class Trace:
 
     def _plot_trace(self, idata, **kwargs):
         az.plot_trace(idata, var_names=kwargs["var_names"])
+        plt.suptitle(f"{kwargs['pipeline_classname']} Trace Plot", fontsize=12, weight="bold")
+        plt.tight_layout()
 
     def _plot_forest(self, idata, **kwargs):
         az.plot_forest(idata, var_names=kwargs["var_names"], combined=True, r_hat=True, ess=True)
+        plt.suptitle(f"{kwargs['pipeline_classname']} Forest Plot", fontsize=12, weight="bold")
+        plt.tight_layout()
 
     def _plot_rank(self, idata, **kwargs):
         az.plot_rank(idata, var_names=kwargs["var_names"])
+        plt.suptitle(f"{kwargs['pipeline_classname']} Rank Plot", fontsize=12, weight="bold")
+        plt.tight_layout()
 
     def _plot_ess(self, idata, **kwargs):
         az.plot_ess(idata, var_names=kwargs["var_names"])
+        plt.suptitle(f"{kwargs['pipeline_classname']} ESS Plot", fontsize=12, weight="bold")
+        plt.tight_layout()
 
     def _plot_energy(self, idata, **kwargs):
         az.plot_energy(idata)
+        plt.suptitle(f"{kwargs['pipeline_classname']} Energy Plot", fontsize=12, weight="bold")
+        plt.tight_layout()
 
     def _tabulate_summary(self, idata, **kwargs):
         # Generate convergence summary statistics
