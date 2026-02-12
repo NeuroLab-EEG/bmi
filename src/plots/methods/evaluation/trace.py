@@ -54,7 +54,7 @@ class Trace:
                     pathname = path.join(dirname, filename)
                     idata = az.from_netcdf(pathname)
                     for plot, filename_prefix in self._plots():
-                        plot(idata, var_names)
+                        plot(idata, var_names=var_names, pipeline_classname=pipeline_classname)
                         base_name, _ = path.splitext(filename)
                         plt.savefig(f"{filename_prefix}-{dataset_classname}-{pipeline_classname}-{base_name}")
 
@@ -81,33 +81,33 @@ class Trace:
 
     def _plots(self):
         yield (self._plot_trace, "trace")
+        yield (self._tabulate_summary, "summary")
         yield (self._plot_forest, "forest")
         yield (self._plot_rank, "rank")
         yield (self._plot_ess, "ess")
         yield (self._plot_energy, "energy")
-        yield (self._tabulate_summary, "summary")
 
-    def _plot_trace(self, idata, var_names):
-        az.plot_trace(idata, var_names=var_names)
+    def _plot_trace(self, idata, **kwargs):
+        az.plot_trace(idata, var_names=kwargs["var_names"])
 
-    def _plot_forest(self, idata, var_names):
-        az.plot_forest(idata, var_names=var_names, combined=True, r_hat=True, ess=True)
+    def _plot_forest(self, idata, **kwargs):
+        az.plot_forest(idata, var_names=kwargs["var_names"], combined=True, r_hat=True, ess=True)
 
-    def _plot_rank(self, idata, var_names):
-        az.plot_rank(idata, var_names=var_names)
+    def _plot_rank(self, idata, **kwargs):
+        az.plot_rank(idata, var_names=kwargs["var_names"])
 
-    def _plot_ess(self, idata, var_names):
-        az.plot_ess(idata, var_names=var_names)
+    def _plot_ess(self, idata, **kwargs):
+        az.plot_ess(idata, var_names=kwargs["var_names"])
 
-    def _plot_energy(self, idata, _):
+    def _plot_energy(self, idata, **kwargs):
         az.plot_energy(idata)
 
-    def _tabulate_summary(self, idata, var_names):
+    def _tabulate_summary(self, idata, **kwargs):
         # Generate convergence summary statistics
-        summary = az.summary(idata, var_names=var_names)
+        summary = az.summary(idata, var_names=kwargs["var_names"])
         stats = [
-            ["Mean r_hat", f"{summary["r_hat"].mean():.4f}"],
-            ["Max r_hat", f"{summary["r_hat"].max():.4f}"],
+            ["Mean R-hat", f"{summary["r_hat"].mean():.4f}"],
+            ["Max R-hat", f"{summary["r_hat"].max():.4f}"],
             ["Min ESS (bulk)", f"{summary["ess_bulk"].min():.0f}"],
             ["Mean ESS (bulk)", f"{summary["ess_bulk"].mean():.0f}"],
             ["Min ESS (tail)", f"{summary["ess_tail"].min():.0f}"],
@@ -140,5 +140,5 @@ class Trace:
                 if i % 2 == 0:
                     table[(i, j)].set_facecolor("#f0f0f0")
 
-        plt.title("Convergence Diagnostics Summary", fontsize=12, weight="bold", pad=20)
+        plt.title(f"{kwargs["pipeline_classname"]} Convergence Diagnostics Summary", fontsize=12, weight="bold", pad=20)
         plt.tight_layout()
