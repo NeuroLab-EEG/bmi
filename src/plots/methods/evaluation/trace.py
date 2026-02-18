@@ -39,7 +39,7 @@ class Trace:
         self.data_path = getenv("DATA_PATH")
         az.style.use("arviz-doc")
 
-    def run(self, min_trace=True):
+    def run(self):
         for DatasetCls in self._datasets():
             for PipelineCls, var_names in self._pipelines():
                 dataset_classname = DatasetCls.__name__
@@ -48,8 +48,6 @@ class Trace:
                     self.data_path, "metrics", dataset_classname, "traces", pipeline_classname
                 )
                 filenames = [f for f in listdir(dirname)]
-                if min_trace:
-                    filenames = filenames[:1]
                 for filename in filenames:
                     pathname = path.join(dirname, filename)
                     idata = az.from_netcdf(pathname)
@@ -72,7 +70,7 @@ class Trace:
         yield Stieger2021
 
     def _pipelines(self):
-        yield (CSPBLDA, [])
+        yield (CSPBLDA, ["pi", "mu_0", "mu_1", "sigma"])
         yield (CSPGP, [])
         yield (TSBLR, ["w", "b"])
         yield (TSGP, [])
@@ -89,27 +87,27 @@ class Trace:
 
     def _plot_trace(self, idata, **kwargs):
         az.plot_trace(idata, var_names=kwargs["var_names"])
-        plt.suptitle(f"{kwargs['pipeline_classname']} Trace Plot", fontsize=12, weight="bold")
+        plt.suptitle(f"{kwargs["pipeline_classname"]} Trace Plot", fontsize=12, weight="bold")
         plt.tight_layout()
 
     def _plot_forest(self, idata, **kwargs):
         az.plot_forest(idata, var_names=kwargs["var_names"], combined=True, r_hat=True, ess=True)
-        plt.suptitle(f"{kwargs['pipeline_classname']} Forest Plot", fontsize=12, weight="bold")
+        plt.suptitle(f"{kwargs["pipeline_classname"]} Forest Plot", fontsize=12, weight="bold")
         plt.tight_layout()
 
     def _plot_rank(self, idata, **kwargs):
         az.plot_rank(idata, var_names=kwargs["var_names"])
-        plt.suptitle(f"{kwargs['pipeline_classname']} Rank Plot", fontsize=12, weight="bold")
+        plt.suptitle(f"{kwargs["pipeline_classname"]} Rank Plot", fontsize=12, weight="bold")
         plt.tight_layout()
 
     def _plot_ess(self, idata, **kwargs):
         az.plot_ess(idata, var_names=kwargs["var_names"])
-        plt.suptitle(f"{kwargs['pipeline_classname']} ESS Plot", fontsize=12, weight="bold")
+        plt.suptitle(f"{kwargs["pipeline_classname"]} ESS Plot", fontsize=12, weight="bold")
         plt.tight_layout()
 
     def _plot_energy(self, idata, **kwargs):
         az.plot_energy(idata)
-        plt.suptitle(f"{kwargs['pipeline_classname']} Energy Plot", fontsize=12, weight="bold")
+        plt.suptitle(f"{kwargs["pipeline_classname"]} Energy Plot", fontsize=12, weight="bold")
         plt.tight_layout()
 
     def _tabulate_summary(self, idata, **kwargs):
