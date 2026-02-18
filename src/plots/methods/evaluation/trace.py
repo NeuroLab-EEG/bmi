@@ -148,6 +148,7 @@ class Trace:
                 if i % 2 == 0:
                     table[(i, j)].set_facecolor("#f0f0f0")
 
+        # Style figure
         plt.title(
             f"{kwargs['pipeline_classname']} Convergence Diagnostics Summary",
             fontsize=12,
