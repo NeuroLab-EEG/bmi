@@ -10,27 +10,28 @@ References
 """
 
 import torch
+import numpy as np
 import pymc as pm
 from sklearn.preprocessing import StandardScaler
 from src.pipelines.classifiers.model_builder import ModelBuilderBase
 
 
 class BayesianNeuralNetwork(ModelBuilderBase):
-    def __init__(self, network, **kwargs):
+    def __init__(self, network=None, **kwargs):
         super().__init__(**kwargs)
         self.network = network
         self.scaler = StandardScaler()
 
     def build_model(self, X, y):
         with pm.Model() as self.model:
-            x_data = pm.Data("x_data", X)
-            y_data = pm.Data("y_data", y)
+            X_obs = pm.Data("X_obs", X)
+            y_obs = pm.Data("y_obs", y)
 
             # Define priors
             w = pm.Normal(
                 "w",
                 mu=self.model_config["w_mu"],
-                sigma=self.model_config["w_sigma"],
+                sigma=1 / np.sqrt(X.shape[1]),
                 shape=X.shape[1],
             )
             b = pm.Normal(
@@ -40,8 +41,8 @@ class BayesianNeuralNetwork(ModelBuilderBase):
             )
 
             # Define likelihood
-            logit = pm.math.dot(x_data, w) + b
-            pm.Bernoulli(self.output_var, logit_p=logit, observed=y_data)
+            logit = pm.math.dot(X_obs, w) + b
+            pm.Bernoulli(self.output_var, logit_p=logit, observed=y_obs)
 
     def fit(self, X, y):
         # Train neural network
@@ -74,7 +75,6 @@ class BayesianNeuralNetwork(ModelBuilderBase):
     def get_default_model_config():
         return {
             "w_mu": 0,
-            "w_sigma": 1.0,
             "b_mu": 0,
-            "b_sigma": 3.0,
+            "b_sigma": 1.0,
         }
