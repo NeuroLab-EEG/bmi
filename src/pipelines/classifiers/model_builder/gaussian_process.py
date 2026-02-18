@@ -48,7 +48,7 @@ class GaussianProcess(ModelBuilderBase):
             y_obs = pm.Data("y_obs", y)
 
             # Get inducing points
-            n_inducing = 100
+            n_inducing = self.model_config["n_inducing"]
             Xu = pm.gp.util.kmeans_inducing_points(n_inducing, np.array(X))
 
             # Define covariance priors

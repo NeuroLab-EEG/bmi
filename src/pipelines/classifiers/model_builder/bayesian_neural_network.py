@@ -31,7 +31,7 @@ class BayesianNeuralNetwork(ModelBuilderBase):
             w = pm.Normal(
                 "w",
                 mu=self.model_config["w_mu"],
-                sigma=1/np.sqrt(X.shape[1]),
+                sigma=1 / np.sqrt(X.shape[1]),
                 shape=X.shape[1],
             )
             b = pm.Normal(

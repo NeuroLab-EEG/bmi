@@ -54,7 +54,9 @@ class ModelBuilderBase(ModelBuilder, ClassifierMixin, BaseEstimator):
         filename = self._pascal_to_kebab(self.__class__.__name__)
         with self.model:
             graph = pm.model_to_graphviz(self.model)
-            graph.render(f"{filename}-{datetime.now().strftime('%Y%m%d-%H%M%S-%f')}", format="png", cleanup=True)
+            graph.render(
+                f"{filename}-{datetime.now().strftime('%Y%m%d-%H%M%S-%f')}", format="png", cleanup=True
+            )
 
     def _pascal_to_kebab(self, string):
         return re.sub(r"(?<!^)(?=[A-Z])", "-", string).lower()

@@ -22,9 +22,19 @@ class BayesianLinearDiscriminantAnalysis(ModelBuilderBase):
             pi = pm.Beta("pi", alpha=self.model_config["pi_alpha"], beta=self.model_config["pi_beta"])
 
             # Define location priors
-            mu_0 = pm.Normal("mu_0", mu=self.model_config["mu_0_mu"], sigma=self.model_config["mu_0_sigma"], shape=X.shape[1])
-            mu_1 = pm.Normal("mu_1", mu=self.model_config["mu_1_mu"], sigma=self.model_config["mu_1_sigma"], shape=X.shape[1])
-            
+            mu_0 = pm.Normal(
+                "mu_0",
+                mu=self.model_config["mu_0_mu"],
+                sigma=self.model_config["mu_0_sigma"],
+                shape=X.shape[1],
+            )
+            mu_1 = pm.Normal(
+                "mu_1",
+                mu=self.model_config["mu_1_mu"],
+                sigma=self.model_config["mu_1_sigma"],
+                shape=X.shape[1],
+            )
+
             # Define shared scale prior
             sigma = pm.HalfNormal("sigma", sigma=self.model_config["sigma_sigma"], shape=X.shape[1])
 
@@ -39,7 +49,7 @@ class BayesianLinearDiscriminantAnalysis(ModelBuilderBase):
                 observed=X_obs,
             )
 
-            #Define likelihood of labels
+            # Define likelihood of labels
             logp_0 = pm.logp(pm.Normal.dist(mu=mu_0, sigma=sigma), X_obs).sum(axis=1)
             logp_1 = pm.logp(pm.Normal.dist(mu=mu_1, sigma=sigma), X_obs).sum(axis=1)
             logit = logp_1 + pm.math.log(pi) - logp_0 - pm.math.log(1 - pi)

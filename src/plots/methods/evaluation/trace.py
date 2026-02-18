@@ -87,39 +87,39 @@ class Trace:
 
     def _plot_trace(self, idata, **kwargs):
         az.plot_trace(idata, var_names=kwargs["var_names"])
-        plt.suptitle(f"{kwargs["pipeline_classname"]} Trace Plot", fontsize=12, weight="bold")
+        plt.suptitle(f"{kwargs['pipeline_classname']} Trace Plot", fontsize=12, weight="bold")
         plt.tight_layout()
 
     def _plot_forest(self, idata, **kwargs):
         az.plot_forest(idata, var_names=kwargs["var_names"], combined=True, r_hat=True, ess=True)
-        plt.suptitle(f"{kwargs["pipeline_classname"]} Forest Plot", fontsize=12, weight="bold")
+        plt.suptitle(f"{kwargs['pipeline_classname']} Forest Plot", fontsize=12, weight="bold")
         plt.tight_layout()
 
     def _plot_rank(self, idata, **kwargs):
         az.plot_rank(idata, var_names=kwargs["var_names"])
-        plt.suptitle(f"{kwargs["pipeline_classname"]} Rank Plot", fontsize=12, weight="bold")
+        plt.suptitle(f"{kwargs['pipeline_classname']} Rank Plot", fontsize=12, weight="bold")
         plt.tight_layout()
 
     def _plot_ess(self, idata, **kwargs):
         az.plot_ess(idata, var_names=kwargs["var_names"])
-        plt.suptitle(f"{kwargs["pipeline_classname"]} ESS Plot", fontsize=12, weight="bold")
+        plt.suptitle(f"{kwargs['pipeline_classname']} ESS Plot", fontsize=12, weight="bold")
         plt.tight_layout()
 
     def _plot_energy(self, idata, **kwargs):
         az.plot_energy(idata)
-        plt.suptitle(f"{kwargs["pipeline_classname"]} Energy Plot", fontsize=12, weight="bold")
+        plt.suptitle(f"{kwargs['pipeline_classname']} Energy Plot", fontsize=12, weight="bold")
         plt.tight_layout()
 
     def _tabulate_summary(self, idata, **kwargs):
         # Generate convergence summary statistics
         summary = az.summary(idata, var_names=kwargs["var_names"])
         stats = [
-            ["Mean R-hat", f"{summary["r_hat"].mean():.4f}"],
-            ["Max R-hat", f"{summary["r_hat"].max():.4f}"],
-            ["Min ESS (bulk)", f"{summary["ess_bulk"].min():.0f}"],
-            ["Mean ESS (bulk)", f"{summary["ess_bulk"].mean():.0f}"],
-            ["Min ESS (tail)", f"{summary["ess_tail"].min():.0f}"],
-            ["Mean ESS (tail)", f"{summary["ess_tail"].mean():.0f}"],
+            ["Mean R-hat", f"{summary['r_hat'].mean():.4f}"],
+            ["Max R-hat", f"{summary['r_hat'].max():.4f}"],
+            ["Min ESS (bulk)", f"{summary['ess_bulk'].min():.0f}"],
+            ["Mean ESS (bulk)", f"{summary['ess_bulk'].mean():.0f}"],
+            ["Min ESS (tail)", f"{summary['ess_tail'].min():.0f}"],
+            ["Mean ESS (tail)", f"{summary['ess_tail'].mean():.0f}"],
         ]
 
         # Create summary statistics table
@@ -148,5 +148,10 @@ class Trace:
                 if i % 2 == 0:
                     table[(i, j)].set_facecolor("#f0f0f0")
 
-        plt.title(f"{kwargs["pipeline_classname"]} Convergence Diagnostics Summary", fontsize=12, weight="bold", pad=20)
+        plt.title(
+            f"{kwargs['pipeline_classname']} Convergence Diagnostics Summary",
+            fontsize=12,
+            weight="bold",
+            pad=20,
+        )
         plt.tight_layout()
