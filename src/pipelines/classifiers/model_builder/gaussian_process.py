@@ -7,13 +7,14 @@ References
 .. [2] https://doi.org/10.1201/b10905
 .. [3] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Latent.html#example-2-classification
 .. [4] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Heteroskedastic.html#sparse-heteroskedastic-gp
-.. [5] https://www.pymc.io/projects/examples/en/latest/howto/model_builder.html
-.. [6] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
+.. [5] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-SparseApprox.html#initializing-the-inducing-points-with-k-means
+.. [6] https://www.pymc.io/projects/examples/en/latest/howto/model_builder.html
+.. [7] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
 """
 
+import numpy as np
 import pymc as pm
 import pytensor.tensor as pt
-from cuml import KMeans
 from src.pipelines.classifiers.model_builder import ModelBuilderBase
 
 
@@ -42,36 +43,31 @@ class GaussianProcess(ModelBuilderBase):
         self.model_config = self._model_config()
 
     def build_model(self, X, y):
-        # Get inducing points
-        n_inducing = self.model_config["n_inducing"]
-        kmeans = KMeans(n_clusters=n_inducing, random_state=self.random_state)
-        Xu = kmeans.fit(X).cluster_centers_
-
         with pm.Model() as self.model:
-            x_data = pm.Data("x_data", X)
-            y_data = pm.Data("y_data", y)
-            xu_data = pm.Data("xu_data", Xu)
+            X_obs = pm.Data("X_obs", X)
+            y_obs = pm.Data("y_obs", y)
+
+            # Get inducing points
+            n_inducing = 100
+            Xu = pm.gp.util.kmeans_inducing_points(n_inducing, np.array(X))
 
             # Define covariance priors
-            cov = self._covariance_function(X.shape[1])
+            cov = self._covariance(X.shape[1])
 
             # Define latent function priors
             gp = SparseLatent(cov_func=cov)
-            f = gp.prior("f", X=x_data, Xu=xu_data)
+            f = gp.prior("f", X=X_obs, Xu=Xu)
 
             # Define likelihood
-            p = pm.math.invlogit(f)
-            pm.Bernoulli(self.output_var, p=p, observed=y_data)
+            pm.Bernoulli(self.output_var, logit_p=f, observed=y_obs)
 
-    def _covariance_function(self, n_features):
+    def _covariance(self, n_features):
         if self.kernel == "linear":
             eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
             return eta**2 * pm.gp.cov.Linear(input_dim=n_features, c=0)
 
         if self.kernel == "rbf":
-            ell = pm.InverseGamma(
-                "ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"], shape=n_features
-            )
+            ell = pm.LogNormal("ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"])
             eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
             return eta**2 * pm.gp.cov.ExpQuad(input_dim=n_features, ls=ell)
 
@@ -80,15 +76,15 @@ class GaussianProcess(ModelBuilderBase):
     def _model_config(self):
         if self.kernel == "linear":
             return {
-                "eta_sigma": 3.0,
+                "eta_sigma": 1.0,
                 "n_inducing": 100,
             }
 
         if self.kernel == "rbf":
             return {
-                "ell_mu": 1.0,
-                "ell_sigma": 1.0,
-                "eta_sigma": 3.0,
+                "ell_mu": 0,
+                "ell_sigma": 0.5,
+                "eta_sigma": 1.0,
                 "n_inducing": 100,
             }
 

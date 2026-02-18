@@ -45,9 +45,10 @@ class ModelBuilderBase(ModelBuilder, ClassifierMixin, BaseEstimator):
 
     def graph_model(self):
         if self.model is None:
-            # Hardcode trials x channels from the gold standard BNCI2014_001
-            X_dummy = np.random.randn(576, 22)
-            y_dummy = np.random.randint(0, 2, size=576)
+            # Hardcode (n_trials, n_channels) from the gold standard BNCI2014_001
+            n_trials, n_channels = (576, 22)
+            X_dummy = np.random.randn(n_trials, n_channels)
+            y_dummy = np.random.randint(0, 2, size=n_trials)
             self.build_model(X_dummy, y_dummy)
 
         filename = self._pascal_to_kebab(self.__class__.__name__)

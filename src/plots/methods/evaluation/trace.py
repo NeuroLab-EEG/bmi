@@ -71,9 +71,9 @@ class Trace:
 
     def _pipelines(self):
         yield (CSPBLDA, ["pi", "mu_0", "mu_1", "sigma"])
-        yield (CSPGP, [])
+        yield (CSPGP, ["ell", "eta", "f"])
         yield (TSBLR, ["w", "b"])
-        yield (TSGP, [])
+        yield (TSGP, ["eta", "f"])
         yield (BSCNN, ["w", "b"])
         yield (BDCNN, ["w", "b"])
 
