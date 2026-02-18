@@ -35,7 +35,7 @@ class ModelBuilderBase(ModelBuilder, ClassifierMixin, BaseEstimator):
         return trace
 
     def predict_proba(self, X):
-        posterior_samples = super().predict_proba(X)
+        posterior_samples = super().predict_proba(X, var_names=[self.output_var])
         proba = posterior_samples.mean(dim=["chain", "draw"]).values
         return np.column_stack([1 - proba, proba])
 
