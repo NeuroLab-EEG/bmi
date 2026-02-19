@@ -25,7 +25,7 @@ from moabb.datasets import (
     GrosseWentrup2009,
     Stieger2021,
 )
-from src.datasets.liu2024 import Liu2024
+from src.datasets import Liu2024
 
 
 class Download:
