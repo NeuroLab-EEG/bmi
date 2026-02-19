@@ -25,6 +25,7 @@ from moabb.datasets import (
     GrosseWentrup2009,
     Stieger2021,
 )
+from src.datasets.liu2024 import Liu2024
 
 
 class Download:
@@ -51,3 +52,4 @@ class Download:
         yield Weibo2014
         yield GrosseWentrup2009
         yield Stieger2021
+        yield Liu2024
