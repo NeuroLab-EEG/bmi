@@ -25,6 +25,7 @@ from moabb.datasets import (
     GrosseWentrup2009,
     Stieger2021,
 )
+from src.datasets import Liu2024
 from src.paradigm import MultiScoreLeftRightImagery
 from src.pipelines import CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, CSPBLDA, CSPGP, TSBLR, TSGP, BSCNN, BDCNN
 
@@ -52,7 +53,7 @@ class Evaluation:
             makedirs(scores_path, exist_ok=True)
 
             # Configure evaluation
-            dataset = DatasetCls()
+            dataset = DatasetCls(accept=True) if DatasetCls is Shin2017A else DatasetCls()
             paradigm = MultiScoreLeftRightImagery(resample=128)
             evaluation = CrossSubjectEvaluation(
                 datasets=[dataset],
@@ -100,6 +101,7 @@ class Evaluation:
         yield (Dreyer2023, 10)
         yield (Weibo2014, 5)
         yield (GrosseWentrup2009, 5)
+        yield (Liu2024, 10)
         yield (Stieger2021, 10)
 
     def _pipelines(self):
