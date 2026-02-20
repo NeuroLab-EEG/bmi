@@ -19,7 +19,7 @@ class SCNN(PipelineBase):
                 ShallowCNN(
                     n_features=self.n_features,
                     n_classes=self.n_classes,
-                    n_times=self.n_times,
+                    n_timepoints=self.n_timepoints,
                     random_state=self.random_state,
                 ),
             ),
