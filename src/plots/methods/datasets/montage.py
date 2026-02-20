@@ -20,12 +20,12 @@ from moabb.datasets import (
     Shin2017A,
     BNCI2014_001,
     BNCI2014_004,
-    Beetl2021_A,
-    Beetl2021_B,
     Dreyer2023,
-    Stieger2021,
     Weibo2014,
+    GrosseWentrup2009,
+    Stieger2021,
 )
+from src.datasets import Liu2024
 
 
 class Montage:
@@ -34,48 +34,40 @@ class Montage:
         load_dotenv()
         self.data_path = getenv("DATA_PATH")
 
-        self.fig, self.axs = plt.subplots(4, 3, figsize=(32, 28))
-
-    def __call__(self):
+    def run(self):
+        fig, axes = plt.subplots(4, 3, figsize=(8, 8))
+        
         for row, col, DatasetCls, subdir in self._params():
-            # Define directory
-            root = path.join(path.expanduser(self.data_path), subdir)
-            subject = 4 if DatasetCls is Beetl2021_B else 1
-            bids_paths = find_matching_paths(
-                root=root, subjects=f"{subject}", datatypes="eeg", extensions=".edf"
-            )
-            # print(row, col, DatasetCls.__name__)
-            bids_path = bids_paths[0]
-
             # Read directory
+            root = path.join(path.expanduser(self.data_path), subdir)
+            bids_paths = find_matching_paths(root=root, subjects="1", datatypes="eeg", extensions=".edf")
+            bids_path = bids_paths[0]
             raw = read_raw_bids(bids_path=bids_path, verbose=False)
-            raw.set_montage("standard_1005")
+            if DatasetCls not in [Liu2024, GrosseWentrup2009]:
+                raw.set_montage("standard_1005")
 
             # Plot montage
-            ax = self.axs[row][col]
+            ax = axes[row][col]
             try:
-                raw.plot_sensors(show_names=True, sphere="auto", show=False, axes=ax)
+                raw.plot_sensors(show_names=False, sphere="auto", show=False, axes=ax)
             except ValueError:
-                raw.plot_sensors(show_names=True, sphere=(0, 0, 0, 0.095), show=False, axes=ax)
-            ax.set_title(DatasetCls.__name__, fontsize=32)
-
-        self.fig.tight_layout()
-        self.fig.suptitle("Channels Montages", fontsize=36)
-        self.fig.savefig("montage")
+                raw.plot_sensors(show_names=False, sphere=(0, 0, 0, 0.095), show=False, axes=ax)
+            ax.set_title(DatasetCls.__name__, fontsize=14)
+            
+        fig.suptitle("Channel Montages", fontweight="bold", fontsize=16)            
+        fig.tight_layout()
+        fig.savefig("montages")
 
     def _params(self):
-        yield (0, 0, Beetl2021_A, "MNE-BIDS-beetl2021-a")
-        yield (0, 1, Beetl2021_B, "MNE-BIDS-beetl2021-b")
-        yield (0, 2, BNCI2014_001, "MNE-BIDS-bnci2014-001")
-        yield (1, 0, BNCI2014_004, "MNE-BIDS-bnci2014-004")
-        yield (1, 1, Cho2017, "MNE-BIDS-cho2017")
-        yield (1, 2, Dreyer2023, "MNE-BIDS-dreyer2023")
-        yield (2, 0, Lee2019_MI, "MNE-BIDS-lee2019-mi")
-        yield (2, 1, PhysionetMI, "MNE-BIDS-physionet-motor-imagery")
-        yield (2, 2, Schirrmeister2017, "MNE-BIDS-schirrmeister2017")
-        yield (3, 0, Shin2017A, "MNE-BIDS-shin2017-a")
-        yield (3, 1, Stieger2021, "MNE-BIDS-stieger2021")
-        yield (3, 2, Weibo2014, "MNE-BIDS-weibo2014")
-
-
-Montage()()
+        yield (0, 0, BNCI2014_001, "MNE-BIDS-bnci2014-001")
+        yield (0, 1, BNCI2014_004, "MNE-BIDS-bnci2014-004")
+        yield (0, 2, Cho2017, "MNE-BIDS-cho2017")
+        yield (1, 0, Dreyer2023, "MNE-BIDS-dreyer2023")
+        yield (1, 1, Lee2019_MI, "MNE-BIDS-lee2019-mi")
+        yield (1, 2, PhysionetMI, "MNE-BIDS-physionet-motor-imagery")
+        yield (2, 0, Schirrmeister2017, "MNE-BIDS-schirrmeister2017")
+        yield (2, 1, Shin2017A, "MNE-BIDS-shin2017-a")
+        yield (2, 2, Stieger2021, "MNE-BIDS-stieger2021")
+        yield (3, 0, Weibo2014, "MNE-BIDS-weibo2014")
+        yield (3, 1, Liu2024, "MNE-BIDS-liu2024")
+        yield (3, 2, GrosseWentrup2009, "MNE-BIDS-grosse-wentrup2009")
