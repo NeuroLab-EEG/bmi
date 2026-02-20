@@ -47,9 +47,7 @@ class Liu2024(MOABBLiu2024):
         sub = f"sub-{subject:02d}"
 
         # Construct the path to the subject's data file
-        subject_path = (
-            path_folder / "edffile" / sub / "eeg" / f"{sub}_task-motor-imagery_eeg.edf"
-        )
+        subject_path = path_folder / "edffile" / sub / "eeg" / f"{sub}_task-motor-imagery_eeg.edf"
         subject_paths.append(str(subject_path))
 
         return subject_paths
