@@ -42,9 +42,7 @@ class BubblePlot:
                 Stieger2021(),
                 Shin2017A(),
             ],
-            color_map={
-                "imagery": "tab:blue"
-            }
+            color_map={"imagery": "tab:blue"},
         )
 
         fig.suptitle("MI-EEG Datasets Bubble Plot", fontweight="bold", fontsize=10)

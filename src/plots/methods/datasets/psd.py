@@ -44,7 +44,7 @@ class PSD:
             psd_right = epochs_right.compute_psd(picks="data", fmin=8, fmax=32)
             mean_psd_left = psd_left.average()
             mean_psd_right = psd_right.average()
-            
+
             for mean_psd, color in [(mean_psd_left, "blue"), (mean_psd_right, "red")]:
                 psds, freqs = mean_psd.get_data(return_freqs=True)
                 psds = 10 * np.log10(psds)
@@ -59,7 +59,7 @@ class PSD:
         fig.suptitle("Multitaper Power Spectral Density", fontweight="bold", fontsize=16)
         fig.tight_layout()
         fig.savefig("psd")
-            
+
     def _datasets(self):
         yield (BNCI2014_001, 0, 0)
         yield (BNCI2014_004, 0, 1)

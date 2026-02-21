@@ -36,7 +36,7 @@ class Montage:
 
     def run(self):
         fig, axes = plt.subplots(2, 6, figsize=(12, 4))
-        
+
         for row, col, DatasetCls, subdir in self._params():
             # Read directory
             root = path.join(path.expanduser(self.data_path), subdir)
@@ -53,8 +53,8 @@ class Montage:
             except ValueError:
                 raw.plot_sensors(show_names=False, sphere=(0, 0, 0, 0.095), show=False, axes=ax)
             ax.set_title(DatasetCls.__name__, fontsize=14)
-            
-        fig.suptitle("Channel Montages", fontweight="bold", fontsize=16)            
+
+        fig.suptitle("Channel Montages", fontweight="bold", fontsize=16)
         fig.tight_layout()
         fig.savefig("montages")
 
