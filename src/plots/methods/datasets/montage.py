@@ -35,7 +35,7 @@ class Montage:
         self.data_path = getenv("DATA_PATH")
 
     def run(self):
-        fig, axes = plt.subplots(4, 3, figsize=(8, 8))
+        fig, axes = plt.subplots(2, 6, figsize=(12, 4))
         
         for row, col, DatasetCls, subdir in self._params():
             # Read directory
@@ -62,12 +62,12 @@ class Montage:
         yield (0, 0, BNCI2014_001, "MNE-BIDS-bnci2014-001")
         yield (0, 1, BNCI2014_004, "MNE-BIDS-bnci2014-004")
         yield (0, 2, Cho2017, "MNE-BIDS-cho2017")
-        yield (1, 0, Dreyer2023, "MNE-BIDS-dreyer2023")
-        yield (1, 1, Lee2019_MI, "MNE-BIDS-lee2019-mi")
-        yield (1, 2, PhysionetMI, "MNE-BIDS-physionet-motor-imagery")
-        yield (2, 0, Schirrmeister2017, "MNE-BIDS-schirrmeister2017")
-        yield (2, 1, Shin2017A, "MNE-BIDS-shin2017-a")
-        yield (2, 2, Stieger2021, "MNE-BIDS-stieger2021")
-        yield (3, 0, Weibo2014, "MNE-BIDS-weibo2014")
-        yield (3, 1, Liu2024, "MNE-BIDS-liu2024")
-        yield (3, 2, GrosseWentrup2009, "MNE-BIDS-grosse-wentrup2009")
+        yield (0, 3, Dreyer2023, "MNE-BIDS-dreyer2023")
+        yield (0, 4, Lee2019_MI, "MNE-BIDS-lee2019-mi")
+        yield (0, 5, PhysionetMI, "MNE-BIDS-physionet-motor-imagery")
+        yield (1, 0, Schirrmeister2017, "MNE-BIDS-schirrmeister2017")
+        yield (1, 1, Shin2017A, "MNE-BIDS-shin2017-a")
+        yield (1, 2, Stieger2021, "MNE-BIDS-stieger2021")
+        yield (1, 3, Weibo2014, "MNE-BIDS-weibo2014")
+        yield (1, 4, Liu2024, "MNE-BIDS-liu2024")
+        yield (1, 5, GrosseWentrup2009, "MNE-BIDS-grosse-wentrup2009")

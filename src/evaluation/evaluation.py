@@ -53,7 +53,7 @@ class Evaluation:
             makedirs(scores_path, exist_ok=True)
 
             # Configure evaluation
-            dataset = DatasetCls(accept=True) if DatasetCls is Shin2017A else DatasetCls()
+            dataset = DatasetCls()
             paradigm = MultiScoreLeftRightImagery(resample=128)
             evaluation = CrossSubjectEvaluation(
                 datasets=[dataset],
