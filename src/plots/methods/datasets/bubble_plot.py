@@ -45,6 +45,6 @@ class BubblePlot:
             color_map={"imagery": "tab:blue"},
         )
 
-        fig.suptitle("MI-EEG Datasets Bubble Plot", fontweight="bold", fontsize=10)
+        fig.suptitle("Scale Comparison", fontweight="bold", fontsize=10)
         fig.set_size_inches(4, 3)
         plt.savefig("bubble-plot")
