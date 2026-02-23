@@ -50,7 +50,7 @@ class Montage:
         DatasetCls, subdir = next(self.params)
 
         # Read directory
-        root = path.join(path.expanduser(self.data_path), subdir)
+        root = path.join(self.data_path, subdir)
         bids_paths = find_matching_paths(root=root, subjects="1", datatypes="eeg", extensions=".edf")
         bids_path = bids_paths[0]
         raw = read_raw_bids(bids_path=bids_path, verbose=False)
