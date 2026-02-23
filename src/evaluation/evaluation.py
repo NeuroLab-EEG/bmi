@@ -80,7 +80,7 @@ class Evaluation:
                     random_state=self.random_state,
                     n_features=X.shape[1],
                     n_classes=len(np.unique(y)),
-                    n_times=X.shape[2],
+                    n_timepoints=X.shape[2],
                 )
                 .build()
                 .items()
