@@ -46,7 +46,7 @@ class PSD:
     def _plot_psd(self, ax):
         DatasetCls = next(self.datasets)
         dataset = DatasetCls()
-        
+
         paradigm = MultiScoreLeftRightImagery(resample=128, fmin=8, fmax=32)
         epochs, labels, _ = paradigm.get_data(dataset, subjects=[1], return_epochs=True)
 
