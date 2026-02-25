@@ -23,23 +23,23 @@ class CuMLBase(ClassifierMixin, BaseEstimator):
         y_gpu = cp.asarray(y)
         self.model_ = self.classifier
         self.model_.fit(X_gpu, y_gpu)
-        self._cleanup_gpu()
         classes = self.model_.classes_
         self.classes_ = classes.get() if hasattr(classes, "get") else classes
+        self._cleanup_gpu()
         return self
 
     def predict(self, X):
         X_gpu = cp.asarray(X)
         pred = self.model_.predict(X_gpu)
-        self._cleanup_gpu()
         result = pred.get() if hasattr(pred, "get") else pred
+        self._cleanup_gpu()
         return result
 
     def predict_proba(self, X):
         X_gpu = cp.asarray(X)
         proba = self.model_.predict_proba(X_gpu)
-        self._cleanup_gpu()
         result = proba.get() if hasattr(proba, "get") else proba
+        self._cleanup_gpu()
         return result
 
     def _cleanup_gpu(self):
