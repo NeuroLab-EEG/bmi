@@ -11,8 +11,8 @@ from pyriemann.estimation import Covariances
 from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
 from src.pipelines import PipelineBase
-from src.pipelines.classifiers import SVC
 
 
 class TSSVM(PipelineBase):
