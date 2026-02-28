@@ -5,9 +5,9 @@ from .gaussian_process import GaussianProcess
 from .bayesian_neural_network import BayesianNeuralNetwork
 
 __all__ = [
-    "ModelBuilderBase",
-    "BayesianLinearDiscriminantAnalysis",
-    "BayesianLogisticRegression",
-    "GaussianProcess",
-    "BayesianNeuralNetwork",
+    ModelBuilderBase.__name__,
+    BayesianLinearDiscriminantAnalysis.__name__,
+    BayesianLogisticRegression.__name__,
+    GaussianProcess.__name__,
+    BayesianNeuralNetwork.__name__,
 ]

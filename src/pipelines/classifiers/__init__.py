@@ -8,12 +8,12 @@ from .model_builder import (
 )
 
 __all__ = [
-    "LogisticRegression",
-    "SVC",
-    "ShallowCNN",
-    "DeepCNN",
-    "BayesianLogisticRegression",
-    "BayesianLinearDiscriminantAnalysis",
-    "GaussianProcess",
-    "BayesianNeuralNetwork",
+    LogisticRegression.__name__,
+    SVC.__name__,
+    ShallowCNN.__name__,
+    DeepCNN.__name__,
+    BayesianLogisticRegression.__name__,
+    BayesianLinearDiscriminantAnalysis.__name__,
+    GaussianProcess.__name__,
+    BayesianNeuralNetwork.__name__,
 ]
