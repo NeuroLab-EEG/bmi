@@ -11,14 +11,13 @@ from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from sklearn.preprocessing import StandardScaler
-from src.pipelines import PipelineBase
+from ..pipeline_base import PipelineBase
 
 
 class CSPLDA(PipelineBase):
     def build(self):
-        classname = self.__class__.__name__
         return {
-            classname: make_pipeline(
+            self.__class__.__name__: make_pipeline(
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),
