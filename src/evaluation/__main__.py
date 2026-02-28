@@ -12,7 +12,7 @@ import subprocess
 from .evaluation import Evaluation
 
 
-def main():
+if __name__ == "__main__":
     for dataset in Evaluation.DATASETS.keys():
         for pipeline in Evaluation.PIPELINES.keys():
             subprocess.run(
@@ -26,7 +26,3 @@ def main():
                     pipeline,
                 ]
             )
-
-
-if __name__ == "__main__":
-    main()
