@@ -1,3 +1,4 @@
+from .cuml import LogisticRegression, SVC
 from .neural_network import ShallowCNN, DeepCNN
 from .model_builder import (
     BayesianLogisticRegression,
@@ -7,6 +8,8 @@ from .model_builder import (
 )
 
 __all__ = [
+    "LogisticRegression",
+    "SVC",
     "ShallowCNN",
     "DeepCNN",
     "BayesianLogisticRegression",

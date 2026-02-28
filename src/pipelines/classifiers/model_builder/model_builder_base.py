@@ -7,9 +7,7 @@ References
 .. [2] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
 """
 
-import gc
 import re
-import jax
 import pandas as pd
 import numpy as np
 import pymc as pm
@@ -34,8 +32,6 @@ class ModelBuilderBase(ModelBuilder, ClassifierMixin, BaseEstimator):
         y_series = pd.Series(y, name=self.output_var)
         trace = super().fit(X_df, y=y_series, progressbar=self.progressbar, random_seed=self.random_state)
         trace.to_netcdf(path.join(self.data_path, f"{datetime.now().strftime('%Y%m%d-%H%M%S')}.nc"))
-        jax.clear_caches()
-        gc.collect()
         return trace
 
     def predict_proba(self, X):

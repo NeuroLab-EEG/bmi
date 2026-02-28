@@ -11,8 +11,8 @@ from pyriemann.estimation import Covariances
 from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
 from src.pipelines import PipelineBase
+from src.pipelines.classifiers import SVC
 
 
 class CSPSVM(PipelineBase):
