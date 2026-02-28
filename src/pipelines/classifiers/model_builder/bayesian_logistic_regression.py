@@ -10,7 +10,7 @@ References
 
 import numpy as np
 import pymc as pm
-from src.pipelines.classifiers.model_builder import ModelBuilderBase
+from .model_builder_base import ModelBuilderBase
 
 
 class BayesianLogisticRegression(ModelBuilderBase):

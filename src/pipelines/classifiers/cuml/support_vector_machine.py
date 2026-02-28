@@ -8,7 +8,7 @@ References
 """
 
 from cuml.svm import SVC as CuMLSVC
-from src.pipelines.classifiers.cuml import CuMLBase
+from .cuml_base import CuMLBase
 
 
 class SVC(CuMLBase):

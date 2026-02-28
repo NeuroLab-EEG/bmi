@@ -7,7 +7,7 @@ References
 """
 
 from braindecode.models import Deep4Net
-from src.pipelines.classifiers.neural_network import NeuralNetworkBase
+from .neural_network_base import NeuralNetworkBase
 
 
 class DeepCNN(NeuralNetworkBase):
