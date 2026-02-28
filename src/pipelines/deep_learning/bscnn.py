@@ -8,17 +8,14 @@ References
 
 from os import path, makedirs
 from sklearn.pipeline import make_pipeline
-from src.pipelines import PipelineBase
-from src.pipelines.classifiers import ShallowCNN, BayesianNeuralNetwork
+from ..pipeline_base import PipelineBase
+from ..classifiers import ShallowCNN, BayesianNeuralNetwork
 
 
 class BSCNN(PipelineBase):
     def build(self):
-        classname = self.__class__.__name__
-        data_path = path.join(self.data_path, classname)
-        makedirs(data_path, exist_ok=True)
         return {
-            classname: make_pipeline(
+            self.__class__.__name__: make_pipeline(
                 BayesianNeuralNetwork(
                     data_path=data_path,
                     random_state=self.random_state,

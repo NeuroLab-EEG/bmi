@@ -7,15 +7,14 @@ References
 """
 
 from sklearn.pipeline import make_pipeline
-from src.pipelines import PipelineBase
-from src.pipelines.classifiers import ShallowCNN
+from ..pipeline_base import PipelineBase
+from ..classifiers import ShallowCNN
 
 
 class SCNN(PipelineBase):
     def build(self):
-        classname = self.__class__.__name__
         return {
-            classname: make_pipeline(
+            self.__class__.__name__: make_pipeline(
                 ShallowCNN(
                     n_features=self.n_features,
                     n_classes=self.n_classes,
