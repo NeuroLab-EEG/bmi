@@ -12,20 +12,8 @@ References
 from os import getenv
 from dotenv import load_dotenv
 from moabb.utils import set_download_dir
-from moabb.datasets import (
-    PhysionetMI,
-    Lee2019_MI,
-    Cho2017,
-    Schirrmeister2017,
-    Shin2017A,
-    BNCI2014_001,
-    BNCI2014_004,
-    Dreyer2023,
-    Weibo2014,
-    GrosseWentrup2009,
-    Stieger2021,
-)
-from src.datasets import Liu2024
+from moabb.datasets import Shin2017A
+from src.evaluation import Evaluation
 
 
 class Download:
@@ -36,20 +24,6 @@ class Download:
         set_download_dir(self.data_path)
 
     def run(self):
-        for DatasetCls in self._datasets():
+        for DatasetCls in Evaluation.DATASETS.values():
             dataset = DatasetCls(accept=True) if DatasetCls is Shin2017A else DatasetCls()
             dataset.get_data(cache_config=dict(path=self.data_path, save_raw=True))
-
-    def _datasets(self):
-        yield PhysionetMI
-        yield Lee2019_MI
-        yield Cho2017
-        yield Schirrmeister2017
-        yield Shin2017A
-        yield BNCI2014_001
-        yield BNCI2014_004
-        yield Dreyer2023
-        yield Weibo2014
-        yield GrosseWentrup2009
-        yield Stieger2021
-        yield Liu2024
