@@ -89,7 +89,12 @@ class Evaluation:
 
     def run(self):
         # Make directories
-        metrics_path = path.join(self.data_path, "metrics", self.DatasetCls.__name__, self.PipelineCls.__name__)
+        metrics_path = path.join(
+            self.data_path,
+            "metrics",
+            self.DatasetCls.__name__,
+            self.PipelineCls.__name__,
+        )
         makedirs(metrics_path, exist_ok=True)
 
         # Configure evaluation

@@ -6,7 +6,6 @@ References
 .. [1] https://github.com/NeuroTechX/moabb/blob/v1.1.2/pipelines/Keras_ShallowConvNet.yml
 """
 
-from os import path, makedirs
 from sklearn.pipeline import make_pipeline
 from ..pipeline_base import PipelineBase
 from ..classifiers import ShallowCNN, BayesianNeuralNetwork
@@ -17,7 +16,7 @@ class BSCNN(PipelineBase):
         return {
             self.__class__.__name__: make_pipeline(
                 BayesianNeuralNetwork(
-                    data_path=data_path,
+                    data_path=self.data_path,
                     random_state=self.random_state,
                     network=ShallowCNN(
                         n_features=self.n_features,

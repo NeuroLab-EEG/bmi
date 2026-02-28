@@ -11,14 +11,22 @@ os.environ["XLA_FLAGS"] = "--xla_gpu_deterministic_ops=true"
 import subprocess
 from .evaluation import Evaluation
 
+
 def main():
     for dataset in Evaluation.DATASETS.keys():
         for pipeline in Evaluation.PIPELINES.keys():
-            subprocess.run([
-                "python", "-m", "src.evaluation.run",
-                "--dataset", dataset,
-                "--pipeline", pipeline,
-            ])
+            subprocess.run(
+                [
+                    "python",
+                    "-m",
+                    "src.evaluation.run",
+                    "--dataset",
+                    dataset,
+                    "--pipeline",
+                    pipeline,
+                ]
+            )
+
 
 if __name__ == "__main__":
     main()

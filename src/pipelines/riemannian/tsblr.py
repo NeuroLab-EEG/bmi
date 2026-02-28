@@ -6,7 +6,6 @@ References
 .. [1] https://github.com/NeuroTechX/moabb/blob/develop/pipelines/TSLR.yml
 """
 
-from os import path, makedirs
 from pyriemann.estimation import Covariances
 from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
@@ -22,6 +21,6 @@ class TSBLR(PipelineBase):
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
-                BayesianLogisticRegression(data_path=data_path, random_state=self.random_state),
+                BayesianLogisticRegression(data_path=self.data_path, random_state=self.random_state),
             )
         }

@@ -6,7 +6,6 @@ References
 .. [1] https://github.com/NeuroTechX/moabb/blob/develop/pipelines/CSP.yml
 """
 
-from os import path, makedirs
 from pyriemann.estimation import Covariances
 from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
@@ -22,6 +21,6 @@ class CSPBLDA(PipelineBase):
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),
-                BayesianLDA(data_path=data_path, random_state=self.random_state),
+                BayesianLDA(data_path=self.data_path, random_state=self.random_state),
             )
         }

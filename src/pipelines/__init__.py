@@ -16,5 +16,5 @@ __all__ = [
     SCNN.__name__,
     DCNN.__name__,
     BSCNN.__name__,
-    BSCNN.__name__,
+    BDCNN.__name__,
 ]
