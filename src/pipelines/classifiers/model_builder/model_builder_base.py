@@ -7,7 +7,6 @@ References
 .. [2] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
 """
 
-import re
 import pandas as pd
 import numpy as np
 import pymc as pm
