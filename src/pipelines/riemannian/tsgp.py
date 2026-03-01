@@ -21,6 +21,6 @@ class TSGP(PipelineBase):
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
-                GaussianProcess(kernel="linear", data_path=self.data_path, random_state=self.random_state),
+                GaussianProcess.from_kernel(kernel="linear", data_path=self.data_path, random_state=self.random_state),
             )
         }

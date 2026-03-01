@@ -14,6 +14,7 @@ References
 import numpy as np
 import pymc as pm
 import pytensor.tensor as pt
+from abc import abstractmethod
 from .model_builder_base import ModelBuilderBase
 
 
@@ -36,10 +37,15 @@ class SparseLatent:
 
 
 class GaussianProcess(ModelBuilderBase):
-    def __init__(self, kernel, **kwargs):
-        super().__init__(**kwargs)
-        self.kernel = kernel
-        self.model_config = self._model_config()
+    KERNELS = {}
+
+    def __init_subclass__(cls, kernel, **kwargs):
+        super().__init_subclass__(**kwargs)
+        GaussianProcess.KERNELS[kernel] = cls
+
+    @classmethod
+    def from_kernel(cls, kernel, **kwargs):
+        return cls.KERNELS[kernel](**kwargs)
 
     def build_model(self, X, y):
         with pm.Model() as self.model:
@@ -60,35 +66,35 @@ class GaussianProcess(ModelBuilderBase):
             # Define likelihood
             pm.Bernoulli(self.output_var, logit_p=f, observed=y_obs)
 
+    @abstractmethod
     def _covariance(self, n_features):
-        if self.kernel == "linear":
-            eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
-            return eta**2 * pm.gp.cov.Linear(input_dim=n_features, c=0)
+        pass
 
-        if self.kernel == "rbf":
-            ell = pm.LogNormal("ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"])
-            eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
-            return eta**2 * pm.gp.cov.ExpQuad(input_dim=n_features, ls=ell)
 
-        raise NotImplementedError
-
-    def _model_config(self):
-        if self.kernel == "linear":
-            return {
-                "eta_sigma": 1.0,
-                "n_inducing": 100,
-            }
-
-        if self.kernel == "rbf":
-            return {
-                "ell_mu": 0,
-                "ell_sigma": 0.5,
-                "eta_sigma": 1.0,
-                "n_inducing": 100,
-            }
-
-        raise NotImplementedError
+class LinearGP(GaussianProcess, kernel="linear"):
+    def _covariance(self, n_features):
+        eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
+        return eta**2 * pm.gp.cov.Linear(input_dim=n_features, c=0)
 
     @staticmethod
     def get_default_model_config():
-        pass
+        return {
+            "eta_sigma": 1.0,
+            "n_inducing": 100,
+        }
+
+
+class RBFGP(GaussianProcess, kernel="rbf"):
+    def _covariance(self, n_features):
+        ell = pm.LogNormal("ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"])
+        eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
+        return eta**2 * pm.gp.cov.ExpQuad(input_dim=n_features, ls=ell)
+
+    @staticmethod
+    def get_default_model_config():
+        return {
+            "ell_mu": 0,
+            "ell_sigma": 0.5,
+            "eta_sigma": 1.0,
+            "n_inducing": 100,
+        }
