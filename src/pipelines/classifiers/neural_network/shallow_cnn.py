@@ -7,7 +7,7 @@ References
 """
 
 from braindecode.models import ShallowFBCSPNet
-from src.pipelines.classifiers.neural_network import NeuralNetworkBase
+from .neural_network_base import NeuralNetworkBase
 
 
 class ShallowCNN(NeuralNetworkBase):

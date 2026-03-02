@@ -3,17 +3,19 @@ from .neural_network import ShallowCNN, DeepCNN
 from .model_builder import (
     BayesianLogisticRegression,
     BayesianLinearDiscriminantAnalysis,
-    GaussianProcess,
+    LinearGP,
+    RBFGP,
     BayesianNeuralNetwork,
 )
 
 __all__ = [
-    "LogisticRegression",
-    "SVC",
-    "ShallowCNN",
-    "DeepCNN",
-    "BayesianLogisticRegression",
-    "BayesianLinearDiscriminantAnalysis",
-    "GaussianProcess",
-    "BayesianNeuralNetwork",
+    LogisticRegression.__name__,
+    SVC.__name__,
+    ShallowCNN.__name__,
+    DeepCNN.__name__,
+    BayesianLogisticRegression.__name__,
+    BayesianLinearDiscriminantAnalysis.__name__,
+    LinearGP.__name__,
+    RBFGP.__name__,
+    BayesianNeuralNetwork.__name__,
 ]

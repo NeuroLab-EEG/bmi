@@ -31,89 +31,101 @@ from src.pipelines import CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, CSPBLDA, CSPG
 
 
 class Evaluation:
-    def __init__(self):
+    DATASETS = {
+        BNCI2014_001.__name__: BNCI2014_001,
+        Dreyer2023.__name__: Dreyer2023,
+        Stieger2021.__name__: Stieger2021,
+        PhysionetMI.__name__: PhysionetMI,
+        Lee2019_MI.__name__: Lee2019_MI,
+        Cho2017.__name__: Cho2017,
+        Schirrmeister2017.__name__: Schirrmeister2017,
+        Shin2017A.__name__: Shin2017A,
+        BNCI2014_004.__name__: BNCI2014_004,
+        Weibo2014.__name__: Weibo2014,
+        GrosseWentrup2009.__name__: GrosseWentrup2009,
+        Liu2024.__name__: Liu2024,
+    }
+
+    N_SPLITS = {
+        BNCI2014_001.__name__: 9,
+        Dreyer2023.__name__: 10,
+        Stieger2021.__name__: 10,
+        PhysionetMI.__name__: 10,
+        Lee2019_MI.__name__: 10,
+        Cho2017.__name__: 10,
+        Schirrmeister2017.__name__: 5,
+        Shin2017A.__name__: 5,
+        BNCI2014_004.__name__: 9,
+        Weibo2014.__name__: 5,
+        GrosseWentrup2009.__name__: 5,
+        Liu2024.__name__: 10,
+    }
+
+    PIPELINES = {
+        CSPLDA.__name__: CSPLDA,
+        CSPBLDA.__name__: CSPBLDA,
+        CSPSVM.__name__: CSPSVM,
+        CSPGP.__name__: CSPGP,
+        TSLR.__name__: TSLR,
+        TSBLR.__name__: TSBLR,
+        TSSVM.__name__: TSSVM,
+        TSGP.__name__: TSGP,
+        SCNN.__name__: SCNN,
+        BSCNN.__name__: BSCNN,
+        DCNN.__name__: DCNN,
+        BDCNN.__name__: BDCNN,
+    }
+
+    def __init__(self, dataset=None, pipeline=None):
         # Configure environment
         load_dotenv()
         self.random_state = int(getenv("RANDOM_STATE"))
         self.data_path = getenv("DATA_PATH")
         set_download_dir(self.data_path)
 
+        self.DatasetCls = Evaluation.DATASETS[dataset]
+        self.n_splits = Evaluation.N_SPLITS[dataset]
+        self.PipelineCls = Evaluation.PIPELINES[pipeline]
+
     def run(self):
         # Make directories
-        metrics_path = path.join(self.data_path, "metrics")
+        metrics_path = path.join(
+            self.data_path,
+            "metrics",
+            self.DatasetCls.__name__,
+            self.PipelineCls.__name__,
+        )
         makedirs(metrics_path, exist_ok=True)
 
-        for DatasetCls, n_splits in self._datasets():
-            # Make subdirectories
-            emissions_path = path.join(metrics_path, DatasetCls.__name__, "emissions")
-            traces_path = path.join(metrics_path, DatasetCls.__name__, "traces")
-            scores_path = path.join(metrics_path, DatasetCls.__name__)
-            makedirs(emissions_path, exist_ok=True)
-            makedirs(traces_path, exist_ok=True)
-            makedirs(scores_path, exist_ok=True)
+        # Configure evaluation
+        dataset = self.DatasetCls()
+        paradigm = MultiScoreLeftRightImagery(resample=128)
+        evaluation = CrossSubjectEvaluation(
+            datasets=[dataset],
+            paradigm=paradigm,
+            hdf5_path=self.data_path,
+            overwrite=True,
+            n_splits=self.n_splits,
+            codecarbon_config=dict(
+                save_to_file=True,
+                output_dir=metrics_path,
+                log_level="critical",
+                country_iso_code="USA",
+                region="washington",
+            ),
+        )
 
-            # Configure evaluation
-            dataset = DatasetCls()
-            paradigm = MultiScoreLeftRightImagery(resample=128)
-            evaluation = CrossSubjectEvaluation(
-                datasets=[dataset],
-                paradigm=paradigm,
-                hdf5_path=self.data_path,
-                overwrite=True,
-                n_splits=n_splits,
-                codecarbon_config=dict(
-                    save_to_file=True,
-                    output_dir=emissions_path,
-                    log_level="critical",
-                    country_iso_code="USA",
-                    region="washington",
-                ),
-            )
+        # Configure pipelines
+        X, y, _ = paradigm.get_data(dataset, subjects=[1])
+        pipeline = self.PipelineCls(
+            data_path=metrics_path,
+            random_state=self.random_state,
+            n_features=X.shape[1],
+            n_classes=len(np.unique(y)),
+            n_timepoints=X.shape[2],
+        )
+        pipelines = pipeline.build()
 
-            # Configure pipelines
-            X, y, _ = paradigm.get_data(dataset, subjects=[1])
-            pipelines = {
-                k: v
-                for PipelineCls in self._pipelines()
-                for k, v in PipelineCls(
-                    data_path=traces_path,
-                    random_state=self.random_state,
-                    n_features=X.shape[1],
-                    n_classes=len(np.unique(y)),
-                    n_timepoints=X.shape[2],
-                )
-                .build()
-                .items()
-            }
-
-            # Execute pipelines evaluation
-            result = evaluation.process(pipelines)
-            result.to_csv(path.join(scores_path, "scores.csv"), index=False)
-
-    def _datasets(self):
-        yield (PhysionetMI, 10)
-        yield (BNCI2014_001, 9)
-        yield (Lee2019_MI, 10)
-        yield (Cho2017, 10)
-        yield (Schirrmeister2017, 5)
-        yield (Shin2017A, 5)
-        yield (BNCI2014_004, 9)
-        yield (Dreyer2023, 10)
-        yield (Weibo2014, 5)
-        yield (GrosseWentrup2009, 5)
-        yield (Liu2024, 10)
-        yield (Stieger2021, 10)
-
-    def _pipelines(self):
-        yield CSPLDA
-        yield CSPBLDA
-        yield CSPSVM
-        yield CSPGP
-        yield TSLR
-        yield TSBLR
-        yield TSSVM
-        yield TSGP
-        yield SCNN
-        yield BSCNN
-        yield DCNN
-        yield BDCNN
+        # Execute pipelines evaluation
+        result = evaluation.process(pipelines)
+        result.to_csv(path.join(metrics_path, "scores.csv"), index=False)
