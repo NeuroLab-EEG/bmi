@@ -4,6 +4,7 @@ Make Gaussian process classifier.
 References
 ----------
 .. [1] https://doi.org/10.7551/mitpress/3206.001.0001
+.. [2] https://bayesiancomputationbook.com/markdown/chp_04.html#posterior-geometry-matters
 .. [3] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Latent.html#example-2-classification
 .. [4] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Heteroskedastic.html#sparse-heteroskedastic-gp
 .. [5] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-SparseApprox.html#initializing-the-inducing-points-with-k-means
