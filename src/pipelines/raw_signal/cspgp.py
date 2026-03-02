@@ -11,7 +11,7 @@ from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from ..pipeline_base import PipelineBase
-from ..classifiers import GaussianProcess
+from ..classifiers import RBFGP
 
 
 class CSPGP(PipelineBase):
@@ -21,10 +21,6 @@ class CSPGP(PipelineBase):
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),
-                GaussianProcess.from_kernel(
-                    kernel="rbf",
-                    data_path=self.data_path,
-                    random_state=self.random_state,
-                ),
+                RBFGP(data_path=self.data_path, random_state=self.random_state),
             )
         }

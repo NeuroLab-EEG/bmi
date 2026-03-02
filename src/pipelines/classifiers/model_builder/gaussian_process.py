@@ -38,16 +38,6 @@ class SparseLatent:
 
 
 class GaussianProcess(ModelBuilderBase):
-    KERNELS = {}
-
-    def __init_subclass__(cls, kernel, **kwargs):
-        super().__init_subclass__(**kwargs)
-        GaussianProcess.KERNELS[kernel] = cls
-
-    @classmethod
-    def from_kernel(cls, kernel, **kwargs):
-        return cls.KERNELS[kernel](**kwargs)
-
     def build_model(self, X, y):
         with pm.Model() as self.model:
             X_obs = pm.Data("X_obs", X)
@@ -72,7 +62,7 @@ class GaussianProcess(ModelBuilderBase):
         pass
 
 
-class LinearGP(GaussianProcess, kernel="linear"):
+class LinearGP(GaussianProcess):
     def _covariance(self, n_features):
         eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
         return eta**2 * pm.gp.cov.Linear(input_dim=n_features, c=0)
@@ -85,7 +75,7 @@ class LinearGP(GaussianProcess, kernel="linear"):
         }
 
 
-class RBFGP(GaussianProcess, kernel="rbf"):
+class RBFGP(GaussianProcess):
     def _covariance(self, n_features):
         ell = pm.LogNormal("ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"])
         eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
