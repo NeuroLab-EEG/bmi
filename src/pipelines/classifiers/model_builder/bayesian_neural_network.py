@@ -44,11 +44,6 @@ class BayesianNeuralNetwork(ModelBuilderBase):
             pm.Bernoulli(self.output_var, logit_p=logit, observed=y_obs)
 
     def fit(self, X, y):
-        # Free GPU memory across folds preventing leaks
-        for attr in ("model", "idata"):
-            if hasattr(self, attr):
-                delattr(self, attr)
-
         # Train neural network on GPU
         self.network.fit(X, y)
 
@@ -58,7 +53,7 @@ class BayesianNeuralNetwork(ModelBuilderBase):
         self.backbone.eval()
 
         # Free GPU memory within fold preventing leaks
-        del self.network.model_
+        self.network.model_ = None
         torch.cuda.empty_cache()
 
         # Extract features from backbone

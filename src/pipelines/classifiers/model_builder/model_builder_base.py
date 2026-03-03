@@ -26,6 +26,10 @@ class ModelBuilderBase(ModelBuilder, ClassifierMixin, BaseEstimator):
         self.random_state = random_state
 
     def fit(self, X, y):
+        # Free GPU memory across folds preventing leaks
+        self.model = None
+        self.idata = None
+
         self.classes_ = np.unique(y)
         X_df = pd.DataFrame(X, columns=[f"x{i}" for i in range(X.shape[1])])
         y_series = pd.Series(y, name=self.output_var)
