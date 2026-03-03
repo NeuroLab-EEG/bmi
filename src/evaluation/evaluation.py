@@ -33,9 +33,9 @@ from src.pipelines import CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, CSPBLDA, CSPG
 class Evaluation:
     DATASETS = {
         BNCI2014_001.__name__: BNCI2014_001,
+        PhysionetMI.__name__: PhysionetMI,
         Dreyer2023.__name__: Dreyer2023,
         Stieger2021.__name__: Stieger2021,
-        PhysionetMI.__name__: PhysionetMI,
         Lee2019_MI.__name__: Lee2019_MI,
         Cho2017.__name__: Cho2017,
         Schirrmeister2017.__name__: Schirrmeister2017,
