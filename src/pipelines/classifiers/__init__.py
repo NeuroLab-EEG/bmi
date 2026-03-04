@@ -7,6 +7,9 @@ from .model_builder import (
     RBFGP,
     BayesianNeuralNetwork,
 )
+from .subprocess import (
+    PyMCSubprocessEstimator,
+)
 
 __all__ = [
     LogisticRegression.__name__,
@@ -18,4 +21,5 @@ __all__ = [
     LinearGP.__name__,
     RBFGP.__name__,
     BayesianNeuralNetwork.__name__,
+    PyMCSubprocessEstimator.__name__,
 ]

@@ -11,7 +11,7 @@ from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from ..pipeline_base import PipelineBase
-from ..classifiers import BayesianLogisticRegression
+from ..classifiers import BayesianLogisticRegression, PyMCSubprocessEstimator
 
 
 class TSBLR(PipelineBase):
@@ -21,6 +21,11 @@ class TSBLR(PipelineBase):
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
-                BayesianLogisticRegression(data_path=self.data_path, random_state=self.random_state),
+                PyMCSubprocessEstimator(
+                    estimator=BayesianLogisticRegression(
+                        random_state=self.random_state
+                    ),
+                    save_dir=self.data_path,
+                )
             )
         }

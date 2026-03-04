@@ -17,25 +17,16 @@ from sklearn.base import BaseEstimator, ClassifierMixin
 
 
 class ModelBuilderBase(ModelBuilder, ClassifierMixin, BaseEstimator):
-    def __init__(
-        self, model_config=None, sampler_config=None, progressbar=False, data_path=None, random_state=None
-    ):
+    def __init__(self, model_config=None, sampler_config=None, progressbar=False, random_state=None):
         super().__init__(model_config, sampler_config)
         self.progressbar = progressbar
-        self.data_path = data_path
         self.random_state = random_state
 
     def fit(self, X, y):
-        # Free GPU memory across folds preventing leaks
-        self.model = None
-        self.idata = None
-
         self.classes_ = np.unique(y)
         X_df = pd.DataFrame(X, columns=[f"x{i}" for i in range(X.shape[1])])
         y_series = pd.Series(y, name=self.output_var)
-        trace = super().fit(X_df, y=y_series, progressbar=self.progressbar, random_seed=self.random_state)
-        trace.to_netcdf(path.join(self.data_path, f"{datetime.now().strftime('%Y%m%d-%H%M%S')}.nc"))
-        return trace
+        return super().fit(X_df, y=y_series, progressbar=self.progressbar, random_seed=self.random_state)
 
     def predict_proba(self, X):
         posterior_samples = super().predict_proba(X, var_names=[self.output_var])
