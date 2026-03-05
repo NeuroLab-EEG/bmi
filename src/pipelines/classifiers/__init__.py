@@ -12,6 +12,8 @@ from .subprocess import (
     PyTorchSubprocessor,
     CuMLSubprocessor,
     SklearnSubprocessor,
+    BNNPyMCSubprocessor,
+    BNNPyTorchSubprocessor,
 )
 
 __all__ = [
@@ -28,4 +30,6 @@ __all__ = [
     PyTorchSubprocessor.__name__,
     CuMLSubprocessor.__name__,
     SklearnSubprocessor.__name__,
+    BNNPyMCSubprocessor.__name__,
+    BNNPyTorchSubprocessor.__name__,
 ]

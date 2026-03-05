@@ -11,8 +11,8 @@ from ..pipeline_base import PipelineBase
 from ..classifiers import (
     DeepConvNet,
     BayesianNeuralNetwork,
-    PyMCSubprocessor,
-    PyTorchSubprocessor,
+    BNNPyMCSubprocessor,
+    BNNPyTorchSubprocessor,
 )
 
 
@@ -20,10 +20,10 @@ class BDCNN(PipelineBase):
     def build(self):
         return {
             self.__class__.__name__: make_pipeline(
-                PyMCSubprocessor(
+                BNNPyMCSubprocessor(
                     estimator=BayesianNeuralNetwork(
                         random_state=self.random_state,
-                        network=PyTorchSubprocessor(
+                        network=BNNPyTorchSubprocessor(
                             estimator=DeepConvNet(
                                 n_features=self.n_features,
                                 n_classes=self.n_classes,

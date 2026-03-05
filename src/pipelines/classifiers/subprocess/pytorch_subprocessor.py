@@ -19,10 +19,3 @@ class PyTorchSubprocessor(SubprocessorBase):
             f_history=path.join(self.save_dir, "history.json"),
         )
         self.estimator.classes_ = self.classes_
-
-    def load_backbone(self):
-        classifier = self.estimator.build_classifier()
-        classifier.initialize()
-        classifier.load_params(f_params=path.join(self.save_dir, "params.pt"))
-        classifier.module_.to("cpu")
-        return classifier.module_
