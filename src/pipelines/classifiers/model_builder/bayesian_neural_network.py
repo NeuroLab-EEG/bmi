@@ -30,9 +30,9 @@ class BayesianNeuralNetwork(ModelBuilderBase):
             y_obs = pm.Data("y_obs", y)
 
             # Non-centered parameterization
-            X_centered = X - X.mean(axis=0)
-            Kxx = (X_centered.T @ X_centered) / X.shape[0]
-            L = pt.linalg.cholesky(pt.as_tensor_variable(Kxx) + 1e-6 * pt.eye(X.shape[1]))
+            X_centered = np.array(X) - np.array(X).mean(axis=0)
+            Kxx = (X_centered.T @ X_centered) / X_centered.shape[0]
+            L = pt.linalg.cholesky(pm.gp.util.stabilize(pt.as_tensor_variable(Kxx)))
 
             # Define priors
             w_raw = pm.Normal("w_raw", mu=0.0, sigma=1.0, shape=X.shape[1])

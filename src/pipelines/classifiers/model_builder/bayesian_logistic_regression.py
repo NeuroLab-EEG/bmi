@@ -12,7 +12,27 @@ References
 import numpy as np
 import pymc as pm
 import pytensor.tensor as pt
+from sklearn.decomposition import TruncatedSVD
 from .model_builder_base import ModelBuilderBase
+
+
+class LowRankPrior:
+    def __init__(self, n_components, random_state):
+        self.n_components = n_components
+        self.random_state = random_state
+
+    def prior(self, name, X):
+        X_centered = X - X.mean(axis=0)
+        svd = TruncatedSVD(n_components=self.n_components, random_state=self.random_state)
+        X_reduced = svd.fit_transform(X_centered)
+        Vt = svd.components_
+
+        Kxx_reduced = (X_reduced.T @ X_reduced) / X_centered.shape[0]
+        L = pt.linalg.cholesky(pm.gp.util.stabilize(pt.as_tensor_variable(Kxx_reduced)))
+
+        w_raw = pm.Normal(f"{name}_raw", mu=0.0, sigma=1.0, shape=self.n_components)
+        w_reduced = pt.dot(L, w_raw)
+        return pm.Deterministic(name, pt.dot(pt.as_tensor_variable(Vt.T), w_reduced) / np.sqrt(self.n_components))
 
 
 class BayesianLogisticRegression(ModelBuilderBase):
@@ -20,15 +40,10 @@ class BayesianLogisticRegression(ModelBuilderBase):
         with pm.Model() as self.model:
             X_obs = pm.Data("X_obs", X)
             y_obs = pm.Data("y_obs", y)
-
-            # Non-centered parameterization
-            X_centered = X - X.mean(axis=0)
-            Kxx = (X_centered.T @ X_centered) / X.shape[0]
-            L = pt.linalg.cholesky(pt.as_tensor_variable(Kxx) + 1e-6 * pt.eye(X.shape[1]))
-
+            
             # Define priors
-            w_raw = pm.Normal("w_raw", mu=0.0, sigma=1.0, shape=X.shape[1])
-            w = pm.Deterministic("w", pt.dot(L, w_raw) / np.sqrt(X.shape[1]))
+            prior = LowRankPrior(n_components=self.model_config["n_components"], random_state=self.random_state)
+            w = prior.prior("w", X=np.array(X))
             b = pm.Normal("b", mu=self.model_config["b_mu"], sigma=self.model_config["b_sigma"])
 
             # Define likelihood
@@ -40,4 +55,5 @@ class BayesianLogisticRegression(ModelBuilderBase):
         return {
             "b_mu": 0,
             "b_sigma": 1.0,
+            "n_components": 100,
         }
