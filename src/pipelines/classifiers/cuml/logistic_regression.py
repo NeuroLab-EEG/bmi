@@ -8,7 +8,7 @@ References
 """
 
 from cuml import LogisticRegression as CuMLLogisticRegression
-from src.pipelines.classifiers.cuml import CuMLBase
+from .cuml_base import CuMLBase
 
 
 class LogisticRegression(CuMLBase):

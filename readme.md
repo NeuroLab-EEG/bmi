@@ -15,11 +15,8 @@ conda activate bmi
 # Deactivate environment
 conda deactivate
 
-# Save reproducible environment
+# Save environment
 conda env export > environment.yml
-
-# Save portable environment
-conda env export --from-history > environment.yml
 
 # Recreate environment
 conda env create -f environment.yml

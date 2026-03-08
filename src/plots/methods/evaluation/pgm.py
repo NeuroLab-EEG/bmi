@@ -9,7 +9,8 @@ References
 from src.pipelines.classifiers import (
     BayesianLogisticRegression,
     BayesianLinearDiscriminantAnalysis,
-    GaussianProcess,
+    LinearGP,
+    RBFGP,
     BayesianNeuralNetwork,
 )
 
@@ -19,5 +20,5 @@ class PGM:
         BayesianLogisticRegression().graph_model()
         BayesianLinearDiscriminantAnalysis().graph_model()
         BayesianNeuralNetwork().graph_model()
-        GaussianProcess(kernel="linear").graph_model()
-        GaussianProcess(kernel="rbf").graph_model()
+        RBFGP().graph_model()
+        LinearGP().graph_model()
