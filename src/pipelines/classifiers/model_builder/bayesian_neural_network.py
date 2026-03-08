@@ -29,15 +29,12 @@ class BayesianNeuralNetwork(ModelBuilderBase):
             X_obs = pm.Data("X_obs", X)
             y_obs = pm.Data("y_obs", y)
 
-            # Non-centered parameterization
-            X_centered = np.array(X) - np.array(X).mean(axis=0)
-            Kxx = (X_centered.T @ X_centered) / X_centered.shape[0]
-            L = pt.linalg.cholesky(pm.gp.util.stabilize(pt.as_tensor_variable(Kxx)))
-
-            # Define priors
-            w_raw = pm.Normal("w_raw", mu=0.0, sigma=1.0, shape=X.shape[1])
-            w = pm.Deterministic("w", pt.dot(L, w_raw) / np.sqrt(X.shape[1]))
-            b = pm.Normal("b", mu=self.model_config["b_mu"], sigma=self.model_config["b_sigma"])
+            # Define priors with non-centered parameterization
+            w_sigma = 1 / np.sqrt(X.shape[1])
+            w_raw = pm.Normal("w_raw", mu=0, sigma=1, shape=X.shape[1])
+            w = pm.Deterministic("w", self.model_config["w_mu"] + w_sigma * w_raw)
+            b_raw = pm.Normal("b_raw", mu=0, sigma=1)
+            b = pm.Deterministic("b", self.model_config["b_mu"] + self.model_config["b_sigma"] * b_raw)
 
             # Define likelihood
             logit = pm.math.dot(X_obs, w) + b
@@ -65,6 +62,7 @@ class BayesianNeuralNetwork(ModelBuilderBase):
     @staticmethod
     def get_default_model_config():
         return {
+            "w_mu": 0,
             "b_mu": 0,
             "b_sigma": 1.0,
         }
