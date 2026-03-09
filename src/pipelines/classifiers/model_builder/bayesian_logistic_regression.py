@@ -12,23 +12,7 @@ References
 
 import numpy as np
 import pymc as pm
-import pytensor.tensor as pt
 from .model_builder_base import ModelBuilderBase
-
-
-"""
-Build Bayesian logistic regression classifier.
-
-References
-----------
-.. [1] https://doi.org/10.1007/978-0-387-84858-7_4
-.. [2] https://www.pymc.io/projects/examples/en/latest/howto/model_builder.html
-.. [3] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
-"""
-
-import numpy as np
-import pymc as pm
-from src.pipelines.classifiers.model_builder import ModelBuilderBase
 
 
 class BayesianLogisticRegression(ModelBuilderBase):
