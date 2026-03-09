@@ -26,6 +26,7 @@ from moabb.datasets import (
     GrosseWentrup2009,
     Stieger2021,
 )
+from .configs import N_SPLITS, CHANNELS
 from src.datasets import Liu2024
 from src.paradigm import MultiScoreLeftRightImagery
 from src.pipelines import CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, CSPBLDA, CSPGP, TSBLR, TSGP, BSCNN, BDCNN
@@ -40,7 +41,7 @@ class Evaluation:
         set_download_dir(self.data_path)
 
     def run(self):
-        for (DatasetCls, n_splits), PipelineCls in product(self._datasets(), self._pipelines()):
+        for DatasetCls, PipelineCls in product(self._datasets(), self._pipelines()):
             # Make directories
             metrics_path = path.join(
                 self.data_path,
@@ -52,13 +53,13 @@ class Evaluation:
 
             # Configure evaluation
             dataset = DatasetCls()
-            paradigm = MultiScoreLeftRightImagery(resample=128)
+            paradigm = MultiScoreLeftRightImagery(resample=128, channels=CHANNELS[DatasetCls])
             evaluation = CrossSubjectEvaluation(
                 datasets=[dataset],
                 paradigm=paradigm,
                 hdf5_path=self.data_path,
                 overwrite=True,
-                n_splits=n_splits,
+                n_splits=N_SPLITS[DatasetCls],
                 codecarbon_config=dict(
                     save_to_file=True,
                     output_dir=metrics_path,
@@ -84,18 +85,18 @@ class Evaluation:
             result.to_csv(path.join(metrics_path, "scores.csv"), index=False)
 
     def _datasets(self):
-        yield (BNCI2014_001, 9)
-        yield (Stieger2021, 10)
-        yield (PhysionetMI, 10)
-        yield (Lee2019_MI, 10)
-        yield (Cho2017, 10)
-        yield (Schirrmeister2017, 5)
-        yield (Shin2017A, 5)
-        yield (BNCI2014_004, 9)
-        yield (Dreyer2023, 10)
-        yield (Weibo2014, 5)
-        yield (GrosseWentrup2009, 5)
-        yield (Liu2024, 10)
+        yield BNCI2014_001
+        yield Stieger2021
+        yield Schirrmeister2017
+        yield Liu2024
+        yield GrosseWentrup2009
+        yield PhysionetMI
+        yield Lee2019_MI
+        yield Cho2017
+        yield Shin2017A
+        yield BNCI2014_004
+        yield Dreyer2023
+        yield Weibo2014
 
     def _pipelines(self):
         yield CSPLDA
