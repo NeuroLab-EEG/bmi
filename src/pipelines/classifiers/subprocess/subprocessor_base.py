@@ -6,43 +6,39 @@ References
 .. [1] https://docs.python.org/3/library/multiprocessing.html
 """
 
-import traceback
 import numpy as np
 import multiprocessing as mp
-from os import path, makedirs, environ
+from os import path, makedirs
 from datetime import datetime
 from abc import abstractmethod
 from sklearn.base import BaseEstimator, ClassifierMixin
 
 
 def _fit_worker(subprocessor, X, y, queue):
-    environ["JAX_TRACEBACK_FILTERING"] = "off"
     try:
         subprocessor.estimator.fit(X, y)
         subprocessor.save_fitted_state()
-        queue.put(("ok", None, None))
+        queue.put(("ok", None))
     except Exception as e:
-        queue.put(("err", e, traceback.format_exc()))
+        queue.put(("err", e))
 
 
 def _predict_worker(subprocessor, X, queue):
-    environ["JAX_TRACEBACK_FILTERING"] = "off"
     try:
         subprocessor.load_fitted_state()
         result = subprocessor.estimator.predict(X)
-        queue.put(("ok", result, None))
+        queue.put(("ok", result))
     except Exception as e:
-        queue.put(("err", e, traceback.format_exc()))
+        queue.put(("err", e))
 
 
 def _predict_proba_worker(subprocessor, X, queue):
-    environ["JAX_TRACEBACK_FILTERING"] = "off"
     try:
         subprocessor.load_fitted_state()
         result = subprocessor.estimator.predict_proba(X)
-        queue.put(("ok", result, None))
+        queue.put(("ok", result))
     except Exception as e:
-        queue.put(("err", e, traceback.format_exc()))
+        queue.put(("err", e))
 
 
 def _spawn_worker(target, args):
@@ -51,9 +47,8 @@ def _spawn_worker(target, args):
     proc = ctx.Process(target=target, args=(*args, queue))
     proc.start()
     proc.join()
-    status, payload, tb = queue.get()
+    status, payload = queue.get()
     if status == "err":
-        print(tb)
         raise payload
     return payload
 
