@@ -5,8 +5,7 @@ from .subprocessor_base import SubprocessorBase
 
 
 class PyMCSubprocessor(SubprocessorBase):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __del__(self):
         self._cleanup_disk()
 
     def _cleanup_disk(self):

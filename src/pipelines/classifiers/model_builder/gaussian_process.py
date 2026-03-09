@@ -4,12 +4,13 @@ Make Gaussian process classifier.
 References
 ----------
 .. [1] https://doi.org/10.7551/mitpress/3206.001.0001
-.. [2] https://bayesiancomputationbook.com/markdown/chp_04.html#posterior-geometry-matters
-.. [3] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Latent.html#example-2-classification
-.. [4] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Heteroskedastic.html#sparse-heteroskedastic-gp
-.. [5] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-SparseApprox.html#initializing-the-inducing-points-with-k-means
-.. [6] https://www.pymc.io/projects/examples/en/latest/howto/model_builder.html
-.. [7] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
+.. [2] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Latent.html#example-2-classification
+.. [3] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Heteroskedastic.html#sparse-heteroskedastic-gp
+.. [4] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-SparseApprox.html#initializing-the-inducing-points-with-k-means
+.. [5] https://bayesiancomputationbook.com/markdown/chp_04.html#posterior-geometry-matters
+.. [6] https://www.pymc.io/projects/examples/en/latest/statistical_rethinking_lectures/14-Correlated_Features.html#cholesky-factors-correlation-matrices
+.. [7] https://www.pymc.io/projects/examples/en/latest/howto/model_builder.html
+.. [8] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
 """
 
 import numpy as np
@@ -65,7 +66,7 @@ class GaussianProcess(ModelBuilderBase):
 class LinearGP(GaussianProcess):
     def _covariance(self, n_features):
         eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
-        return eta**2 * pm.gp.cov.Linear(input_dim=n_features, c=0)
+        return eta**2 * pm.gp.cov.Linear(input_dim=n_features, c=0.0)
 
     @staticmethod
     def get_default_model_config():
@@ -84,7 +85,7 @@ class RBFGP(GaussianProcess):
     @staticmethod
     def get_default_model_config():
         return {
-            "ell_mu": 0,
+            "ell_mu": 0.0,
             "ell_sigma": 0.5,
             "eta_sigma": 1.0,
             "n_inducing": 100,

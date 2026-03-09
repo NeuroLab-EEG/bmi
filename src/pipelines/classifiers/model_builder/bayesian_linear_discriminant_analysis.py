@@ -60,9 +60,9 @@ class BayesianLinearDiscriminantAnalysis(ModelBuilderBase):
         return {
             "pi_alpha": 2.0,
             "pi_beta": 2.0,
-            "mu_0_mu": 0,
+            "mu_0_mu": 0.0,
             "mu_0_sigma": 1.0,
-            "mu_1_mu": 0,
+            "mu_1_mu": 0.0,
             "mu_1_sigma": 1.0,
             "sigma_sigma": 1.0,
         }

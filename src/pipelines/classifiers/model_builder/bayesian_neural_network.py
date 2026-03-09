@@ -4,16 +4,16 @@ Build Bayesian neural network classifier.
 References
 ----------
 .. [1] http://probml.github.io/book2
-.. [2] https://bayesiancomputationbook.com/markdown/chp_04.html#posterior-geometry-matters
-.. [3] https://www.pymc.io/projects/examples/en/latest/variational_inference/bayesian_neural_network_advi.html
-.. [4] https://www.pymc.io/projects/examples/en/latest/howto/model_builder.html
-.. [5] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
+.. [2] https://www.pymc.io/projects/examples/en/latest/variational_inference/bayesian_neural_network_advi.html
+.. [3] https://bayesiancomputationbook.com/markdown/chp_04.html#posterior-geometry-matters
+.. [4] https://www.pymc.io/projects/examples/en/latest/statistical_rethinking_lectures/14-Correlated_Features.html#non-centered-prior
+.. [5] https://www.pymc.io/projects/examples/en/latest/howto/model_builder.html
+.. [6] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
 """
 
 import torch
 import numpy as np
 import pymc as pm
-import pytensor.tensor as pt
 from sklearn.preprocessing import StandardScaler
 from .model_builder_base import ModelBuilderBase
 
@@ -29,15 +29,12 @@ class BayesianNeuralNetwork(ModelBuilderBase):
             X_obs = pm.Data("X_obs", X)
             y_obs = pm.Data("y_obs", y)
 
-            # Non-centered parameterization
-            X_centered = X - X.mean(axis=0)
-            Kxx = (X_centered.T @ X_centered) / X.shape[0]
-            L = pt.linalg.cholesky(pt.as_tensor_variable(Kxx) + 1e-6 * pt.eye(X.shape[1]))
-
-            # Define priors
+            # Define priors with non-centered parameterization
+            w_sigma = 1 / np.sqrt(X.shape[1])
             w_raw = pm.Normal("w_raw", mu=0.0, sigma=1.0, shape=X.shape[1])
-            w = pm.Deterministic("w", pt.dot(L, w_raw) / np.sqrt(X.shape[1]))
-            b = pm.Normal("b", mu=self.model_config["b_mu"], sigma=self.model_config["b_sigma"])
+            w = pm.Deterministic("w", self.model_config["w_mu"] + w_sigma * w_raw)
+            b_raw = pm.Normal("b_raw", mu=0.0, sigma=1.0)
+            b = pm.Deterministic("b", self.model_config["b_mu"] + self.model_config["b_sigma"] * b_raw)
 
             # Define likelihood
             logit = pm.math.dot(X_obs, w) + b
@@ -65,6 +62,7 @@ class BayesianNeuralNetwork(ModelBuilderBase):
     @staticmethod
     def get_default_model_config():
         return {
-            "b_mu": 0,
+            "w_mu": 0.0,
+            "b_mu": 0.0,
             "b_sigma": 1.0,
         }
