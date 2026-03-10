@@ -4,8 +4,6 @@ Make CUDA accelerated scikit-learn classifier.
 References
 ----------
 .. [1] https://docs.rapids.ai/api/cuml/stable/
-.. [2] https://docs.cupy.dev/en/stable/reference/generated/cupy.cuda.MemoryPool.html#cupy.cuda.MemoryPool.free_all_blocks
-.. [3] https://docs.cupy.dev/en/stable/reference/generated/cupy.cuda.PinnedMemoryPool.html#cupy.cuda.PinnedMemoryPool.free_all_blocks
 """
 
 import cupy as cp
