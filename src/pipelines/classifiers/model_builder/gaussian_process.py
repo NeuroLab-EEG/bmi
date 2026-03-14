@@ -41,11 +41,9 @@ class SparseLatent:
 class GaussianProcess(ModelBuilderBase):
     def build_model(self, X, y, Xu=None):
         with pm.Model() as self.model:
+            self.Xu = self._inducing_points(X, Xu)
             X_obs = pm.Data("X_obs", X)
             y_obs = pm.Data("y_obs", y)
-
-            # Get approximation inducing points
-            self.Xu = self._inducing_points(X, Xu)
 
             # Define covariance priors
             cov = self._covariance(X.shape[1])
