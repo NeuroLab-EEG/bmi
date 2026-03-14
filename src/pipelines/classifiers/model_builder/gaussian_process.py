@@ -39,24 +39,29 @@ class SparseLatent:
 
 
 class GaussianProcess(ModelBuilderBase):
-    def build_model(self, X, y):
+    def build_model(self, X, y, Xu=None):
         with pm.Model() as self.model:
             X_obs = pm.Data("X_obs", X)
             y_obs = pm.Data("y_obs", y)
 
-            # Get inducing points
-            n_inducing = self.model_config["n_inducing"]
-            Xu = pm.gp.util.kmeans_inducing_points(n_inducing, np.array(X))
+            # Get approximation inducing points
+            self.Xu = self._inducing_points(X, Xu)
 
             # Define covariance priors
             cov = self._covariance(X.shape[1])
 
             # Define latent function priors
             gp = SparseLatent(cov_func=cov)
-            f = gp.prior("f", X=X_obs, Xu=Xu)
+            f = gp.prior("f", X=X_obs, Xu=self.Xu)
 
             # Define likelihood
             pm.Bernoulli(self.output_var, logit_p=f, observed=y_obs)
+
+    def _inducing_points(self, X, Xu=None):
+        if Xu is not None:
+            return Xu
+        n_inducing = self.model_config["n_inducing"]
+        return pm.gp.util.kmeans_inducing_points(n_inducing, np.array(X), seed=self.random_state)
 
     @abstractmethod
     def _covariance(self, n_features):

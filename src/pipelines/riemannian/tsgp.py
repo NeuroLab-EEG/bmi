@@ -11,7 +11,7 @@ from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from ..pipeline_base import PipelineBase
-from ..classifiers import LinearGP, PyMCSubprocessor
+from ..classifiers import LinearGP, GPPyMCSubprocessor
 
 
 class TSGP(PipelineBase):
@@ -21,6 +21,6 @@ class TSGP(PipelineBase):
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
-                PyMCSubprocessor(estimator=LinearGP(random_state=self.random_state), root_dir=self.data_path),
+                GPPyMCSubprocessor(estimator=LinearGP(random_state=self.random_state), root_dir=self.data_path),
             )
         }

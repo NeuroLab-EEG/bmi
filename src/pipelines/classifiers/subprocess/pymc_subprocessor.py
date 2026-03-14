@@ -15,6 +15,9 @@ class PyMCSubprocessor(SubprocessorBase):
                 if filename in ("X.npy", "y.npy"):
                     remove(path.join(dirpath, filename))
 
+    def _build_model(self, X, y):
+        self.estimator.build_model(X, y)
+
     def save_fitted_state(self):
         np.save(path.join(self.save_dir, "X.npy"), self.estimator.X)
         np.save(path.join(self.save_dir, "y.npy"), self.estimator.y)
@@ -23,6 +26,6 @@ class PyMCSubprocessor(SubprocessorBase):
     def load_fitted_state(self):
         X = np.load(path.join(self.save_dir, "X.npy"))
         y = np.load(path.join(self.save_dir, "y.npy"))
-        self.estimator.build_model(X, y)
+        self._build_model(X, y)
         self.estimator.idata = InferenceData.from_netcdf(path.join(self.save_dir, "idata.nc"))
         self.estimator.classes_ = self.classes_

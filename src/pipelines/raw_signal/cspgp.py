@@ -11,7 +11,7 @@ from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from ..pipeline_base import PipelineBase
-from ..classifiers import RBFGP, PyMCSubprocessor
+from ..classifiers import RBFGP, GPPyMCSubprocessor
 
 
 class CSPGP(PipelineBase):
@@ -21,6 +21,6 @@ class CSPGP(PipelineBase):
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),
-                PyMCSubprocessor(estimator=RBFGP(random_state=self.random_state), root_dir=self.data_path),
+                GPPyMCSubprocessor(estimator=RBFGP(random_state=self.random_state), root_dir=self.data_path),
             )
         }
