@@ -21,6 +21,8 @@ class TSGP(PipelineBase):
                 Covariances(estimator="oas"),
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
-                GPPyMCSubprocessor(estimator=LinearGP(random_state=self.random_state), root_dir=self.data_path),
+                GPPyMCSubprocessor(
+                    estimator=LinearGP(random_state=self.random_state), root_dir=self.data_path
+                ),
             )
         }

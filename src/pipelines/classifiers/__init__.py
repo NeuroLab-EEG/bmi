@@ -33,5 +33,5 @@ __all__ = [
     SklearnSubprocessor.__name__,
     BNNPyMCSubprocessor.__name__,
     BNNPyTorchSubprocessor.__name__,
-    GPPyMCSubprocessor.__name__
+    GPPyMCSubprocessor.__name__,
 ]
