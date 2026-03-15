@@ -4,18 +4,20 @@ Make Gaussian process classifier.
 References
 ----------
 .. [1] https://doi.org/10.7551/mitpress/3206.001.0001
-.. [2] https://doi.org/10.1201/b10905
-.. [3] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Latent.html#example-2-classification
-.. [4] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Heteroskedastic.html#sparse-heteroskedastic-gp
-.. [5] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-SparseApprox.html#initializing-the-inducing-points-with-k-means
-.. [6] https://www.pymc.io/projects/examples/en/latest/howto/model_builder.html
-.. [7] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
+.. [2] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Latent.html#example-2-classification
+.. [3] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-Heteroskedastic.html#sparse-heteroskedastic-gp
+.. [4] https://www.pymc.io/projects/examples/en/latest/gaussian_processes/GP-SparseApprox.html#initializing-the-inducing-points-with-k-means
+.. [5] https://bayesiancomputationbook.com/markdown/chp_04.html#posterior-geometry-matters
+.. [6] https://www.pymc.io/projects/examples/en/latest/statistical_rethinking_lectures/14-Correlated_Features.html#cholesky-factors-correlation-matrices
+.. [7] https://www.pymc.io/projects/examples/en/latest/howto/model_builder.html
+.. [8] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
 """
 
 import numpy as np
 import pymc as pm
 import pytensor.tensor as pt
-from src.pipelines.classifiers.model_builder import ModelBuilderBase
+from abc import abstractmethod
+from .model_builder_base import ModelBuilderBase
 
 
 class SparseLatent:
@@ -37,59 +39,57 @@ class SparseLatent:
 
 
 class GaussianProcess(ModelBuilderBase):
-    def __init__(self, kernel, **kwargs):
-        super().__init__(**kwargs)
-        self.kernel = kernel
-        self.model_config = self._model_config()
-
-    def build_model(self, X, y):
+    def build_model(self, X, y, Xu=None):
         with pm.Model() as self.model:
+            self.Xu = self._inducing_points(X, Xu)
             X_obs = pm.Data("X_obs", X)
             y_obs = pm.Data("y_obs", y)
-
-            # Get inducing points
-            n_inducing = self.model_config["n_inducing"]
-            Xu = pm.gp.util.kmeans_inducing_points(n_inducing, np.array(X))
 
             # Define covariance priors
             cov = self._covariance(X.shape[1])
 
             # Define latent function priors
             gp = SparseLatent(cov_func=cov)
-            f = gp.prior("f", X=X_obs, Xu=Xu)
+            f = gp.prior("f", X=X_obs, Xu=self.Xu)
 
             # Define likelihood
             pm.Bernoulli(self.output_var, logit_p=f, observed=y_obs)
 
+    def _inducing_points(self, X, Xu=None):
+        if Xu is not None:
+            return Xu
+        n_inducing = self.model_config["n_inducing"]
+        return pm.gp.util.kmeans_inducing_points(n_inducing, np.array(X), seed=self.random_state)
+
+    @abstractmethod
     def _covariance(self, n_features):
-        if self.kernel == "linear":
-            eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
-            return eta**2 * pm.gp.cov.Linear(input_dim=n_features, c=0)
+        pass
 
-        if self.kernel == "rbf":
-            ell = pm.LogNormal("ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"])
-            eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
-            return eta**2 * pm.gp.cov.ExpQuad(input_dim=n_features, ls=ell)
 
-        raise NotImplementedError
-
-    def _model_config(self):
-        if self.kernel == "linear":
-            return {
-                "eta_sigma": 1.0,
-                "n_inducing": 100,
-            }
-
-        if self.kernel == "rbf":
-            return {
-                "ell_mu": 0,
-                "ell_sigma": 0.5,
-                "eta_sigma": 1.0,
-                "n_inducing": 100,
-            }
-
-        raise NotImplementedError
+class LinearGP(GaussianProcess):
+    def _covariance(self, n_features):
+        eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
+        return eta**2 * pm.gp.cov.Linear(input_dim=n_features, c=0.0)
 
     @staticmethod
     def get_default_model_config():
-        pass
+        return {
+            "eta_sigma": 1.0,
+            "n_inducing": 100,
+        }
+
+
+class RBFGP(GaussianProcess):
+    def _covariance(self, n_features):
+        ell = pm.LogNormal("ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"])
+        eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
+        return eta**2 * pm.gp.cov.ExpQuad(input_dim=n_features, ls=ell)
+
+    @staticmethod
+    def get_default_model_config():
+        return {
+            "ell_mu": 0.0,
+            "ell_sigma": 0.5,
+            "eta_sigma": 1.0,
+            "n_inducing": 100,
+        }

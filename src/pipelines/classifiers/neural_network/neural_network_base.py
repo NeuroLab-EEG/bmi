@@ -21,9 +21,8 @@ class NeuralNetworkBase(ClassifierMixin, BaseEstimator):
         self.random_state = random_state
         self.model_ = None
 
-    def fit(self, X, y):
-        set_random_seeds(seed=self.random_state, cuda=torch.cuda.is_available())
-        self.model_ = EEGClassifier(
+    def build_classifier(self):
+        return EEGClassifier(
             module=self.classifier,
             criterion=torch.nn.CrossEntropyLoss,
             optimizer=torch.optim.AdamW,
@@ -56,6 +55,10 @@ class NeuralNetworkBase(ClassifierMixin, BaseEstimator):
                 ),
             ],
         )
+
+    def fit(self, X, y):
+        set_random_seeds(seed=self.random_state, cuda=torch.cuda.is_available())
+        self.model_ = self.build_classifier()
         self.model_.fit(X, y)
         self.classes_ = self.model_.classes_
         return self

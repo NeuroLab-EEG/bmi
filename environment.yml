@@ -284,6 +284,7 @@ dependencies:
       - pure-eval==0.2.3
       - py-cpuinfo==9.0.0
       - pyarrow==23.0.0
+      - pybv==0.7.6
       - pycodestyle==2.14.0
       - pycountry==24.6.1
       - pycparser==3.0
@@ -300,7 +301,7 @@ dependencies:
       - pyogrio==0.12.1
       - pyparsing==3.3.2
       - pyproj==3.7.2
-      - pyriemann==0.10
+      - pyriemann==0.11.dev0
       - pyro-api==0.1.2
       - pyro-ppl==1.9.1
       - pytensor==2.37.0
