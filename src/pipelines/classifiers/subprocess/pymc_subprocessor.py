@@ -1,5 +1,5 @@
 import numpy as np
-from os import path, walk, remove
+from os import path, remove
 from arviz import InferenceData
 from .subprocessor_base import SubprocessorBase
 
@@ -9,11 +9,9 @@ class PyMCSubprocessor(SubprocessorBase):
         self._cleanup_disk()
 
     def _cleanup_disk(self):
-        """Remove data files accessed across subprocesses within folds."""
-        for dirpath, _, filenames in walk(self.root_dir):
-            for filename in filenames:
-                if filename in ("X.npy", "y.npy"):
-                    remove(path.join(dirpath, filename))
+        """Remove data files accessed across subprocesses."""
+        remove(path.join(self.save_dir, "X.npy"))
+        remove(path.join(self.save_dir, "y.npy"))
 
     def _build_model(self, X, y):
         self.estimator.build_model(X, y)
