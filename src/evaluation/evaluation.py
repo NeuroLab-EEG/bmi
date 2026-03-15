@@ -54,8 +54,7 @@ class Evaluation:
             # Configure evaluation
             dataset = DatasetCls(sessions=SESSIONS[DatasetCls]) if DatasetCls in SESSIONS else DatasetCls()
             paradigm = MultiScoreLeftRightImagery(
-                resample=RESAMPLE[DatasetCls],
-                channels=CHANNELS[DatasetCls]
+                resample=RESAMPLE[DatasetCls], channels=CHANNELS[DatasetCls]
             )
             evaluation = CrossSubjectEvaluation(
                 datasets=[dataset],
