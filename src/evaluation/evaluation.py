@@ -26,7 +26,7 @@ from moabb.datasets import (
     GrosseWentrup2009,
     Stieger2021,
 )
-from .configs import N_SPLITS, CHANNELS
+from .configs import N_SPLITS, RESAMPLE, SESSIONS, CHANNELS
 from src.datasets import Liu2024
 from src.paradigm import MultiScoreLeftRightImagery
 from src.pipelines import CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, CSPBLDA, CSPGP, TSBLR, TSGP, BSCNN, BDCNN
@@ -52,8 +52,11 @@ class Evaluation:
             makedirs(metrics_path, exist_ok=True)
 
             # Configure evaluation
-            dataset = DatasetCls()
-            paradigm = MultiScoreLeftRightImagery(resample=128, channels=CHANNELS[DatasetCls])
+            dataset = DatasetCls(sessions=SESSIONS[DatasetCls]) if DatasetCls in SESSIONS else DatasetCls()
+            paradigm = MultiScoreLeftRightImagery(
+                resample=RESAMPLE[DatasetCls],
+                channels=CHANNELS[DatasetCls]
+            )
             evaluation = CrossSubjectEvaluation(
                 datasets=[dataset],
                 paradigm=paradigm,

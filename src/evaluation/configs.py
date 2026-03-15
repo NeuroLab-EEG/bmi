@@ -29,6 +29,29 @@ N_SPLITS = {
     GrosseWentrup2009: 5,
 }
 
+RESAMPLE = {
+    BNCI2014_001: 250,
+    Liu2024: 500,
+    Stieger2021: 1000,
+    PhysionetMI: 160,
+    Lee2019_MI: 1000,
+    Cho2017: 512,
+    Schirrmeister2017: 500,
+    Shin2017A: 200,
+    BNCI2014_004: 250,
+    Dreyer2023: 512,
+    Weibo2014: 200,
+    GrosseWentrup2009: 500,
+}
+
+SESSIONS = {
+    BNCI2014_001: [1, 2],
+    Stieger2021: [1, 2, 3, 4, 5],
+    Lee2019_MI: [1, 2],
+    Shin2017A: [1, 2, 3],
+    BNCI2014_004: [1, 2, 3, 4, 5],
+}
+
 CHANNELS = {
     BNCI2014_001: [
         "FC3",
