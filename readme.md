@@ -9,6 +9,9 @@ conda create -n bmi python=3.12
 # Delete environment
 conda env remove -n bmi
 
+# List environments
+conda env list
+
 # Activate environment
 conda activate bmi
 
