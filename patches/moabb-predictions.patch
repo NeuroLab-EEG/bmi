@@ -1,0 +1,83 @@
+diff --git a/moabb/evaluations/base.py b/moabb/evaluations/base.py
+index b5747ea..df285f2 100644
+--- a/moabb/evaluations/base.py
++++ b/moabb/evaluations/base.py
+@@ -4,11 +4,13 @@ from abc import ABC, abstractmethod
+ from collections import defaultdict
+ from copy import deepcopy
+ from itertools import chain
++from pathlib import Path
+ from time import perf_counter
+ from typing import Optional, Union
+ from uuid import uuid4
+ from warnings import warn
+ 
++import h5py
+ import numpy as np
+ import pandas as pd
+ from joblib import Parallel, delayed
+@@ -252,6 +254,30 @@ def _evaluate_fold(
+         if _carbonfootprint:
+             res["carbon_emission"] = 1000 * emissions
+             res["codecarbon_task_name"] = task_name
++        if not is_error and hdf5_path is not None and config.get("save_predictions"):
++            pred_key = (
++                f"{dataset.code}/{pipeline_name}/"
++                f"{subject}/{group_session}"
++            )
++            pred_path = Path(hdf5_path) / "predictions.h5"
++            pred_path.parent.mkdir(parents=True, exist_ok=True)
++            with h5py.File(pred_path, "a") as f:
++                if pred_key in f:
++                    del f[pred_key]
++                grp = f.require_group(pred_key)
++                grp.create_dataset("y_true", data=group_y, compression="gzip")
++                if hasattr(cvclf, "predict_proba"):
++                    grp.create_dataset(
++                        "y_pred_proba",
++                        data=cvclf.predict_proba(X[group_idx]),
++                        compression="gzip",
++                    )
++                else:
++                    grp.create_dataset(
++                        "y_pred",
++                        data=cvclf.predict(X[group_idx]),
++                        compression="gzip",
++                    )
+         results.append(res)
+ 
+     return results
+@@ -311,6 +337,9 @@ class BaseEvaluation(ABC):
+     save_model : bool
+         Save model after training, for each fold of cross-validation if needed.
+         Defaults to ``False``.
++    save_predictions : bool
++        Save predictions after training, for each fold of cross-validation if needed.
++        Defaults to ``False``.
+     cache_config : :class:`~moabb.datasets.base.CacheConfig` or None
+         Configuration for caching of datasets. See :class:`moabb.datasets.base.CacheConfig` for details.
+         Defaults to ``None``.
+@@ -368,6 +397,7 @@ class BaseEvaluation(ABC):
+         cv_kwargs: Optional[dict] = None,
+         groups=None,
+         save_model: bool = False,
++        save_predictions: bool = False,
+         cache_config: Optional["CacheConfig"] = None,
+         optuna: bool = False,
+         time_out: int = 60 * 15,
+@@ -386,6 +416,7 @@ class BaseEvaluation(ABC):
+         self.cv_kwargs = {} if cv_kwargs is None else cv_kwargs
+         self.groups = groups
+         self.save_model = save_model
++        self.save_predictions = save_predictions
+         self.cache_config = cache_config
+         self.optuna = optuna
+         self.time_out = time_out
+@@ -669,6 +700,7 @@ class BaseEvaluation(ABC):
+             "n_jobs_grid": 1,
+             "additional_columns": self.additional_columns,
+             "save_model": self.save_model,
++            "save_predictions": self.save_predictions,
+             "hdf5_path": self.hdf5_path,
+             "eval_type": self._eval_type or self.__class__.__name__,
+             "mne_labels": self.mne_labels,
