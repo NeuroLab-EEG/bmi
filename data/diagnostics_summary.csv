@@ -1,0 +1,7 @@
+pipeline,n_runs,n_low_ess_bulk,worst_ess_bulk,n_low_ess_tail,worst_ess_tail,n_high_r_hat,worst_r_hat,total_divergences
+BDCNN,196,0,3157.0,0,1777.0,0,1.01,0
+BSCNN,196,0,3389.0,0,1442.0,0,1.01,0
+CSPBLDA,196,0,959.0,0,914.0,0,1.01,0
+CSPGP,196,6,272.0,1,359.0,1,1.02,7
+TSBLR,196,0,2371.0,0,1749.0,0,1.01,0
+TSGP,196,8,160.0,1,253.0,6,1.02,2

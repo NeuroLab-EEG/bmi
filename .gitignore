@@ -226,3 +226,7 @@ pyrightconfig.json
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/python,macos,visualstudiocode
+
+# Large derived files permanently archived on Zenodo
+data/predictions.h5
+data/predictions.csv
