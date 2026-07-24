@@ -3,7 +3,7 @@ from .neural_network_base import NeuralNetworkBase
 from .shallow_conv_net import ShallowConvNet
 
 __all__ = [
-    NeuralNetworkBase.__name__,
-    ShallowConvNet.__name__,
-    DeepConvNet.__name__,
+    "DeepConvNet",
+    "NeuralNetworkBase",
+    "ShallowConvNet",
 ]

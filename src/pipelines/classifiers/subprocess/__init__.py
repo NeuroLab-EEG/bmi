@@ -6,10 +6,10 @@ from .pytorch_subprocessor import PyTorchSubprocessor
 from .sklearn_subprocessor import SklearnSubprocessor
 
 __all__ = [
-    PyMCSubprocessor.__name__,
-    PyTorchSubprocessor.__name__,
-    SklearnSubprocessor.__name__,
-    BNNPyMCSubprocessor.__name__,
-    BNNPyTorchSubprocessor.__name__,
-    GPPyMCSubprocessor.__name__,
+    "BNNPyMCSubprocessor",
+    "BNNPyTorchSubprocessor",
+    "GPPyMCSubprocessor",
+    "PyMCSubprocessor",
+    "PyTorchSubprocessor",
+    "SklearnSubprocessor",
 ]
