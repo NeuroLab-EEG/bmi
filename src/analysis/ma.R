@@ -1,4 +1,4 @@
-library(metafor)
+suppressPackageStartupMessages(library(metafor))
 
 data <- read.csv("data/ma.csv")
 
@@ -14,13 +14,6 @@ report_dir <- "data/reports"
 dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(report_dir, recursive = TRUE, showWarnings = FALSE)
 
-# Fits one metric's model and writes its summary/leave-one-out/influence text
-# to data/reports/<metric>_summary.txt. sink(..., split = TRUE) mirrors
-# everything to the console too, so nothing is lost from interactive use.
-# The report connection is opened/closed inside this function (not at the
-# top level) so on.exit gives it its own per-call scope -- guaranteeing the
-# file gets closed even if rma()/influence() errors partway through, which
-# a bare on.exit() inside a top-level for loop would not.
 run_metric <- function(metric) {
   yi <- data[[paste0("yi_", metric)]]
   vi <- data[[paste0("vi_", metric)]]
@@ -62,11 +55,6 @@ for (metric in metrics) {
   models[[metric]] <- result$model
 
   label <- metric_labels[[metric]]
-  # Sized in real inches at print resolution (300+ DPI), not raw pixels --
-  # R scales text relative to the device's inch dimensions, so drawing at
-  # ~8in (close to how large these will actually appear on the page) keeps
-  # text legible even if the figure is placed at less than \textwidth,
-  # while the high DPI keeps it crisp regardless of display size.
   png(file.path(fig_dir, paste0(metric, "_forest.png")),
     width = 8, height = 8.4, units = "in", res = 350
   )
@@ -86,11 +74,7 @@ for (metric in metrics) {
   plot(result$influence)
   dev.off()
 
-  # Plot all studies as plain points, then text-label only the "extreme"
-  # ones (top quartile on either axis) -- with slab names on every point
-  # the tightly-clustered, low-heterogeneity/low-influence studies near
-  # the origin overlap into unreadable text. This is metafor's own
-  # documented pattern for this exact problem (see ?baujat examples).
+  # labels only the extreme points per metafor's own ?baujat example
   png(file.path(fig_dir, paste0(metric, "_baujat.png")),
     width = 8, height = 7.1, units = "in", res = 350
   )

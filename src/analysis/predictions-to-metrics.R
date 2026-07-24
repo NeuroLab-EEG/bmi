@@ -1,21 +1,10 @@
-#!/usr/bin/env Rscript
-#
-# Convert a MOABB-style predictions.h5 into publishable CSVs.
-#
-# Walks the HDF5 tree (<dataset>/<pipeline>/<subject>/<session>,
-# each group holding y_true and y_pred_proba) and writes two files:
-#
-#   1. predictions.csv -- one row per trial (the raw data).
-#   2. metrics.csv     -- one row per (dataset, pipeline, subject, session):
-#                         n_trials, n_classes, auroc, entropy (sharpness),
-#                         and brier/reliability/resolution/uncertainty via
-#                         reliabilitydiag's CORP decomposition. No ECE.
-#
+# Convert predictions.h5 into predictions.csv and metrics.csv
 # Usage: Rscript src/predictions-to-metrics.R [path/to/predictions.h5] [outdir]
 
 suppressPackageStartupMessages({
   library(hdf5r)
   library(reliabilitydiag)
+  library(pROC)
   library(dplyr)
 })
 
@@ -26,9 +15,6 @@ outdir <- if (length(args) >= 2) args[[2]] else "data"
 if (!file.exists(h5_path)) stop("File not found: ", h5_path)
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
 
-# --------------------------------------------------------------------------
-# Walk the HDF5 tree; collect every group that contains "y_true".
-# --------------------------------------------------------------------------
 find_prediction_groups <- function(grp, prefix = "") {
   found <- character(0)
   items <- grp$ls(recursive = FALSE)$name
@@ -54,28 +40,18 @@ parse_key <- function(key) {
   out
 }
 
-# --------------------------------------------------------------------------
-# Extract y_true / y_pred_proba from a group.
-#
-# y_pred_proba is stored -- and read by hdf5r -- as (n_classes, n_trials),
-# the transpose of the numpy/h5py (n_trials, n_classes) convention, so it
-# is transposed here immediately to keep every downstream computation in
-# the more familiar row-per-trial shape.
-# --------------------------------------------------------------------------
 extract_group <- function(grp) {
   y_true <- grp[["y_true"]]$read()
   proba <- NULL
   if (grp$exists("y_pred_proba")) {
     raw <- grp[["y_pred_proba"]]$read()
-    proba <- if (is.null(dim(raw))) raw else t(raw) # -> (n_trials, n_classes)
+    # hdf5r reads y_pred_proba as the transpose of h5py convention
+    proba <- if (is.null(dim(raw))) raw else t(raw)
   }
   y_pred <- if (grp$exists("y_pred")) grp[["y_pred"]]$read() else NULL
   list(y_true = y_true, y_pred_proba = proba, y_pred = y_pred)
 }
 
-# --------------------------------------------------------------------------
-# Raw per-trial rows.
-# --------------------------------------------------------------------------
 rows_for_predictions <- function(meta, data) {
   n <- length(data$y_true)
   df <- data.frame(
@@ -98,25 +74,18 @@ rows_for_predictions <- function(meta, data) {
   df
 }
 
-# --------------------------------------------------------------------------
-# Metrics: AUROC (rank-based Mann-Whitney form, no extra dependency),
-# Shannon entropy (sharpness), and Brier/reliability/resolution/uncertainty
-# via reliabilitydiag's CORP decomposition (binary only).
-# --------------------------------------------------------------------------
 auroc_binary <- function(y, p1) {
   n_pos <- sum(y == 1)
   n_neg <- sum(y == 0)
   if (n_pos == 0 || n_neg == 0) {
     return(NA_real_)
   }
-  r <- rank(p1)
-  (sum(r[y == 1]) - n_pos * (n_pos + 1) / 2) / (n_pos * n_neg)
+  as.numeric(auc(y, p1, direction = "<", quiet = TRUE))
 }
 
 shannon_entropy_sharpness <- function(proba_matrix) {
-  # Mean per-trial entropy, normalised to [0, 1] with base = n_classes.
   k <- ncol(proba_matrix)
-  p <- pmax(proba_matrix, .Machine$double.eps) # guard log(0)
+  p <- pmax(proba_matrix, .Machine$double.eps)
   row_entropy <- -rowSums(p * log(p, base = k))
   mean(row_entropy)
 }
@@ -164,7 +133,6 @@ compute_metrics <- function(meta, data) {
   as.data.frame(result, stringsAsFactors = FALSE)
 }
 
-# --------------------------------------------------------------------------
 f <- H5File$new(h5_path, mode = "r")
 group_paths <- find_prediction_groups(f)
 if (length(group_paths) == 0) stop("No groups containing 'y_true' were found.")
