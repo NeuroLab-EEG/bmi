@@ -10,8 +10,9 @@ from pyriemann.estimation import Covariances
 from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-from ..pipeline_base import PipelineBase
+
 from ..classifiers import RBFGP, GPPyMCSubprocessor
+from ..pipeline_base import PipelineBase
 
 
 class CSPGP(PipelineBase):

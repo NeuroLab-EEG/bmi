@@ -13,10 +13,12 @@ References
 .. [8] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
 """
 
+from abc import abstractmethod
+
 import numpy as np
 import pymc as pm
 import pytensor.tensor as pt
-from abc import abstractmethod
+
 from .model_builder_base import ModelBuilderBase
 
 

@@ -1,18 +1,18 @@
-from .neural_network import ShallowConvNet, DeepConvNet
 from .model_builder import (
-    BayesianLogisticRegression,
-    BayesianLinearDiscriminantAnalysis,
-    LinearGP,
     RBFGP,
+    BayesianLinearDiscriminantAnalysis,
+    BayesianLogisticRegression,
     BayesianNeuralNetwork,
+    LinearGP,
 )
+from .neural_network import DeepConvNet, ShallowConvNet
 from .subprocess import (
-    PyMCSubprocessor,
-    PyTorchSubprocessor,
-    SklearnSubprocessor,
     BNNPyMCSubprocessor,
     BNNPyTorchSubprocessor,
     GPPyMCSubprocessor,
+    PyMCSubprocessor,
+    PyTorchSubprocessor,
+    SklearnSubprocessor,
 )
 
 __all__ = [

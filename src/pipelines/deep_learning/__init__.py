@@ -1,7 +1,7 @@
-from .scnn import SCNN
-from .dcnn import DCNN
-from .bscnn import BSCNN
 from .bdcnn import BDCNN
+from .bscnn import BSCNN
+from .dcnn import DCNN
+from .scnn import SCNN
 
 __all__ = [
     SCNN.__name__,

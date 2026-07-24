@@ -1,6 +1,8 @@
-import numpy as np
 from os import path, remove
+
+import numpy as np
 from arviz import InferenceData
+
 from .subprocessor_base import SubprocessorBase
 
 

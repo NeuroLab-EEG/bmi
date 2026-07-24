@@ -1,7 +1,7 @@
-from .tslr import TSLR
-from .tssvm import TSSVM
 from .tsblr import TSBLR
 from .tsgp import TSGP
+from .tslr import TSLR
+from .tssvm import TSSVM
 
 __all__ = [
     TSLR.__name__,

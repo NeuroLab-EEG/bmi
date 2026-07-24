@@ -7,8 +7,9 @@ References
 """
 
 from sklearn.pipeline import make_pipeline
+
+from ..classifiers import PyTorchSubprocessor, ShallowConvNet
 from ..pipeline_base import PipelineBase
-from ..classifiers import ShallowConvNet, PyTorchSubprocessor
 
 
 class SCNN(PipelineBase):

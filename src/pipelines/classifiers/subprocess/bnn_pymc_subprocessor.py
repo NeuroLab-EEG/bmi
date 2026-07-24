@@ -1,6 +1,8 @@
+from os import path
+
 import joblib
 import numpy as np
-from os import path
+
 from .pymc_subprocessor import PyMCSubprocessor
 
 

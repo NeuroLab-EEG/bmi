@@ -7,6 +7,7 @@ References
 """
 
 from braindecode.models import ShallowFBCSPNet
+
 from .neural_network_base import NeuralNetworkBase
 
 

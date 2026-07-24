@@ -1,5 +1,7 @@
-import numpy as np
 from os import path
+
+import numpy as np
+
 from .pymc_subprocessor import PyMCSubprocessor
 
 

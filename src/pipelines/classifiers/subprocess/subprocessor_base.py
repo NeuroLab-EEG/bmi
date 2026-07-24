@@ -6,12 +6,13 @@ References
 .. [1] https://docs.python.org/3/library/multiprocessing.html
 """
 
-import shutil
-import numpy as np
 import multiprocessing as mp
-from os import path, makedirs
-from datetime import datetime
+import shutil
 from abc import abstractmethod
+from datetime import datetime
+from os import makedirs, path
+
+import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
 
 

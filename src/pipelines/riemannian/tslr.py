@@ -8,11 +8,12 @@ References
 
 from pyriemann.estimation import Covariances
 from pyriemann.tangentspace import TangentSpace
-from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-from ..pipeline_base import PipelineBase
+
 from ..classifiers import SklearnSubprocessor
+from ..pipeline_base import PipelineBase
 
 
 class TSLR(PipelineBase):

@@ -11,10 +11,11 @@ References
 .. [6] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
 """
 
-import torch
 import numpy as np
 import pymc as pm
+import torch
 from sklearn.preprocessing import StandardScaler
+
 from .model_builder_base import ModelBuilderBase
 
 

@@ -7,6 +7,7 @@ References
 """
 
 from braindecode.models import Deep4Net
+
 from .neural_network_base import NeuralNetworkBase
 
 

@@ -1,4 +1,4 @@
-from .configs import Splits, Sessions, Channels, Subjects
+from .configs import Channels, Sessions, Splits, Subjects
 
 __all__ = [
     Splits.__name__,

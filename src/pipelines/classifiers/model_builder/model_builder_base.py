@@ -7,8 +7,8 @@ References
 .. [2] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
 """
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 import pymc as pm
 from pymc_extras.model_builder import ModelBuilder
 from sklearn.base import BaseEstimator, ClassifierMixin

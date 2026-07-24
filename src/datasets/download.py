@@ -10,8 +10,8 @@ References
 """
 
 from os import getenv
+
 from dotenv import load_dotenv
-from moabb.utils import set_download_dir
 from moabb.datasets import (
     BNCI2014_001,
     BNCI2014_004,
@@ -34,6 +34,7 @@ from moabb.datasets import (
     Yang2025,
     Zhou2020,
 )
+from moabb.utils import set_download_dir
 
 
 class Download:

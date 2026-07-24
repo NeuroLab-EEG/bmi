@@ -1,7 +1,7 @@
+from .deep_learning import BDCNN, BSCNN, DCNN, SCNN
 from .pipeline_base import PipelineBase
-from .raw_signal import CSPLDA, CSPSVM, CSPBLDA, CSPGP
-from .riemannian import TSLR, TSSVM, TSBLR, TSGP
-from .deep_learning import SCNN, DCNN, BSCNN, BDCNN
+from .raw_signal import CSPBLDA, CSPGP, CSPLDA, CSPSVM
+from .riemannian import TSBLR, TSGP, TSLR, TSSVM
 
 __all__ = [
     PipelineBase.__name__,

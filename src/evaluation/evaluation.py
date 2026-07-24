@@ -7,11 +7,10 @@ References
 .. [2] https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_select_electrodes_resample.html
 """
 
-from os import path, getenv, makedirs
 from itertools import product
+from os import getenv, makedirs, path
+
 from dotenv import load_dotenv
-from moabb.utils import set_download_dir, setup_seed
-from moabb.evaluations import CrossSubjectEvaluation
 from moabb.datasets import (
     BNCI2014_001,
     BNCI2014_004,
@@ -34,9 +33,12 @@ from moabb.datasets import (
     Yang2025,
     Zhou2020,
 )
-from .configs import Splits, Sessions, Channels, Subjects
-from ..paradigm import MultiScoreLeftRightImagery
-from ..pipelines import CSPLDA, CSPSVM, TSLR, TSSVM, SCNN, DCNN, CSPBLDA, CSPGP, TSBLR, TSGP, BSCNN, BDCNN
+from moabb.evaluations import CrossSubjectEvaluation
+from moabb.paradigms import LeftRightImagery
+from moabb.utils import set_download_dir, setup_seed
+
+from ..pipelines import BDCNN, BSCNN, CSPBLDA, CSPGP, CSPLDA, CSPSVM, DCNN, SCNN, TSBLR, TSGP, TSLR, TSSVM
+from .configs import Channels, Sessions, Splits, Subjects
 
 
 class Evaluation:
@@ -65,7 +67,7 @@ class Evaluation:
             dataset = datasetcls(
                 subjects=Subjects[datasetcls.__name__].value, sessions=Sessions[datasetcls.__name__].value
             )
-            paradigm = MultiScoreLeftRightImagery(resample=128, channels=Channels[datasetcls.__name__].value)
+            paradigm = LeftRightImagery(resample=128, channels=Channels[datasetcls.__name__].value)
             evaluation = CrossSubjectEvaluation(
                 datasets=[dataset],
                 paradigm=paradigm,

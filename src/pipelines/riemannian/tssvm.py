@@ -10,10 +10,11 @@ References
 from pyriemann.estimation import Covariances
 from pyriemann.tangentspace import TangentSpace
 from sklearn.pipeline import make_pipeline
-from sklearn.svm import SVC
 from sklearn.preprocessing import StandardScaler
-from ..pipeline_base import PipelineBase
+from sklearn.svm import SVC
+
 from ..classifiers import SklearnSubprocessor
+from ..pipeline_base import PipelineBase
 
 
 class TSSVM(PipelineBase):

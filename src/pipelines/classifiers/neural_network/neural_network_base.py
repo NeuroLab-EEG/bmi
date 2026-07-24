@@ -8,11 +8,11 @@ References
 """
 
 import torch
-from braindecode.util import set_random_seeds
 from braindecode.classifier import EEGClassifier
+from braindecode.util import set_random_seeds
+from sklearn.base import BaseEstimator, ClassifierMixin
 from skorch.callbacks import EarlyStopping, LRScheduler
 from skorch.dataset import ValidSplit
-from sklearn.base import BaseEstimator, ClassifierMixin
 
 
 class NeuralNetworkBase(ClassifierMixin, BaseEstimator):
