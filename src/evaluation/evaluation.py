@@ -37,7 +37,20 @@ from moabb.evaluations import CrossSubjectEvaluation
 from moabb.paradigms import LeftRightImagery
 from moabb.utils import set_download_dir, setup_seed
 
-from ..pipelines import BDCNN, BSCNN, CSPBLDA, CSPGP, CSPLDA, CSPSVM, DCNN, SCNN, TSBLR, TSGP, TSLR, TSSVM
+from ..pipelines import (
+    BDCNN,
+    BSCNN,
+    CSPBLDA,
+    CSPGP,
+    CSPLDA,
+    CSPSVM,
+    DCNN,
+    SCNN,
+    TSBLR,
+    TSGP,
+    TSLR,
+    TSSVM,
+)
 
 subjects = {
     "Zhou2020": [13, 14, 15, 16, 17, 18, 19, 20],
@@ -57,14 +70,14 @@ channels = {
     "Dreyer2023": ["FC5", "FC3", "FC1", "FCz", "FC2", "FC4", "FC6", "C5", "C3", "C1", "Cz", "C2", "C4", "C6", "CP5", "CP3", "CP1", "CPz", "CP2", "CP4", "CP6"],
     "Forenzo2023": ["FC5", "FC3", "FC1", "FC2", "FC4", "FC6", "C5", "C3", "C1", "C2", "C4", "C6", "CP5", "CP3", "CP1", "CP2", "CP4", "CP6"],
     "GrosseWentrup2009": ["6", "39", "7", "27", "59", "28", "103", "70", "66", "123", "91", "122", "41", "8", "40", "26", "58", "25", "57", "72", "105", "71", "90", "120", "89", "10", "43", "11", "54", "22", "55", "23"],
-    "GrosseWentrup2009_1005": ["FC5", "FC3", "FC1", "FC2", "FC4", "FC6", "FCC5h", "FCC3h", "FCC1h", "FCC2h", "FCC4h", "FCC6h", "C5", "C3", "C1", "Cz", "C2", "C4", "C6", "CCP5h", "CCP3h", "CCP1h", "CCP2h", "CCP4h", "CCP6h", "CP5", "CP3", "CP1", "CPz", "CP2", "CP4", "CP6"],
+    "GrosseWentrup2009_1005": ["FC5", "FC3", "FC1", "FC2", "FC4", "FC6", "FCC5h", "FCC3h", "FFC1h", "FCC2h", "FCC4h", "FCC6h", "C5", "C3", "C1", "Cz", "C2", "C4", "C6", "CCP5h", "CCP3h", "CCP1h", "CCP2h", "CCP4h", "CCP6h", "CP5", "CP3", "CP1", "CPz", "CP2", "CP4", "CP6"],
     "GuttmannFlury2025_MI": ["FC5", "FC3", "FC1", "FCz", "FC2", "FC4", "FC6", "C5", "C3", "C1", "Cz", "C2", "C4", "C6", "CP5", "CP3", "CP1", "CPz", "CP2", "CP4", "CP6"],
     "HefmiIch2025": ["FC5", "FC1", "FC2", "FC6", "C3", "Cz", "C4", "CP5", "CP1", "CP2", "CP6"],
     "Kumar2024": ["FC5", "FC1", "FC2", "FC6", "C3", "Cz", "C4", "CP5", "CP1", "CP2", "CP6"],
     "Lee2019_MI": ["FC5", "FC3", "FC1", "FC2", "FC4", "FC6", "C5", "C3", "C1", "Cz", "C2", "C4", "C6", "CP5", "CP3", "CP1", "CPz", "CP2", "CP4", "CP6"],
     "Liu2024": ["FC3", "FCz", "FC4", "C3", "Cz", "C4", "CP3", "CP4"],
     "PhysionetMI": ["FC5", "FC3", "FC1", "FCz", "FC2", "FC4", "FC6", "C5", "C3", "C1", "Cz", "C2", "C4", "C6", "CP5", "CP3", "CP1", "CPz", "CP2", "CP4", "CP6"],
-    "Schirrmeister2017": ["FC5", "FC3", "FC1", "FCz", "FC2", "FC4", "FC6", "FCC5h", "FCC3h", "FCC1h", "FCC2h", "FCC4h", "FCC6h", "C5", "C3", "C1", "Cz", "C2", "C4", "C6", "CCP5h", "CCP3h", "CCP1h", "CCP2h", "CCP4h", "CCP6h", "CP5", "CP3", "CP1", "CPz", "CP2", "CP4", "CP6"],
+    "Schirrmeister2017": ["FC5", "FC3", "FC1", "FCz", "FC2", "FC4", "FC6", "FCC5h", "FCC3h", "FFC1h", "FCC2h", "FCC4h", "FCC6h", "C5", "C3", "C1", "Cz", "C2", "C4", "C6", "CCP5h", "CCP3h", "CCP1h", "CCP2h", "CCP4h", "CCP6h", "CP5", "CP3", "CP1", "CPz", "CP2", "CP4", "CP6"],
     "Shin2017A": ["FCC5h", "FCC3h", "FCC4h", "FCC6h", "Cz", "CCP5h", "CCP3h", "CCP4h", "CCP6h"],
     "Stieger2021": ["FC5", "FC3", "FC1", "FCz", "FC2", "FC4", "FC6", "C5", "C3", "C1", "Cz", "C2", "C4", "C6", "CP5", "CP3", "CP1", "CPz", "CP2", "CP4", "CP6"],
     "Weibo2014": ["FC5", "FC3", "FC1", "FCz", "FC2", "FC4", "FC6", "C5", "C3", "C1", "Cz", "C2", "C4", "C6", "CP5", "CP3", "CP1", "CPz", "CP2", "CP4", "CP6"],
@@ -101,7 +114,9 @@ class Evaluation:
                 subjects=subjects.get(datasetcls.__name__, None),
                 sessions=sessions.get(datasetcls.__name__, None),
             )
-            paradigm = LeftRightImagery(resample=128, channels=channels.get(datasetcls.__name__, None))
+            paradigm = LeftRightImagery(
+                resample=128, channels=channels.get(datasetcls.__name__, None)
+            )
             evaluation = CrossSubjectEvaluation(
                 datasets=[dataset],
                 paradigm=paradigm,

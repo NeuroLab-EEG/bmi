@@ -35,5 +35,7 @@ class PyMCSubprocessor(SubprocessorBase):
         X = np.load(path.join(self.save_dir, "X.npy"))
         y = np.load(path.join(self.save_dir, "y.npy"))
         self._build_model(X, y)
-        self.estimator.idata = InferenceData.from_netcdf(path.join(self.save_dir, "idata.nc"))
+        self.estimator.idata = InferenceData.from_netcdf(
+            path.join(self.save_dir, "idata.nc")
+        )
         self.estimator.classes_ = self.classes_

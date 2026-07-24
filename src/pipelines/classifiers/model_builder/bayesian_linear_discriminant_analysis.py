@@ -21,7 +21,11 @@ class BayesianLinearDiscriminantAnalysis(ModelBuilderBase):
             y_obs = pm.Data("y_obs", y)
 
             # Define class prior
-            pi = pm.Beta("pi", alpha=self.model_config["pi_alpha"], beta=self.model_config["pi_beta"])
+            pi = pm.Beta(
+                "pi",
+                alpha=self.model_config["pi_alpha"],
+                beta=self.model_config["pi_beta"],
+            )
 
             # Define location priors
             mu_0 = pm.Normal(
@@ -38,7 +42,9 @@ class BayesianLinearDiscriminantAnalysis(ModelBuilderBase):
             )
 
             # Define shared scale prior
-            sigma = pm.HalfNormal("sigma", sigma=self.model_config["sigma_sigma"], shape=X.shape[1])
+            sigma = pm.HalfNormal(
+                "sigma", sigma=self.model_config["sigma_sigma"], shape=X.shape[1]
+            )
 
             # Define likelihood of observations
             pm.Mixture(

@@ -23,7 +23,9 @@ class TSBLR(PipelineBase):
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
                 PyMCSubprocessor(
-                    estimator=BayesianLogisticRegression(random_state=self.random_state),
+                    estimator=BayesianLogisticRegression(
+                        random_state=self.random_state
+                    ),
                     root_dir=self.data_path,
                 ),
             )

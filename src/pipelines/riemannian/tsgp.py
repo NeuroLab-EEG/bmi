@@ -23,7 +23,8 @@ class TSGP(PipelineBase):
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
                 GPPyMCSubprocessor(
-                    estimator=LinearGP(random_state=self.random_state), root_dir=self.data_path
+                    estimator=LinearGP(random_state=self.random_state),
+                    root_dir=self.data_path,
                 ),
             )
         }

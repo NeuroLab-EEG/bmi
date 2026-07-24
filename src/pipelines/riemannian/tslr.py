@@ -24,7 +24,8 @@ class TSLR(PipelineBase):
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
                 SklearnSubprocessor(
-                    estimator=LogisticRegression(C=1.0, max_iter=1000), root_dir=self.data_path
+                    estimator=LogisticRegression(C=1.0, max_iter=1000),
+                    root_dir=self.data_path,
                 ),
             )
         }

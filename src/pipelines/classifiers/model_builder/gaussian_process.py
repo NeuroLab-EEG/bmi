@@ -61,7 +61,9 @@ class GaussianProcess(ModelBuilderBase):
         if Xu is not None:
             return Xu
         n_inducing = self.model_config["n_inducing"]
-        return pm.gp.util.kmeans_inducing_points(n_inducing, np.array(X), seed=self.random_state)
+        return pm.gp.util.kmeans_inducing_points(
+            n_inducing, np.array(X), seed=self.random_state
+        )
 
     @abstractmethod
     def _covariance(self, n_features):
@@ -83,7 +85,9 @@ class LinearGP(GaussianProcess):
 
 class RBFGP(GaussianProcess):
     def _covariance(self, n_features):
-        ell = pm.LogNormal("ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"])
+        ell = pm.LogNormal(
+            "ell", mu=self.model_config["ell_mu"], sigma=self.model_config["ell_sigma"]
+        )
         eta = pm.HalfNormal("eta", sigma=self.model_config["eta_sigma"])
         return eta**2 * pm.gp.cov.ExpQuad(input_dim=n_features, ls=ell)
 

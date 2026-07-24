@@ -23,6 +23,8 @@ class CSPLDA(PipelineBase):
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),
-                SklearnSubprocessor(estimator=LDA(solver="svd"), root_dir=self.data_path),
+                SklearnSubprocessor(
+                    estimator=LDA(solver="svd"), root_dir=self.data_path
+                ),
             )
         }

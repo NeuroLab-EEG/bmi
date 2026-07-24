@@ -25,7 +25,12 @@ class TSSVM(PipelineBase):
                 TangentSpace(metric="riemann"),
                 StandardScaler(),
                 SklearnSubprocessor(
-                    estimator=SVC(C=1.0, kernel="linear", probability=True, random_state=self.random_state),
+                    estimator=SVC(
+                        C=1.0,
+                        kernel="linear",
+                        probability=True,
+                        random_state=self.random_state,
+                    ),
                     root_dir=self.data_path,
                 ),
             )
