@@ -11,10 +11,11 @@ References
 .. [6] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
 """
 
-import torch
 import numpy as np
 import pymc as pm
+import torch
 from sklearn.preprocessing import StandardScaler
+
 from .model_builder_base import ModelBuilderBase
 
 
@@ -44,7 +45,9 @@ class BayesianNeuralNetwork(ModelBuilderBase):
             w_raw = pm.Normal("w_raw", mu=0.0, sigma=1.0, shape=X.shape[1])
             w = pm.Deterministic("w", self.model_config["w_mu"] + w_sigma * w_raw)
             b_raw = pm.Normal("b_raw", mu=0.0, sigma=1.0)
-            b = pm.Deterministic("b", self.model_config["b_mu"] + self.model_config["b_sigma"] * b_raw)
+            b = pm.Deterministic(
+                "b", self.model_config["b_mu"] + self.model_config["b_sigma"] * b_raw
+            )
 
             # Define likelihood
             logit = pm.math.dot(X_obs, w) + b

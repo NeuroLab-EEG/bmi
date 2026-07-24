@@ -7,15 +7,21 @@ References
 .. [2] https://www.pymc.io/projects/extras/en/latest/generated/pymc_extras.model_builder.ModelBuilder.html
 """
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 import pymc as pm
 from pymc_extras.model_builder import ModelBuilder
 from sklearn.base import BaseEstimator, ClassifierMixin
 
 
 class ModelBuilderBase(ModelBuilder, ClassifierMixin, BaseEstimator):
-    def __init__(self, model_config=None, sampler_config=None, progressbar=False, random_state=None):
+    def __init__(
+        self,
+        model_config=None,
+        sampler_config=None,
+        progressbar=False,
+        random_state=None,
+    ):
         super().__init__(model_config, sampler_config)
         self.progressbar = progressbar
         self.random_state = random_state
@@ -39,7 +45,12 @@ class ModelBuilderBase(ModelBuilder, ClassifierMixin, BaseEstimator):
         self.classes_ = np.unique(y)
         X_df = pd.DataFrame(X, columns=[f"x{i}" for i in range(X.shape[1])])
         y_series = pd.Series(y, name=self.output_var)
-        return super().fit(X_df, y=y_series, progressbar=self.progressbar, random_seed=self.random_state)
+        return super().fit(
+            X_df,
+            y=y_series,
+            progressbar=self.progressbar,
+            random_seed=self.random_state,
+        )
 
     def predict_proba(self, X):
         posterior_samples = super().predict_proba(X, var_names=[self.output_var])

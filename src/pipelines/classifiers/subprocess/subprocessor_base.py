@@ -6,12 +6,13 @@ References
 .. [1] https://docs.python.org/3/library/multiprocessing.html
 """
 
-import shutil
-import numpy as np
 import multiprocessing as mp
-from os import path, makedirs
-from datetime import datetime
+import shutil
 from abc import abstractmethod
+from datetime import datetime, timezone
+from os import makedirs, path
+
+import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
 
 
@@ -20,7 +21,7 @@ def _fit_worker(subprocessor, X, y, queue):
         subprocessor.estimator.fit(X, y)
         subprocessor.save_fitted_state()
         queue.put(("ok", None))
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         queue.put(("err", e))
 
 
@@ -29,7 +30,7 @@ def _predict_worker(subprocessor, X, queue):
         subprocessor.load_fitted_state()
         result = subprocessor.estimator.predict(X)
         queue.put(("ok", result))
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         queue.put(("err", e))
 
 
@@ -38,7 +39,7 @@ def _predict_proba_worker(subprocessor, X, queue):
         subprocessor.load_fitted_state()
         result = subprocessor.estimator.predict_proba(X)
         queue.put(("ok", result))
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         queue.put(("err", e))
 
 
@@ -76,7 +77,7 @@ class SubprocessorBase(ClassifierMixin, BaseEstimator):
             shutil.rmtree(filepath)
 
     def _make_save_dir(self):
-        timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
         save_dir = path.join(self.root_dir, self.__class__.__name__, timestamp)
         makedirs(save_dir, exist_ok=True)
         return save_dir

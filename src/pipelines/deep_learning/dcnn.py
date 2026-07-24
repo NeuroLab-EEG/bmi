@@ -7,8 +7,9 @@ References
 """
 
 from sklearn.pipeline import make_pipeline
-from ..pipeline_base import PipelineBase
+
 from ..classifiers import DeepConvNet, PyTorchSubprocessor
+from ..pipeline_base import PipelineBase
 
 
 class DCNN(PipelineBase):

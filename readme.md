@@ -1,8 +1,5 @@
 # Bayesian Motor Imagery (BMI)
 
-[![DOI](https://img.shields.io/badge/DOI-10.6084%2Fm9.figshare.32176734-blue)](https://doi.org/10.6084/m9.figshare.32176734)
-[![DOI](https://zenodo.org/badge/1104871973.svg)](https://doi.org/10.5281/zenodo.20415453)
-
 ## Python Guide
 
 ### Conda setup

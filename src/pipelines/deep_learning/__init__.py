@@ -1,11 +1,11 @@
-from .scnn import SCNN
-from .dcnn import DCNN
-from .bscnn import BSCNN
 from .bdcnn import BDCNN
+from .bscnn import BSCNN
+from .dcnn import DCNN
+from .scnn import SCNN
 
 __all__ = [
-    SCNN.__name__,
-    DCNN.__name__,
-    BSCNN.__name__,
-    BDCNN.__name__,
+    "BDCNN",
+    "BSCNN",
+    "DCNN",
+    "SCNN",
 ]

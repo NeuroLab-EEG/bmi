@@ -8,11 +8,12 @@ References
 
 from pyriemann.estimation import Covariances
 from pyriemann.spatialfilters import CSP
-from sklearn.pipeline import make_pipeline
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-from ..pipeline_base import PipelineBase
+
 from ..classifiers import SklearnSubprocessor
+from ..pipeline_base import PipelineBase
 
 
 class CSPLDA(PipelineBase):
@@ -22,6 +23,8 @@ class CSPLDA(PipelineBase):
                 Covariances(estimator="oas"),
                 CSP(nfilter=6),
                 StandardScaler(),
-                SklearnSubprocessor(estimator=LDA(solver="svd"), root_dir=self.data_path),
+                SklearnSubprocessor(
+                    estimator=LDA(solver="svd"), root_dir=self.data_path
+                ),
             )
         }

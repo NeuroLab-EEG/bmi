@@ -10,11 +10,14 @@ from pyriemann.estimation import Covariances
 from pyriemann.spatialfilters import CSP
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-from ..pipeline_base import PipelineBase
+
 from ..classifiers import (
     BayesianLinearDiscriminantAnalysis as BayesianLDA,
+)
+from ..classifiers import (
     PyMCSubprocessor,
 )
+from ..pipeline_base import PipelineBase
 
 
 class CSPBLDA(PipelineBase):

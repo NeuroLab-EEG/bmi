@@ -7,13 +7,14 @@ References
 """
 
 from sklearn.pipeline import make_pipeline
-from ..pipeline_base import PipelineBase
+
 from ..classifiers import (
-    DeepConvNet,
     BayesianNeuralNetwork,
     BNNPyMCSubprocessor,
     BNNPyTorchSubprocessor,
+    DeepConvNet,
 )
+from ..pipeline_base import PipelineBase
 
 
 class BDCNN(PipelineBase):
